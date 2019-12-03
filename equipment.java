@@ -30,4 +30,5 @@ public class equipmentname {
 
     @OneToMany(fetch = FetchType.EAGER)
     private Collection<equipment> equipmentname;
+
 }
