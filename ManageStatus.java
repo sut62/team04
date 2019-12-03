@@ -49,4 +49,5 @@ public class ManageStatus {
 
      @Column(name="RENT_DATE")
     private @NonNull Date rentDate;
+
 }
