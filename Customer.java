@@ -13,7 +13,7 @@ import javax.persistence.GenerationType;
 
 import com.SE.RoomBook.Entity.TitleName;
 import com.SE.RoomBook.Entity.Gender;
-import com.SE.RoomBook.Entity.Status;
+import com.SE.RoomBook.Entity.StatusCustomer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ public class Customer {
 	@Id
 	@SequenceGenerator(name="customer_seq",sequenceName="customer_seq")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="customer_seq")
-	@Column(name="Customer_id",unique = true, nullable = true)
+	@Column(name="Cus_id",unique = true, nullable = true)
     private @NonNull Long id;
     @Column(name="Customer_name")
     private @NonNull String Name;
@@ -41,9 +41,9 @@ public class Customer {
 	@JoinColumn(name="Gender",insertable = true)
     private Gender Genders;
 
-    @ManyToOne(fetch = FetchType.EAGER ,targetEntity = Status.class)
+    @ManyToOne(fetch = FetchType.EAGER ,targetEntity = StatusCustomer.class)
 	@JoinColumn(name="Status",insertable = true)
-    private Status Statuss;
+    private StatusCustomer Statuss;
 
     @ManyToOne(fetch = FetchType.EAGER ,targetEntity = TitleName.class)
 	@JoinColumn(name="Title",insertable = true)
