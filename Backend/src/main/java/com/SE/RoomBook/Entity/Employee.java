@@ -1,4 +1,4 @@
-package package com.SE.RoomBook.Entity;
+package com.SE.RoomBook.Entity;
 
 import lombok.*;
 
