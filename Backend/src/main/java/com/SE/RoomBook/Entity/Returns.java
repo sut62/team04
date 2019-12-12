@@ -45,4 +45,5 @@ public class Returns {
     @JoinColumn(name = "Equipment_ID", insertable = true)
     private Equipment equipment;
 
+
 }
