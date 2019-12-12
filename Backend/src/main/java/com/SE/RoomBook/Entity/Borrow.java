@@ -1,4 +1,4 @@
-//package com.okta.springbootvue.Enity;
+package com.SE.RoomBook.Enity;
 
 import lombok.*;
 
