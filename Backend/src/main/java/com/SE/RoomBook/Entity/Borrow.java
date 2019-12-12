@@ -19,9 +19,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.okta.springbootvue.Enity.Customer;
-import com.okta.springbootvue.Enity.Equipment;
-import com.okta.springbootvue.Enity.Employee;
+import com.SE.RoomBook.Entity.Customer;
+import com.SE.RoomBook.Enity.Equipment;
+import com.SE.RoomBook.Enity.Employee;
 
 @Data
 @Entity
