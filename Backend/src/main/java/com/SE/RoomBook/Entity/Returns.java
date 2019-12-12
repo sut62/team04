@@ -1,5 +1,4 @@
 package com.okta.springbootvue.entity;
-
 import lombok.*;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
