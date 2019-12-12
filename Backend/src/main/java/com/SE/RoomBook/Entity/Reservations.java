@@ -35,20 +35,17 @@ public class Reservations {
     @Column(name = "EndTime")
     private @NonNull Date EndTime;
 
-    /*
-     * @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageStatus.class)
-     * 
-     * @JoinColumn(name = "manageStatus_id", insertable = true) private ManageStatus
-     * manageStatus;
-     */
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageStatus.class)
+    @JoinColumn(name = "manageStatus_id", insertable = true)
+    private ManageStatus manageStatus;
+
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = DetailPurpose.class)
     @JoinColumn(name = "DetailPurpose_id", insertable = true)
     private DetailPurpose detailPurpose;
 
-    /*
-     * @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
-     * 
-     * @JoinColumn(name = "EMPLOYEE_ID", insertable = true) private Customer
-     * customer;
-     */
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
+    @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
+    private Customer customer;
+
 }
