@@ -1,4 +1,4 @@
-package com.okta.springbootvue.entity;
+package com.SE.RoomBook.Entity;
 
 import lombok.*;
 
@@ -11,21 +11,16 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 //import javax.persistence.FetchType;
-
-//import com.okta.springbootvue.entity.Room;
-//import com.okta.springbootvue.entity.Status;
-//import com.okta.springbootvue.entity.Employee;
 
 @Data
 @Entity
 @NoArgsConstructor
 @Table(name = "PurposeRoom")
 public class PurposeRoom {
-    
+
     @Id
     @SequenceGenerator(name = "PurposeRoom_seq", sequenceName = "PurposeRoom_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PurposeRoom_seq")
@@ -35,5 +30,4 @@ public class PurposeRoom {
     @Column(name = "Name", unique = false, nullable = true)
     private @NonNull String name;
 
-    
 }
