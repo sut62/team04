@@ -1,4 +1,4 @@
-package com.okta.springbootvue.entity;
+package com.SE.RoomBook.Entity;
 
 import lombok.*;
 
@@ -17,9 +17,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
-import com.okta.springbootvue.entity.Room;;
-import com.okta.springbootvue.entity.Status;;
-import com.okta.springbootvue.entity.Employee;;
+import com.SE.RoomBook.Entity.Room;
+import com.SE.RoomBook.Entity.Status;
+import com.SE.RoomBook.Entity.Employee;
 
 
 @Data
@@ -47,7 +47,8 @@ public class ManageStatus {
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
     private Employee createdBy;
 
-     @Column(name="RENT_DATE")
-    private @NonNull Date rentDate;
+     @Column(name="MANAGESTATUS_DATE")
+    private @NonNull Date ManageStatusDate;
 
 }
+
