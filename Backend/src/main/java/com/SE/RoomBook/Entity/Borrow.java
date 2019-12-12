@@ -1,4 +1,4 @@
-package com.SE.RoomBook.Enity;
+package com.SE.RoomBook.Entity;
 
 import lombok.*;
 
@@ -20,8 +20,8 @@ import javax.persistence.FetchType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.SE.RoomBook.Entity.Customer;
-import com.SE.RoomBook.Enity.Equipment;
-import com.SE.RoomBook.Enity.Employee;
+import com.SE.RoomBook.Entity.Equipment;
+import com.SE.RoomBook.Entity.Employee;
 
 @Data
 @Entity
