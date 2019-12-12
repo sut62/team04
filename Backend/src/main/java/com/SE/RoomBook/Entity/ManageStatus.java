@@ -34,12 +34,12 @@ public class ManageStatus {
     private @NonNull Long ManageStatus_id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Book.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Status.class)
     @JoinColumn(name = "Status_id", insertable = true)
     private Status status;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Typeranking.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Room.class)
     @JoinColumn(name = "Room_id", insertable = true)
     private Room room;
 
