@@ -45,7 +45,7 @@ public class ManageStatus {
 
      @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
-    private Employee createdBy;
+    private Employee employee;
 
      @Column(name="MANAGESTATUS_DATE")
     private @NonNull Date ManageStatusDate;
