@@ -24,9 +24,9 @@ public class Room {
     @SequenceGenerator(name="room_seq",sequenceName="room_seq")               
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="room_seq")  
     @Column(name = "room_id", unique = true, nullable = true)
-    private @NonNull Long id;
+    private @NonNull Long room_id;
     @Column(name = "room_name")
-    private @NonNull String name;
+    private @NonNull String room_name;
 
 
     @OneToMany(fetch = FetchType.EAGER)
