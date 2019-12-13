@@ -30,4 +30,5 @@ public class PurposeRoom {
     @Column(name = "Name", unique = false, nullable = true)
     private @NonNull String name;
 
+    
 }
