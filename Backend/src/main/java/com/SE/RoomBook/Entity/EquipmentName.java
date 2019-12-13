@@ -22,13 +22,14 @@ import javax.persistence.GenerationType;
 @Table(name = "EquipmentName")
 public class EquipmentName {
     @Id
-    @SequenceGenerator(name = "equipmentname_SEQ", sequenceName = "equipmentname_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipmentname_SEQ")
-    
+    @SequenceGenerator(name = "EquipmentName_SEQ", sequenceName = "EquipmentName_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EquipmentName_SEQ")
+    @Column(name="EquipmentName_ID",unique = true, nullable = true)
     private @NonNull Long equipmentname_id;
+    
     private @NonNull String name;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Collection<EquipmentName> equipmentname;
+    private Collection<ManageEquipment> ManageEquipment;
 
 }

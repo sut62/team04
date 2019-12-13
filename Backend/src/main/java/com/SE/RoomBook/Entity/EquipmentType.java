@@ -24,10 +24,11 @@ public class EquipmentType {
     @Id
     @SequenceGenerator(name = "Equipmenttype_SEQ", sequenceName = "equipmenttype_SEQ")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipmenttype_SEQ")
-    
+    @Column(name="EquipmentType_ID",unique = true, nullable = true)
     private @NonNull Long equipmenttype_id;
+    
     private @NonNull String type;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Collection<EquipmentType> EquipmentType;
+    private Collection<ManageEquipment> ManageEquipment;
 }
