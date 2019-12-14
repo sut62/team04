@@ -19,7 +19,8 @@ public class RoomBookApplication {
 	@Bean
 	ApplicationRunner init(GenderRepository genderRepository, 
 	TitleNameRepository titleNameRepository, 
-	StatusCustomerRepository statusCustomer )
+	StatusCustomerRepository statusCustomer,
+	EmployeeRepository employeeRepository )
 	{
 		return args -> {
 		Employee em1 = new Employee();
