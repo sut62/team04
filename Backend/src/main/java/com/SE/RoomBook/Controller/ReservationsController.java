@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class ReservationsController {
 
     @Autowired
+    private final PurposeRoomRepository purposeRoomRepository;
+
+    @Autowired
     private final ReservationsRepository reservationsRepository;
 
     @Autowired
@@ -43,10 +46,12 @@ public class ReservationsController {
     private final ManageStatusRepository manageStatusRepository;
 
     ReservationsController(ReservationsRepository reservationsRepository, CustomerRepository customerRepository,
-            DetailPurposeRepository detailPurposeRepository, ManageStatusRepository manageStatusRepository) {
+            DetailPurposeRepository detailPurposeRepository, PurposeRoomRepository purposeRoomRepository,
+            ManageStatusRepository manageStatusRepository) {
         this.detailPurposeRepository = detailPurposeRepository;
         this.reservationsRepository = reservationsRepository;
         this.customerRepository = customerRepository;
+        this.purposeRoomRepository = purposeRoomRepository;
         this.manageStatusRepository = manageStatusRepository;
     }
 
@@ -56,12 +61,22 @@ public class ReservationsController {
     }
 
     @PostMapping("/Reservation") // บันทึกการจองห้องค้นคว้าออนไลน์
-    public Reservations addReservations(@RequestBody BodyBook bodybook) {
-        Reservations r = new Reservations();
-        Customer c = customerRepository.findById(bodybook.getCustomerid()).get();
-        ManageStatus m = manageStatusRepository.findById(bodybook.getRoomid()).get();
+    public Reservations index(@RequestBody final BodyBook bodyBook) {
+        final Reservations r = new Reservations();
+        Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
+        ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
         r.setManageStatus(m);
         r.setCustomer(c);
+        for (Long purpose : bodyBook.getPurosebook()) {
+            DetailPurpose dp = new DetailPurpose();
+            PurposeRoom p = purposeRoomRepository.findById(purpose).get();
+            dp.setPurposeRoom(p);
+            dp.setReservations(r);
+            detailPurposeRepository.save(dp);
+        }
+       
+        r.setBookdate(new Date());
+        return reservationsRepository.save(r);
     }
 
 }

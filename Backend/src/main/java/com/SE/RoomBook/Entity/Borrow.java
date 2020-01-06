@@ -43,8 +43,5 @@ public class Borrow {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
     @JoinColumn(name = "CUSTOMER_ID", insertable = true)
     private Customer customer;
-
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Equipment.class)
-    @JoinColumn(name = "Equipment_ID", insertable = true)
-    private Equipment equipment;
+   
 }
