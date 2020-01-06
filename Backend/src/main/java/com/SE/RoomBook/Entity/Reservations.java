@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-//import javax.persistence.OneToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,7 +39,7 @@ public class Reservations {
     @JoinColumn(name = "manageStatus_id", insertable = true)
     private ManageStatus manageStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = DetailPurpose.class)
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = DetailPurpose.class)
     @JoinColumn(name = "DetailPurpose_id", insertable = true)
     private DetailPurpose detailPurpose;
 
