@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -26,7 +27,8 @@ public class EquipmentType {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipmenttype_SEQ")
     @Column(name="EquipmentType_ID",unique = true, nullable = true)
     private @NonNull Long equipmenttype_id;
-    
+
+    @Column(name="Typename")
     private @NonNull String type;
 
     @OneToMany(fetch = FetchType.EAGER)

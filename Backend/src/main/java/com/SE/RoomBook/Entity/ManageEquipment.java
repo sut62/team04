@@ -29,10 +29,11 @@ public class ManageEquipment {
     @SequenceGenerator(name="ManageEquipment_seq",sequenceName="ManageEquipment_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="ManageEquipment_seq")
     @Column(name="ManageEquipment_ID",unique = true, nullable = true)
-    private @NonNull Long mnageEquipment_id;
+    private @NonNull Long manageEquipment_id;
 
     private @NonNull Date manageEquipment_date;
 
+    @Column(name="Amount")
     private @NonNull Integer manageEquipment_amount;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = EquipmentType.class)
