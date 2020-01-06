@@ -26,7 +26,8 @@ public class EquipmentName {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EquipmentName_SEQ")
     @Column(name="EquipmentName_ID",unique = true, nullable = true)
     private @NonNull Long equipmentname_id;
-    
+
+    @Column(name="EQname")
     private @NonNull String name;
 
     @OneToMany(fetch = FetchType.EAGER)
