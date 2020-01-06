@@ -19,9 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.SE.RoomBook.Entity.Customer;
-import com.SE.RoomBook.Entity.Equipment;
-import com.SE.RoomBook.Entity.Employee;
+import com.SE.RoomBook.Entity.*;
 
 @Data
 @Entity
@@ -43,5 +41,8 @@ public class Borrow {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
     @JoinColumn(name = "CUSTOMER_ID", insertable = true)
     private Customer customer;
-   
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageEquipment.class)
+    @JoinColumn(name = "ManageEquipment_ID", insertable = true)
+    private ManageEquipment manageequipment;
 }
