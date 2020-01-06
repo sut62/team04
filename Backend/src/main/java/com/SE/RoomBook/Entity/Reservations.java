@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import java.sql.Date;
 //import java.util.Collection;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,13 +40,14 @@ public class Reservations {
     @JoinColumn(name = "manageStatus_id", insertable = true)
     private ManageStatus manageStatus;
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = DetailPurpose.class)
-    @JoinColumn(name = "DetailPurpose_id", insertable = true)
-    private DetailPurpose detailPurpose;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservations")
+    private Collection<DetailPurpose> detailPurpose;
 
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
-    @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
+    @JoinColumn(name = "Cus_id", insertable = true)
     private Customer customer;
 
+    @Column(name= "Date")
+    private Date bookdate;
 }

@@ -9,7 +9,7 @@ import lombok.*;
 public class BodyBook {
     private Long customerid;
     private Long roomid;
-    private String[] purosebook;
+    private Long[] purosebook;
     private Date start;
     private Date end;
 }
