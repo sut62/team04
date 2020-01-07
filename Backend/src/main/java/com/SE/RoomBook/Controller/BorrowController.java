@@ -46,14 +46,14 @@ public class BorrowController {
         return BorrowRepository.findAll().stream().collect(Collectors.toList());
     }
     
-    @PostMapping("/Borrow/{cus_id}/{em_id}/{manageEquipment_id}")
+    @PostMapping("/Borrow/{id}/{em_id}/{manageEquipment_id}")
     public Borrow newBorrow (final Borrow newBorrow,
-    @PathVariable final long cus_id,//customer
+    @PathVariable final long id,//customer
     @PathVariable final long em_id,//employee
     @PathVariable final long manageEquipment_id)//equipment
     {
     
-    final Customer Customer = CustomerRepository.findById(cus_id);
+    final Customer Customer = CustomerRepository.findById(id);
     final Employee Employee = EmployeeRepository.findById(em_id);
     final ManageEquipment ManageEquipment = ManageEquipmentRepository.findById(manageEquipment_id);
 
