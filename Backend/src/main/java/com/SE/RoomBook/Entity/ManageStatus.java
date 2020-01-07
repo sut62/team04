@@ -21,11 +21,22 @@ import com.SE.RoomBook.Entity.Room;
 import com.SE.RoomBook.Entity.Status;
 import com.SE.RoomBook.Entity.Employee;
 
+import javax.persistence.*; // เพื่อใช้ @NamedQuery
 
 @Data
 @Entity
+
+// query หา id ที่มากที่สุด ถ้าไม่มีจะ return null ---------------------------
+
+// @NamedQuery(name = "ManageStatus.Count",
+//            query = "SELECT MAX(ManageStatus_id) FROM ManageStatus")
+
+// @NamedQuery(name = "ManageStatus.Count",
+//     query = "SELECT BY Room_id && Delete_at == NULL FROM ManageStatus")
+
 @NoArgsConstructor
 @Table(name="ManageStatus")
+
 public class ManageStatus {
     @Id
     @SequenceGenerator(name="ManageStatus_seq",sequenceName="ManageStatus_seq")
@@ -43,12 +54,14 @@ public class ManageStatus {
     @JoinColumn(name = "Room_id", insertable = true)
     private Room room;
 
-     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
     private Employee employee;
 
-     @Column(name="MANAGESTATUS_DATE")
-    private @NonNull Date ManageStatusDate;
+    @Column(name="CREATE_AT")
+    private Date Create_at;
+
+    @Column(name="DELETE_AT")
+    private Date Delete_at;
 
 }
-
