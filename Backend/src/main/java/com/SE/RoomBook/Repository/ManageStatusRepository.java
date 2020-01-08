@@ -2,21 +2,24 @@ package com.SE.RoomBook.Repository;
 
 import com.SE.RoomBook.Entity.ManageStatus;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.data.repository.query.Param;
 import java.util.Collection;
-import javax.persistence.*;
-
+@CrossOrigin(origins = "http://localhost:8080")
 @RepositoryRestResource
 public
 interface ManageStatusRepository extends JpaRepository<ManageStatus, Long> {
     
-
-    ManageStatus findByRoom(String Room_name);
-    Collection<ManageStatus> findByRoomGreaterThan(String Room_name);
-    Long Count(); // ตัวนี้จะมองที่ BookRanking ใน Entity  
-
+  @Query(value = "SELECT * FROM MANAGE_STATUS where DELETE_AT is null and room_id = :Room_id",
+            nativeQuery = true)
+  ManageStatus findRoomNull(@Param("Room_id") Long Room_id);
 
 
-    //ManageStatus findById(long id);
+  ManageStatus findById(long id);
 }
+//  ManageStatus findByRoom_id(Long Room_id);
+//         Collection<ManageStatus> findAll(Long Room_id);
+//         Long Count(); 
+
