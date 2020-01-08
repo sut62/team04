@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 <template>
   <v-container grid-list-md>
     <v-layout
@@ -16,8 +17,8 @@
           :plugins="calendarPlugins"
           defaultView='resourceTimelineDay'
           resourceGroupField='building'
-          minTime='06:00:00'
-          maxTime='20:00:00'
+          minTime='08:00:00'
+          maxTime='18:00:00'
           :aspectRatio="1.5"
           :header="{
           left: 'today prev,next',
@@ -95,12 +96,9 @@
                 <br />
                 <v-select
                   outlined
-                  multiple
                   class="mr-10"
-                  :items="items"
-                  item-text="name"
-                  item-value="cus_id"
-                  v-model="value"
+                  :items="type"
+                  v-model="BookRoom.typeselect"
                   label="Customer"
                 ></v-select>
               </v-flex>
@@ -125,12 +123,26 @@
                   outlined
                   multiple
                   class="mr-10"
-                  :items="items"
+                  :items="type"
                   item-text="name"
-                  item-value="cus_id"
-                  v-model="value"
-                  label="Customer"
-                ></v-select>
+                  item-value="purposeRoom_id"
+                  v-model="BookRoom.typeselect"
+                  label="PurposeRoom"
+                ><template v-slot:prepend-item>
+                    <v-list-item
+                      ripple
+                      @click="toggle"
+                    >
+                      <v-list-item-action>
+                        <v-icon :color=" BookRoom.typeselect.length > 0 ? 'indigo darken-4' : '' ">{{ icon }}</v-icon>
+                      </v-list-item-action>
+                      <v-list-item-content>
+                        <v-list-item-title>Select All</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-divider class="mt-2"></v-divider>
+                  </template>
+                </v-select>
               </v-flex>
             </v-layout>
           </v-flex>
@@ -151,13 +163,10 @@
                 <br />
                 <v-select
                   outlined
-                  multiple
                   class="mr-10"
-                  :items="items"
-                  item-text="name"
-                  item-value="cus_id"
-                  v-model="value"
-                  label="Customer"
+                  :items="type"
+                  v-model="BookRoom.typeselect"
+                  label="RoomNumber"
                 ></v-select>
               </v-flex>
             </v-layout>
@@ -180,19 +189,20 @@
                 <br />
                 <v-select
                   outlined
-                  multiple
                   class="mr-10"
-                  :items="items"
-                  item-text="name"
-                  item-value="cus_id"
-                  v-model="value"
-                  label="Customer"
+                  :items="StartTime"
+                  item-text="time"
+                  item-value="idstarttime"
+                  v-model="BookRoom.starttime"
+                  label="StartTime"
                 ></v-select>
+
               </v-flex>
             </v-layout>
           </v-flex>
 
           <v-flex md12>
+
             <v-layout
               row
               wrap
@@ -209,16 +219,16 @@
                 <br />
                 <v-select
                   outlined
-                  multiple
                   class="mr-10"
-                  :items="items"
-                  item-text="name"
-                  item-value="cus_id"
-                  v-model="endtime"
-                  label="Customer"
+                  :items="EndTime"
+                  item-text="time"
+                  item-value="idendtime"
+                  v-model="BookRoom.endtimeBook"
+                  label="EndTime"
                 ></v-select>
               </v-flex>
             </v-layout>
+
           </v-flex>
         </v-layout>
         <v-btn
@@ -228,6 +238,7 @@
           outline
           color="primary"
           dark
+          @click="SaveRoom"
         >
           ยืนยันการจอง
           <v-icon
@@ -241,6 +252,7 @@
           outline
           color="blue-grey"
           dark
+          v-on:click="clear"
         >
           เคลียร์ข้อมูล
           <v-icon
@@ -256,9 +268,11 @@
 </template>
 
 <script>
+/*eslint-disable */
 import FullCalendar from "@fullcalendar/vue";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import listPlugin from "@fullcalendar/list";
+import http from "../http-common";
 export default {
   components: {
     FullCalendar
@@ -266,31 +280,168 @@ export default {
   data() {
     return {
       calendarPlugins: [resourceTimelinePlugin, listPlugin],
+      BookRoom: {
+        typeselect: [],
+        starttime: "",
+        endtimeBook: ""
+      },
+      StartTime: [
+        { idstarttime: 1, time: "08:00:00" }, //
+        { idstarttime: 2, time: "08:30:00" }, // "08:30:00",
+        { idstarttime: 3, time: "09:00:00" }, // "09:00:00",
+        { idstarttime: 4, time: "10:00:00" }, // "10:00:00",
+        { idstarttime: 5, time: "10:30:00" }, // "10:30:00",
+        { idstarttime: 6, time: "11:00:00" }, // "11:00:00",
+        { idstarttime: 7, time: "11:30:00" }, // "11:30:00",
+        { idstarttime: 8, time: "12:00:00" }, // "12:00:00",
+        { idstarttime: 9, time: "12:30:00" }, // "12:30:00",
+        { idstarttime: 10, time: "13:30:00" }, // "13:30:00",
+        { idstarttime: 11, time: "14:30:00" }, // "14:30:00",
+        { idstarttime: 12, time: "15:00:00" }, // "15:00:00",
+        { idstarttime: 13, time: "15:30:00" }, // "15:30:00",
+        { idstarttime: 14, time: "16:00:00" }, // "16:00:00",
+        { idstarttime: 15, time: "16:30:00" }, // "16:30:00",
+        { idstarttime: 16, time: "17:00:00" }, // "17:00:00",
+        { idstarttime: 17, time: "17:30:00" } // "17:30:00"
+      ],
+      EndTime: [
+        { idendtime: 2, time: "08:30:00" }, // "08:30:00",
+        { idendtime: 3, time: "09:00:00" }, // "09:00:00",
+        { idendtime: 4, time: "10:00:00" }, // "10:00:00",
+        { idendtime: 5, time: "10:30:00" }, // "10:30:00",
+        { idendtime: 6, time: "11:00:00" }, // "11:00:00",
+        { idendtime: 7, time: "11:30:00" }, // "11:30:00",
+        { idendtime: 8, time: "12:00:00" }, // "12:00:00",
+        { idendtime: 9, time: "12:30:00" }, // "12:30:00",
+        { idendtime: 10, time: "13:30:00" }, // "13:30:00",
+        { idendtime: 11, time: "14:30:00" }, // "14:30:00",
+        { idendtime: 12, time: "15:00:00" }, // "15:00:00",
+        { idendtime: 13, time: "15:30:00" }, // "15:30:00",
+        { idendtime: 14, time: "16:00:00" }, // "16:00:00",
+        { idendtime: 15, time: "16:30:00" }, // "16:30:00",
+        { idendtime: 16, time: "17:00:00" }, // "17:00:00",
+        { idendtime: 17, time: "17:30:00" }, // "17:30:00"
+        { idendtime: 18, time: "18:00:00" } //
+      ],
+      type: "", // ข้อมูลจุดประสงค์การจองห้อง
       event: [
         {
           id: "1",
-          title: "All Day Event",
-          start: "2019-12-13",
-          resourceId: "a",
-          color: "green"
+          title: "TEST EVENT",
+          start: "2020-01-08",
+          resourceId: "i",
+          color: "green",
+          textColor: "yellow"
         },
+
         {
           id: "2",
           title: "FLEX N GATE",
           start: "2019-12-13T10:00:00",
           end: "2019-12-13T12:00:00",
-          resourceId: "b"
+          resourceId: "c"
         },
         {
           id: "3",
           title: "FLEX N GATE",
           start: "2019-12-14T10:00:00",
           end: "2019-12-14T12:00:00",
-          resourceId: "c"
+          resourceId: "a"
         }
       ]
     };
-  }
+  },
+  methods: {
+    //กด select All ใน combobox
+    toggle() {
+      this.$nextTick(() => {
+        if (this.likesAllPurpose) {
+          this.BookRoom.typeselect = [];
+        } else {
+          // เคลียร์ค่าใน Array ก่อนทำการเพิ่มค่า
+          this.BookRoom.typeselect = [];
+          this.type.forEach((value, index) => {
+            this.BookRoom.typeselect.push(this.type[index].purposeRoom_id);
+          });
+          // this.BookRoom.typeselect = this.type.slice();
+        }
+      });
+    },
+    SaveRoom() {
+      // กดปุ่ม save
+      if (this.CheckCorrectTime > 0 && this.CheckCorrectTime <= 5) {
+        http
+          .post(
+            "/retime/" +
+              this.StartTime[this.BookRoom.starttime - 1].time +
+              "/" +
+              this.EndTime[this.BookRoom.endtimeBook - 2].time
+          )
+          .then(response => {
+            alert(response);
+          })
+          .cath(e => {
+            console.log(e.message);
+            alert("ture");
+          });
+      } else {
+        alert("กรุณาเลือกช่วงเวลาใหม่");
+      }
+    },
+    clear() {
+      // ลบข้อมูลออกจากcombobox
+      this.BookRoom.typeselect = [];
+      this.BookRoom.starttime = "";
+      this.BookRoom.endtimeBook = "";
+    },
+    getTypePurposeBook() {
+      //ดึงวัตถุประสงค์ของห้องมาใส่ combobox
+      http
+        .get("/PurposeRoom")
+        .then(response => {
+          this.type = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getCustomers() {
+      //ดึงcustomer มาใส combobox
+      http
+        .get("/customer")
+        .then(response => {
+          this.customers = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  },
+  mounted() {
+    this.getTypePurposeBook();
+  },
+  computed: {
+    likesAllPurpose() {
+      return this.BookRoom.typeselect.length === this.type.length;
+    },
+    likesSomePurpose() {
+      return this.BookRoom.typeselect.length > 0 && !this.likesAllPurpose;
+    },
+    icon() {
+      if (this.likesAllPurpose) return "mdi-close-box";
+      if (this.likesSomePurpose) return "mdi-minus-box";
+      return "mdi-checkbox-blank-outline";
+    },
+    CheckCorrectTime() {
+      // let v = this.BookRoom.endtimeBook - this.BookRoom.starttime;
+      return this.BookRoom.endtimeBook - this.BookRoom.starttime;
+    },
+    CheckcommitTime() {
+      if (this.CheckCorrectTime > 0 && this.CheckCorrectTime <= 5) return true;
+      else return false;
+    }
+  },
+  watch: {}
 };
 </script>
 
