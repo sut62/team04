@@ -52,15 +52,15 @@ public class CustomerController {
         return customerRepository.findAll().stream().collect(Collectors.toList());
     }
     @GetMapping("/customer/{Customer_Email}/{Password}")
-    public Customer getPatientByName(@PathVariable("Customer_name") String Name, @PathVariable("Password") String Password) {
-        return customerRepository.findPatientByCustomer(Name,Password);
+    public Customer getPatientByName(@PathVariable("Customer_Email") String Email, @PathVariable("Password") String Password) {
+        return customerRepository.findPatientByCustomer(Email,Password);
     }
 
-    @PostMapping("/customer/{Name}/{Password}/{Address}/{Title_id}/{Gender_id}/{Status_ID}")
+    @PostMapping("/customer/{Name}/{Password}/{Email}/{Title_id}/{Gender_id}/{Status_ID}")
     public Customer newCustomer(Customer newCustomer,
         @PathVariable String Name,
         @PathVariable String Password, 
-        @PathVariable String Address,
+        @PathVariable String Email,
         @PathVariable long Title_id, 
         @PathVariable long Gender_id,
         @PathVariable long Status_ID ) {
@@ -72,7 +72,7 @@ public class CustomerController {
         
         newCustomer.setName(Name);
         newCustomer.setPassword(Password);
-        newCustomer.setAddress(Address);
+        newCustomer.setEmail(Email);
         newCustomer.setTitleNames(TitleNames);
         newCustomer.setStatuss(Status);
         newCustomer.setGenders(Genders_cus);
