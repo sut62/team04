@@ -58,10 +58,10 @@ public class RoomBookApplication {
 				titleNameRepository.save(title); // บันทึก Objcet ชื่อ Title
 			});
 
-			Stream.of("Studens", "Teacher","Normal Person").forEach(Type -> {
-				StatusCustomer Status = new StatusCustomer(); // สร้าง Object Type
-				statusCustomer.setStatus(Status); // set ชื่อ (Type) ให้ Object ชื่อ type
-				statusCustomer.save(statusCustomer); // บันทึก Objcet ชื่อ Type
+			Stream.of("Studens", "Teacher","Normal Person").forEach(Status -> {
+				StatusCustomer status = new StatusCustomer(); // สร้าง Object Status
+				status.setStatus(Status); // set ชื่อ (StatusCustomer) ให้ Object ชื่อ Status
+				status.save(status); // บันทึก Objcet ชื่อ Status
 			});
 
 			Stream.of("อ่านหนังสือ ทบทวนบทเรียน", "ทำการบ้าน รายงาน", "ติว", "ประชุม").forEach(name -> {
