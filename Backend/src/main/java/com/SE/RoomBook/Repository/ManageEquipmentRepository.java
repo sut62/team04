@@ -8,4 +8,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface ManageEquipmentRepository extends JpaRepository<ManageEquipment, Long> {
 	ManageEquipment findById(long manageEquipment_id);
+
 }
