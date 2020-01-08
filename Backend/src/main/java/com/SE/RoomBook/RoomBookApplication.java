@@ -21,7 +21,10 @@ public class RoomBookApplication {
 	TitleNameRepository titleNameRepository, 
 	StatusCustomerRepository statusCustomer,
 	EmployeeRepository employeeRepository,
-	PurposeRoomRepository purposeRoomRepository )
+	PurposeRoomRepository purposeRoomRepository,
+	RoomRepository roomRepository, 
+	StatusRepository statusRepository,
+	EmployeeRepository employeeRepository)
 	{
 		return args -> {
 		Employee em1 = new Employee();
@@ -69,6 +72,19 @@ public class RoomBookApplication {
 				p.setName(name);
 				purposeRoomRepository.save(p); // บันทึก Objcet ชื่อ Type
 			});
+
+			
+			Stream.of("G01", "G02", "G03","S01","S02","S03","P01","P02").forEach(name -> {
+					Room room = new Room(); // สร้าง Object 
+					room.setRoom_name(name); // set ชื่อ (name) ให้ Object
+					roomRepository.save(room); // บันทึก Objcet 
+			});
+
+			Stream.of("ออนไลน์", "ออฟไลน์").forEach(name -> {
+					Status status = new Status(); // สร้าง Object 
+					status.setStatus_name(name); // set ชื่อ (name) ให้ Object 
+					statusRepository.save(status); // บันทึก Objcet 
+				});
 		};
 	}
 
