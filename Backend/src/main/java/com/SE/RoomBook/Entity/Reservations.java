@@ -9,9 +9,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import java.sql.Date;
-//import java.util.Collection;
-import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +40,7 @@ public class Reservations {
     private ManageStatus manageStatus;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservations")
-    private Collection<DetailPurpose> detailPurpose;
+    private Set<DetailPurpose> detailPurpose;
 
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
