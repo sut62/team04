@@ -20,7 +20,8 @@ public class RoomBookApplication {
 	ApplicationRunner init(GenderRepository genderRepository, 
 	TitleNameRepository titleNameRepository, 
 	StatusCustomerRepository statusCustomer,
-	EmployeeRepository employeeRepository )
+	EmployeeRepository employeeRepository,
+	PurposeRoomRepository purposeRoomRepository )
 	{
 		return args -> {
 		Employee em1 = new Employee();
@@ -61,6 +62,12 @@ public class RoomBookApplication {
 				StatusCustomer Status = new StatusCustomer(); // สร้าง Object Type
 				statusCustomer.setStatus(Status); // set ชื่อ (Type) ให้ Object ชื่อ type
 				statusCustomer.save(statusCustomer); // บันทึก Objcet ชื่อ Type
+			});
+
+			Stream.of("อ่านหนังสือ ทบทวนบทเรียน", "ทำการบ้าน รายงาน", "ติว", "ประชุม").forEach(name -> {
+				PurposeRoom p = new PurposeRoom(); // สร้าง Object Type
+				p.setName(name);
+				purposeRoomRepository.save(p); // บันทึก Objcet ชื่อ Type
 			});
 		};
 	}
