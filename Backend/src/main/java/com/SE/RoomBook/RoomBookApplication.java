@@ -23,8 +23,7 @@ public class RoomBookApplication {
 	EmployeeRepository employeeRepository,
 	PurposeRoomRepository purposeRoomRepository,
 	RoomRepository roomRepository, 
-	StatusRepository statusRepository,
-	EmployeeRepository employeeRepository)
+	StatusRepository statusRepository)
 	{
 		return args -> {
 		Employee em1 = new Employee();
@@ -62,9 +61,9 @@ public class RoomBookApplication {
 			});
 
 			Stream.of("Studens", "Teacher","Normal Person").forEach(Status -> {
-				StatusCustomer status = new StatusCustomer(); // สร้าง Object Status
-				status.setStatus(Status); // set ชื่อ (StatusCustomer) ให้ Object ชื่อ Status
-				status.save(status); // บันทึก Objcet ชื่อ Status
+				StatusCustomer statuscus = new StatusCustomer(); // สร้าง Object Status
+				statuscus.setStatus(Status); // set ชื่อ (StatusCustomer) ให้ Object ชื่อ Status
+				statusCustomer.save(statuscus); // บันทึก Objcet ชื่อ Status
 			});
 
 			Stream.of("อ่านหนังสือ ทบทวนบทเรียน", "ทำการบ้าน รายงาน", "ติว", "ประชุม").forEach(name -> {
