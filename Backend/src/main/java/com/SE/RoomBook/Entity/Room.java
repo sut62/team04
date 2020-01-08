@@ -7,8 +7,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import java.util.Collection;
 
+import java.util.Collection;
+import java.util.Set;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
@@ -21,15 +22,15 @@ import javax.persistence.FetchType;
 @Table(name="ROOMS")
 public class Room {
     @Id
-    @SequenceGenerator(name="room_seq",sequenceName="room_seq")               
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="room_seq")  
-    @Column(name = "room_id", unique = true, nullable = true)
-    private @NonNull Long room_id;
-    @Column(name = "room_name")
-    private @NonNull String room_name;
+    @SequenceGenerator(name="Room_seq",sequenceName="Room_seq")               
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="Room_seq")  
+    @Column(name = "Room_id", unique = true, nullable = true)
+    private @NonNull Long Room_id;
+    @Column(name = "Room_name")
+    private @NonNull String Room_name;
 
 
     @OneToMany(fetch = FetchType.EAGER)
     // mappedBy  = "Room"
-    private Collection<ManageStatus> ManageStatus;
+    private Set<ManageStatus> ManageStatus;
 }

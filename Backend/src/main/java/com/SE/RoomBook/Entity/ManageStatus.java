@@ -32,7 +32,7 @@ import javax.persistence.*; // เพื่อใช้ @NamedQuery
 //            query = "SELECT MAX(ManageStatus_id) FROM ManageStatus")
 
 // @NamedQuery(name = "ManageStatus.Count",
-//     query = "SELECT BY Room_id && Delete_at == NULL FROM ManageStatus")
+//     query = "SELECT * FROM MANAGE_STATUS where DELETE_AT is null")
 
 @NoArgsConstructor
 @Table(name="ManageStatus")
