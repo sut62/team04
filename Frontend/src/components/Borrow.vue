@@ -215,15 +215,15 @@ export default {
     clear() {
       //this.$refs.form.reset();
       //this.$v.$reset();
-      this.Borrow.employeeId = "";
+      //this.Borrow.employeeId = "";
       this.Borrow.customerId = "";
       this.Borrow.equipId = "";
     },
     refreshList() {
-      this.getEmployees();
+     // this.getEmployees();
       this.getCustomers();
       this.getManageequipments();
-      this.lockemployee();
+      //this.lockemployee();
       
     }
     
