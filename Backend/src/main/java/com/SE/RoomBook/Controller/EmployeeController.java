@@ -23,6 +23,11 @@ public class EmployeeController {
         this.EmployeeRepository = EmployeeRepository;
     }
 
+    @GetMapping("/employee/{em_name}/{password}")
+    public Employee getPatientByFirstName(@PathVariable("em_name") String em_name, @PathVariable("password") String password) {
+        return EmployeeRepository.findPatientByEmployee(em_name,password);
+    }
+
     @GetMapping("/employees")
     public Collection<Employee> Employee() {
         return EmployeeRepository.findAll().stream().collect(Collectors.toList());
