@@ -33,6 +33,7 @@
         <v-select
           label="Employee"
           dense
+          :readonly="true"
           v-model="Returns.employeeId"
           :items="employees"
           item-text="em_name"
@@ -116,6 +117,7 @@ export default {
           console.log(e);
         });
     },
+    
     // ดึงข้อมูล Employee ใส่ combobox
     getEmployee() {
       http
@@ -187,12 +189,21 @@ export default {
      window.location.reload();
 
     }, 
+     refreshList() {
+    this.getEmployee();
+    this.getCustomers();
+    this.getBorrows();
+    this.lockemployee();
+      
+    }
     
-  },
+},
+     
   mounted() {
     this.getEmployee();
     this.getCustomers();
     this.getBorrows();
+    this.lockemployee();
     
   },
   watch:{
