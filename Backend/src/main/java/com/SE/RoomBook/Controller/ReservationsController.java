@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.net.URLDecoder;
 
@@ -61,12 +65,27 @@ public class ReservationsController {
     }
 
     @PostMapping("/Reservation") // บันทึกการจองห้องค้นคว้าออนไลน์
-    public Reservations index(@RequestBody final BodyBook bodyBook) {
-        final Reservations r = new Reservations();
+    public Reservations index(@RequestBody final BodyBook bodyBook)throws ParseException {
+        Reservations r = new Reservations();
         Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
         ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
         r.setManageStatus(m);
         r.setCustomer(c);
+
+        LocalDate date = LocalDate.now();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String start = new String();
+        start = bodyBook.getStart();
+        String end = new String();
+        end = bodyBook.getEnd();
+        String startTime = date + " " + start;
+        String endTime = date + " " + end;
+        System.out.println(formatter.parse(startTime));
+        r.setStartTime(formatter.parse(startTime));
+        r.setEndTime(formatter.parse(endTime));
+        r.setBookdate(new Date());
+
+
         for (Long purpose : bodyBook.getPurosebook()) {
             DetailPurpose dp = new DetailPurpose();
             PurposeRoom p = purposeRoomRepository.findById(purpose).get();
@@ -74,9 +93,24 @@ public class ReservationsController {
             dp.setReservations(r);
             detailPurposeRepository.save(dp);
         }
-       
+
         r.setBookdate(new Date());
         return reservationsRepository.save(r);
     }
+
+    // @PostMapping("/retime/{start}/{end}")
+    // public Reservations newTime(Reservations r, @PathVariable String start, @PathVariable String end)
+    //         throws ParseException {
+    //     LocalDate date = LocalDate.now();
+    //     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    //     String startTime = date + " " + start;
+    //     String endTime = date + " " + end;
+    //     System.out.println(formatter.parse(startTime));
+
+    //     r.setStartTime(formatter.parse(startTime));
+    //     r.setEndTime(formatter.parse(endTime));
+    //     r.setBookdate(new Date());
+    //     return reservationsRepository.save(r);
+    // }
 
 }
