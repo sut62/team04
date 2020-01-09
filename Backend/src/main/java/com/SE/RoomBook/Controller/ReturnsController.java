@@ -24,7 +24,7 @@ import com.SE.RoomBook.Repository.*;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class ReturnsController {
     @Autowired
@@ -45,11 +45,11 @@ public class ReturnsController {
         return returnsRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/returns/{M}/{Br}/{E}")
-    public Returns newReturns(Returns newReturns, @PathVariable long C, @PathVariable long Br, @PathVariable long E) {
+    @PostMapping("/returns/{C}/{bid}/{E}")
+    public Returns newReturns(Returns newReturns, @PathVariable long C, @PathVariable long bid, @PathVariable long E) {
 
         Employee employee = employeeRepository.findById(E);
-        Borrow borrow = borrowRepository.findById(Br);
+        Borrow borrow = borrowRepository.findById(bid);
         Customer customer = customerRepository.findById(C);
 
         newReturns.setBorrow(borrow);
