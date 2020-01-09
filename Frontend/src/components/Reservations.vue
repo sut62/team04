@@ -36,40 +36,12 @@
               durations:{week:3},
               buttonText:'listweek'
             }
-            
                 }"
           :resourceColumns="[{
             labelText:'Room',
             field:'title'
           }]"
-          :resources="[
-      { id: 'a', building: '460 Bryant', title: 'Auditorium A' },
-      { id: 'b', building: '460 Bryant', title: 'Auditorium B' },
-      { id: 'c', building: '460 Bryant', title: 'Auditorium C' },
-      { id: 'd', building: '460 Bryant', title: 'Auditorium D' },
-      { id: 'e', building: '460 Bryant', title: 'Auditorium E' },
-      { id: 'f', building: '460 Bryant', title: 'Auditorium F' },
-      { id: 'g', building: '564 Pacific', title: 'Auditorium G' },
-      { id: 'h', building: '564 Pacific', title: 'Auditorium H' },
-      { id: 'i', building: '564 Pacific', title: 'Auditorium I' },
-      { id: 'j', building: '564 Pacific', title: 'Auditorium J' },
-      { id: 'k', building: '564 Pacific', title: 'Auditorium K' },
-      { id: 'l', building: '564 Pacific', title: 'Auditorium L' },
-      { id: 'm', building: '564 Pacific', title: 'Auditorium M' },
-      { id: 'n', building: '564 Pacific', title: 'Auditorium N' },
-      { id: 'o', building: '101 Main St', title: 'Auditorium O' },
-      { id: 'p', building: '101 Main St', title: 'Auditorium P' },
-      { id: 'q', building: '101 Main St', title: 'Auditorium Q' },
-      { id: 'r', building: '101 Main St', title: 'Auditorium R' },
-      { id: 's', building: '101 Main St', title: 'Auditorium S' },
-      { id: 't', building: '101 Main St', title: 'Auditorium T' },
-      { id: 'u', building: '101 Main St', title: 'Auditorium U' },
-      { id: 'v', building: '101 Main St', title: 'Auditorium V' },
-      { id: 'w', building: '101 Main St', title: 'Auditorium W' },
-      { id: 'x', building: '101 Main St', title: 'Auditorium X' },
-      { id: 'y', building: '101 Main St', title: 'Auditorium Y' },
-      { id: 'z', building: '101 Main St', title: 'Auditorium Z' }
-    ]"
+          :resources="resourcesRoom"
           :events="event"
         />
       </v-flex>
@@ -97,8 +69,10 @@
                 <v-select
                   outlined
                   class="mr-10"
-                  :items="type"
-                  v-model="BookRoom.typeselect"
+                  :items="customers"
+                  item-text="name"
+                  item-value="id"
+                  v-model="BookRoom.customerBook"
                   label="Customer"
                 ></v-select>
               </v-flex>
@@ -164,8 +138,10 @@
                 <v-select
                   outlined
                   class="mr-10"
-                  :items="type"
-                  v-model="BookRoom.typeselect"
+                  :items="Room"
+                  item-text="room.room_name"
+                  item-value="room.room_id"
+                  v-model="BookRoom.Roomselect"
                   label="RoomNumber"
                 ></v-select>
               </v-flex>
@@ -226,6 +202,7 @@
                   v-model="BookRoom.endtimeBook"
                   label="EndTime"
                 ></v-select>
+                {{BookRoom}}
               </v-flex>
             </v-layout>
 
@@ -238,7 +215,7 @@
           outline
           color="primary"
           dark
-          @click="SaveRoom"
+          v-on:click="SaveRoom"
         >
           ยืนยันการจอง
           <v-icon
@@ -261,6 +238,7 @@
             right
           >mdi-cancel</v-icon>
         </v-btn>
+
         <!-- </v-sheet> -->
       </v-flex>
     </v-layout>
@@ -280,11 +258,6 @@ export default {
   data() {
     return {
       calendarPlugins: [resourceTimelinePlugin, listPlugin],
-      BookRoom: {
-        typeselect: [],
-        starttime: "",
-        endtimeBook: ""
-      },
       StartTime: [
         { idstarttime: 1, time: "08:00:00" }, //
         { idstarttime: 2, time: "08:30:00" }, // "08:30:00",
@@ -323,7 +296,17 @@ export default {
         { idendtime: 17, time: "17:30:00" }, // "17:30:00"
         { idendtime: 18, time: "18:00:00" } //
       ],
-      type: "", // ข้อมูลจุดประสงค์การจองห้อง
+      BookRoom: {
+        typeselect: [],
+        starttime: "",
+        endtimeBook: "",
+        Roomselect: "",
+        customerBook: ""
+      },
+      Room: [], // ห้องที่เปิดให้จองได้
+      type: [], // ข้อมูลจุดประสงค์การจองห้อง
+      customers: [], //ดึงข้อมูล สมาชิก
+      resourcesRoom: [], //ลงข้อมูลห้องไว้ Table
       event: [
         {
           id: "1",
@@ -369,20 +352,26 @@ export default {
     },
     SaveRoom() {
       // กดปุ่ม save
-      if (this.CheckCorrectTime > 0 && this.CheckCorrectTime <= 5) {
+      if (this.CheckCorrectTime > 0 /*  && this.CheckCorrectTime <= 5 */) {
         http
           .post(
-            "/retime/" +
-              this.StartTime[this.BookRoom.starttime - 1].time +
-              "/" +
-              this.EndTime[this.BookRoom.endtimeBook - 2].time
+            "/Reservation",
+            {
+              customerid: this.BookRoom.customerBook,
+              roomid: this.BookRoom.Roomselect,
+              purosebook: this.BookRoom.typeselect,
+              start: this.StartTime[this.BookRoom.starttime - 1].time,
+              end: this.EndTime[this.BookRoom.endtimeBook - 2].time
+            }
+            // this.StartTime[this.BookRoom.starttime - 1].time +
+            // "/" +
+            // this.EndTime[this.BookRoom.endtimeBook - 2].time
           )
-          .then(response => {
-            alert(response);
+          .then(res => {
+            alert("บันทึกข้อมูลการจองห้องค้นคว้าสำเร็จ");
           })
-          .cath(e => {
-            console.log(e.message);
-            alert("ture");
+          .catch(error => {
+            console.error(error);
           });
       } else {
         alert("กรุณาเลือกช่วงเวลาใหม่");
@@ -393,6 +382,19 @@ export default {
       this.BookRoom.typeselect = [];
       this.BookRoom.starttime = "";
       this.BookRoom.endtimeBook = "";
+      this.BookRoom.Roomselect = "";
+      this.BookRoom.customerBook = "";
+    },
+    getCustomers() {
+      //ดึงห้องที่มีค่า null ออกมา
+      http
+        .get("/customer")
+        .then(response => {
+          this.customers = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     getTypePurposeBook() {
       //ดึงวัตถุประสงค์ของห้องมาใส่ combobox
@@ -405,20 +407,25 @@ export default {
           console.log(e);
         });
     },
-    getCustomers() {
+    getStatusRoom() {
       //ดึงcustomer มาใส combobox
       http
-        .get("/customer")
+        .get("/ManageStatusD")
         .then(response => {
-          this.customers = response.data;
+          this.Room = response.data;
         })
         .catch(e => {
           console.log(e);
         });
+    },
+    getManageStatus() {
+      //ดึงข้อมูล room ที่ว่างทั้งหมด
     }
   },
   mounted() {
     this.getTypePurposeBook();
+    this.getStatusRoom();
+    this.getCustomers();
   },
   computed: {
     likesAllPurpose() {
@@ -441,8 +448,69 @@ export default {
       else return false;
     }
   },
-  watch: {}
+  watch: {
+    Room() {
+      this.Room.forEach((value, index) => {
+        console.log(value.room.room_name);
+        // console.log(value.room.room_name.indexOf("S01"));
+        if (value.room.room_name.indexOf("S") == 0) {
+          //เช็คว่าเจอจริงมั้ย
+          console.log("เจอ S แล้ว");
+          this.resourcesRoom.push({
+            id: value.room.room_id,
+            building: "ห้องเดี่ยว",
+            title: `หมายเลขห้อง ` + value.room.room_name
+          });
+        } else if (value.room.room_name.indexOf("G") == 0) {
+          //เช็คว่าเจอจริงมั้ย
+          console.log("เจอ G แล้ว");
+          this.resourcesRoom.push({
+            id: value.room.room_id,
+            building: "ห้องกลุ่ม",
+            title: `หมายเลขห้อง ` + value.room.room_name
+          });
+        } else if (value.room.room_name.indexOf("P") == 0) {
+          //เช็คว่าเจอจริงมั้ย
+          console.log("เจอ P แล้ว");
+          this.resourcesRoom.push({
+            id: value.room.room_id,
+            building: "ห้องประชุม",
+            title: `หมายเลขห้อง ` + value.room.room_name
+          });
+        }
+      });
+    }
+  }
 };
+/*
+
+{ id: 'a', building: '460 Bryant', title: 'Auditorium A' },
+      { id: 'b', building: '460 Bryant', title: 'Auditorium B' },
+      { id: 'c', building: '460 Bryant', title: 'Auditorium C' },
+      { id: 'd', building: '460 Bryant', title: 'Auditorium D' },
+      { id: 'e', building: '460 Bryant', title: 'Auditorium E' },
+      { id: 'f', building: '460 Bryant', title: 'Auditorium F' },
+      { id: 'g', building: '564 Pacific', title: 'Auditorium G' },
+      { id: 'h', building: '564 Pacific', title: 'Auditorium H' },
+      { id: 'i', building: '564 Pacific', title: 'Auditorium I' },
+      { id: 'j', building: '564 Pacific', title: 'Auditorium J' },
+      { id: 'k', building: '564 Pacific', title: 'Auditorium K' },
+      { id: 'l', building: '564 Pacific', title: 'Auditorium L' },
+      { id: 'm', building: '564 Pacific', title: 'Auditorium M' },
+      { id: 'n', building: '564 Pacific', title: 'Auditorium N' },
+      { id: 'o', building: '101 Main St', title: 'Auditorium O' },
+      { id: 'p', building: '101 Main St', title: 'Auditorium P' },
+      { id: 'q', building: '101 Main St', title: 'Auditorium Q' },
+      { id: 'r', building: '101 Main St', title: 'Auditorium R' },
+      { id: 's', building: '101 Main St', title: 'Auditorium S' },
+      { id: 't', building: '101 Main St', title: 'Auditorium T' },
+      { id: 'u', building: '101 Main St', title: 'Auditorium U' },
+      { id: 'v', building: '101 Main St', title: 'Auditorium V' },
+      { id: 'w', building: '101 Main St', title: 'Auditorium W' },
+      { id: 'x', building: '101 Main St', title: 'Auditorium X' },
+      { id: 'y', building: '101 Main St', title: 'Auditorium Y' },
+      { id: 'z', building: '101 Main St', title: 'Auditorium Z' }
+*/
 </script>
 
 <style lang="scss" >
