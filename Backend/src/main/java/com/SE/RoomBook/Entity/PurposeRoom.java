@@ -34,6 +34,7 @@ public class PurposeRoom {
     @Column(name = "Name", unique = false, nullable = true)
     private @NonNull String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "purposeRoom")
+    @OneToMany(fetch = FetchType.EAGER)
+    //, mappedBy = "purposeRoom"
     private Collection<DetailPurpose> detailPurpose;
 }
