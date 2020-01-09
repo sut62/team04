@@ -58,6 +58,12 @@ public class ManageStatusController {
         return ManageStatusRepository.findSellectRoomOnline();
     }
 
+    @GetMapping("/ManageStatusRoom/{Room_id}")
+    public ManageStatus newManageStatus(@PathVariable long Room_id) {
+
+        return ManageStatusRepository.findRoomNull(Room_id);
+    }
+
     @PostMapping("/ManageStatus/{Room_id}/{Status_id}/{Employee_id}")
     public ManageStatus newManageStatus(ManageStatus newManageStatus, @PathVariable long Room_id,
             @PathVariable long Status_id, @PathVariable long Employee_id) {
@@ -83,5 +89,3 @@ public class ManageStatusController {
         return ManageStatusRepository.save(newManageStatus); // บันทึก Objcet ชื่อ ManageStatus
     }
 }
-
-
