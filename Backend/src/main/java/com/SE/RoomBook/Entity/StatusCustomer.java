@@ -16,13 +16,13 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="STATUS")
+@Table(name="STATUSCUSTOMER")
 public class StatusCustomer {
 	@Id 
-	@SequenceGenerator(name="Status_seq",sequenceName="Status_seq")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="Status_seq")
+	@SequenceGenerator(name="StatusCus_seq",sequenceName="StatusCus_seq")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="StatusCus_seq")
 	@Column(name="Status_ID",unique = true, nullable = true)
 	private @NonNull Long id;
-	private @NonNull String Status;
+	private @NonNull String StatusCus;
 	
 }
