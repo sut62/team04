@@ -53,25 +53,26 @@ public class ManageStatusController {
         return ManageStatusRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/ManageStatus/{Room_id}/{Status_id}/{Employee_id}")
-    public ManageStatus newManageStatus(ManageStatus newManageStatus,
-    @PathVariable long Room_id,
-    @PathVariable long Status_id,
-    @PathVariable long Employee_id
-    ) {
-    
-    Room room = RoomRepository.findById(Room_id);
-    Status status = StatusRepository.findById(Status_id);
-    Employee employee = EmployeeRepository.findById(Employee_id);
-  
+    @GetMapping("/ManageStatusD")
+    public Collection<ManageStatus> ManageStatussFind() {
+        return ManageStatusRepository.findSellectRoomOnline();
+    }
 
-    ManageStatus Ms = ManageStatusRepository.findRoomNull(Room_id);
-    if(Ms != null ){
+    @PostMapping("/ManageStatus/{Room_id}/{Status_id}/{Employee_id}")
+    public ManageStatus newManageStatus(ManageStatus newManageStatus, @PathVariable long Room_id,
+            @PathVariable long Status_id, @PathVariable long Employee_id) {
+
+        Room room = RoomRepository.findById(Room_id);
+        Status status = StatusRepository.findById(Status_id);
+        Employee employee = EmployeeRepository.findById(Employee_id);
+
+        ManageStatus Ms = ManageStatusRepository.findRoomNull(Room_id);
+        if (Ms != null) {
             Ms.setDelete_at(new Date());
             ManageStatusRepository.save(Ms);
             // ManageStatus Mss = ManageStatusRepository.save(Ms);
-    }
-    
+        }
+
         newManageStatus.setRoom(room);
         newManageStatus.setStatus(status);
         newManageStatus.setEmployee(employee);
@@ -79,36 +80,8 @@ public class ManageStatusController {
         newManageStatus.setCreate_at(new Date());
         newManageStatus.setDelete_at(null);
 
-
-        return ManageStatusRepository.save(newManageStatus); //บันทึก Objcet ชื่อ ManageStatus
+        return ManageStatusRepository.save(newManageStatus); // บันทึก Objcet ชื่อ ManageStatus
     }
 }
 
 
-
-
-
-// newManageStatus.setDelete_at(null);
-
-//  ManageStatus Ms = ManageStatusRepository.findByRoom_id(Room_id);
-//     if(Ms != null ){
-//             Ms.setDelete_at(new Date());
-//             ManageStatus Mss = ManageStatusRepository.save(Ms);
-//     }
-   
-
-
-//สร้างcolum 2 ใช้ datetime เพื่อเก็บเวลา วัน พร้อมกันได้ในครั้งเดียว 
-//ต้องมี open 
-//if ถ้ามันเปิดอยู่ไม่ต้องทำอะไร 
-//เราจะปรับให้ห้อง off ถ้า status ไม่เหมือนกัน 
-
-//  ManageStatus Ms = ManageStatusRepository.findByRoom(ManageStatus_id);
-    //หาRanking 
-    //    if(Ms != null){
-    //      Ms.setRoom_name(0);
-     //     ManageStatus Mss = ManageStatusRepository.save(Ms);
-     //   }
-
-     //   newManageStatus.setManageStatus_id(ManageStatusRepository.Count() == null ? 1 : ManageStatusRepository.Count() + 1L); 
-        

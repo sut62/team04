@@ -14,7 +14,12 @@ interface ManageStatusRepository extends JpaRepository<ManageStatus, Long> {
     
   @Query(value = "SELECT * FROM MANAGE_STATUS where DELETE_AT is null and room_id = :Room_id",
             nativeQuery = true)
-  ManageStatus findRoomNull(@Param("Room_id") Long Room_id);
+  ManageStatus findRoomNull(@Param("Room_id") Long i);
+
+
+  @Query(value = "SELECT * FROM MANAGE_STATUS where DELETE_AT is null and status_id = 1",
+            nativeQuery = true)
+  Collection<ManageStatus> findSellectRoomOnline();
 
 
   ManageStatus findById(long id);
