@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -42,7 +43,7 @@ public class Borrow {
     @JoinColumn(name = "CUSTOMER_ID", insertable = true)
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageEquipment.class)
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = ManageEquipment.class)
     @JoinColumn(name = "ManageEquipment_ID", insertable = true)
     private ManageEquipment manageequipment;
 }
