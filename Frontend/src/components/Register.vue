@@ -158,7 +158,7 @@ export default {
     },
     // function เมื่อกดปุ่ม Register
     RegisterCustomer() {
-      if(!this.customer.Name||!this.customer.LastName||!this.customer.Password||!this.customer.Phone||!this.customer.Email||!this.customer.GenderId||!this.customer.TitleId||!this.customer.TypeId)
+      if(!this.customer.Name||!this.customer.LastName||!this.customer.Password||!this.customer.Phone||!this.customer.Email||!this.customer.GenderId||!this.customer.TitleId||!this.customer.StatusId)
       {
         alert("Can't not register")
       }

@@ -56,14 +56,15 @@ public class CustomerController {
         return customerRepository.findPatientByCustomer(Email,Password);
     }
 
-    @PostMapping("/customer/{Name}/{Password}/{Email}/{Title_id}/{Gender_id}/{Status_ID}")
+    @PostMapping("/customer/{Name}/{Password}/{Email}/{Phone}/{Title_id}/{Gender_id}/{Status_ID}")
     public Customer newCustomer(Customer newCustomer,
         @PathVariable String Name,
         @PathVariable String Password, 
         @PathVariable String Email,
         @PathVariable long Title_id, 
         @PathVariable long Gender_id,
-        @PathVariable long Status_ID ) {
+        @PathVariable long Status_ID,
+        @PathVariable String Phone ) {
         
 
         TitleName TitleNames = titlenameRepository.findById(Title_id);
@@ -73,6 +74,7 @@ public class CustomerController {
         newCustomer.setName(Name);
         newCustomer.setPassword(Password);
         newCustomer.setEmail(Email);
+        newCustomer.setPhone(Phone);
         newCustomer.setTitleNames(TitleNames);
         newCustomer.setStatuss(Status);
         newCustomer.setGenders(Genders_cus);
