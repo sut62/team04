@@ -42,7 +42,7 @@ public class Customer {
     private Gender Genders;
 
     @ManyToOne(fetch = FetchType.EAGER ,targetEntity = StatusCustomer.class)
-	@JoinColumn(name="Status",insertable = true)
+	@JoinColumn(name="StatusCus",insertable = true)
     private StatusCustomer Statuss;
 
     @ManyToOne(fetch = FetchType.EAGER ,targetEntity = TitleName.class)
