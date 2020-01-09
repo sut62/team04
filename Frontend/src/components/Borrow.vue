@@ -10,19 +10,21 @@
                   <v-card class="elevation-12">
                     <v-toolbar color="primary" dark flat>
                       <!-- กรอบข้างบนสีฟ้า -->
-
                       <v-toolbar-title>
+                        
                         <h2>ยืมอุปกรณ์</h2>
+                    
                       </v-toolbar-title>
                       <div class="flex-grow-1"></div>
                     </v-toolbar>
+
                     <v-form>
                       <v-card-text>
+
                         <!-- ComboBox รายชื่อลูกค้า -->
                         <v-row justify="center">
                           <v-col cols="10">
                             <v-select
-                              v-on:change="getfindByCustomer"
                               label="รายชื่อลูกค้า"
                               outlined
                               v-model="Borrow.customerId"
@@ -34,22 +36,25 @@
                             ></v-select>
                           </v-col>
                         </v-row>
-                        <!-- ComboBox รายการอุปการณ์ -->
+
+
+                        <!-- ComboBox อุปกรณ์-->
                         <v-row justify="center">
                           <v-col cols="10">
                             <v-select
-                              label="อุปการณ์"
+                              label="อุปกรณ์"
                               outlined
-                              v-model="Borrow.equiptId"
-                              :items="object"
-                              item-text="RE_id"
-                              item-value="RE_id"
+                              v-model="Borrow.equipId"
+                              :items="Result"
+                              item-text="name"
+                              item-value="equipmentname_id"
                               :rules="[(v) => !!v || 'Item is required']"
                               required
                             ></v-select>
                           </v-col>
                         </v-row>
-                        
+
+
                         <!-- ComboBox รายชื่อพนักงาน -->
                         <v-row justify="center">
                           <v-col cols="10">
@@ -67,23 +72,18 @@
                           </v-col>
                         </v-row>
 
-                        <!-- กรอกแต้ม 
-                        <v-row justify="center">
-                          <v-col cols="3">
-                            <v-text-field label="กรอกแต้ม" outlined v-model="Borrow.cpointId"></v-text-field>
-                          </v-col>
-                        </v-row>
-                        -->
 
                       </v-card-text>
                     </v-form>
+
                     <v-card-actions>
                       <!-- ปุ่มกด -->
                       <div class="flex-grow-1"></div>
-                      <v-btn color="primary" @click="save">ยืนยัน</v-btn>
+                      <v-btn color="primary" @click="save">ยืมอุปกรณ์</v-btn>
                       <v-btn color="primary" @click="clear">ล้างข้อมูล</v-btn>
-                      <v-btn rounded style="margin: 30px" @click="back" >ย้อนกลับ</v-btn>
+                      <v-btn color="primary" @click="back" >ย้อนกลับ</v-btn>
                     </v-card-actions>
+
                   </v-card>
                 </v-col>
               </v-row>
@@ -96,25 +96,39 @@
 </template>
 
 
-<script>
-import http from "../http-common";
+<script>import http from "../http-common";
 export default {
   name: "Borrow",
   data() {
     return {
+      manageEquipmentss:[],
       Borrow: {
-        equiptId: "",
         customerId: "",
-        employeeId: ""
+        employeeId: "",
+        equipId:""
       },
-     // object: [], //ค่าที่มาจาการกรอง Receipt
-      Borrows: [],
-      equipts: [],
-      customers: [],
-      employees: []
+        Borrows:[],
+        customers:[],
+        employees:[],
+        equips:[],
+        EQNameID:[], //จัดการอุปรกรณ์
+        equipsFull:[]
     };
   },
   methods: {
+    /* eslint-disable */
+   ResultALL(){
+      this.equipsFull = this.Result;
+      // this.
+      
+   },
+    CheckSum(){
+      
+      if(this.manageEquipmentss != null)
+      return true;
+    },
+    
+    
     lockemployee(){
       this.emid = this.$route.params.em;
       this.Borrow.EmployeeId  = this.emid;
@@ -123,72 +137,55 @@ export default {
     back(){
       this.$router.push({name: 'Dashbord' , params: {em: this.emid} }); 
     },
-    /*
-    cheack(value) {
-      for (let coll in this.Borrows) {
-        let cusid = this.Borrows[coll].customer.id;
-        let recpid = this.Borrows[coll].receipt.RE_id;
-
-        if (cusid == this.Borrows.customerId && recpid == value.RE_id) {
-          return false;
-        }
-      }
-      return true;
+    SumAllEq(){
+      this.manageEquipmentss.forEach((element1,index1) => {
+      });
     },
-    /* eslint-disable no-console */
-   /* getfindByCustomer() {
-      this.object = []; //clear ค่า
-
-      let recp = this.Borrows.customerId;
-      for (let key in this.receipts) {
-        let recp1 = this.receipts[key].customer.id;
-        if (recp == recp1 && this.cheack(this.receipts[key]) == true) {
-          this.object.push(this.receipts[key]);
-        }
-      }
-    },*/
-
-    // ดึงข้อมูล Receipt ใส่ combobox
-    getEquiptments() {
-      http
-        .get("/receipt")
-        .then(response => {
-          this.receipts = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    // ดึงข้อมูล Customer ใส่ combobox
-    getCustomers() {
-      http
-        .get("/customer")
-        .then(response => {
-          this.customers = response.data;
-          console.log("cus ", response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
+    
     // ดึงข้อมูล Employee ใส่ combobox
     getEmployees() {
       http
         .get("/employee")
         .then(response => {
           this.employees = response.data;
+          console.log(response.data);
         })
         .catch(e => {
           console.log(e);
         });
     },
+    
+    getCustomers() {
+      http
+      .get("/customer")
+      .then(response => {
+        this.customers = response.data;
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    },
+    
+    
+    getManageequipments() {
+      http
+      .get("/manageEquipments")
+      .then(response => {
+        this.manageEquipmentss = response.data;
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    },
 
-    // function เมื่อกดปุ่ม submit
     save() {
       if (
         this.Borrow.employeeId == "" ||
         this.Borrow.customerId == "" ||
-        this.Borrow.equiptmentId == ""
+        this.Borrow.equipId == ""
+      
       ) {
         alert("เลือกให้ครบจ้า");
       } else {
@@ -199,13 +196,12 @@ export default {
               "/" +
               this.Borrow.employeeId +
               "/" +
-              this.Borrow.cpointId,
+              this.Borrow.equipId,
             this.Borrow
           )
           .then(response => {
             console.log(response);
-            this.getCpoint();
-            alert("สะสมแต้มให้แล้วนะ");
+            alert("ทำรายการเรียบร้อยแล้ว");
           })
           .catch(e => {
             console.log(e);
@@ -219,20 +215,50 @@ export default {
       //this.$v.$reset();
       this.Borrow.employeeId = "";
       this.Borrow.customerId = "";
+      this.Borrow.equipId = "";
     },
     refreshList() {
       this.getEmployees();
       this.getCustomers();
-      this.getEquipments();
+      this.getManageequipments();
       this.lockemployee();
+      
     }
-    /* eslint-enable no-console */
+    
   },
   mounted() {
     this.getEmployees();
     this.getCustomers();
-    this.getEquipments();
+    this.getManageequipments();
     this.lockemployee();
+    this.ResultALL();
+  },
+  computed:{
+    Result(){
+      let result1 = new Set();
+      let result = new Array();
+      // let a = new Array();
+      if(this.CheckSum()){
+        for (let i = 0; i < this.manageEquipmentss.length; i++) {
+          result1.add(this.manageEquipmentss[i].equipmentName.equipmentname_id);
+        }
+      }
+      result1.forEach((value =>{
+        for (let i = 0; i < this.manageEquipmentss.length; i++) {
+          let name = this.manageEquipmentss[i].equipmentName.equipmentname_id;
+          if(value === name){
+            result.push(this.manageEquipmentss[i].equipmentName);
+            break;
+          }
+        }
+      }))
+      return result;
+      1
+    },
+
   }
+  
 };
+/* eslint-disable no-console*/
+
 </script>
