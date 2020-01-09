@@ -64,8 +64,8 @@
               <v-select
                 label="Status Customer"
                 v-model="customer.StatusId"
-                :items="statuss"
-                item-text="status"
+                :items="statusCuss"
+                item-text="statusCus"
                 item-value="id"
                 :rules="[(v) => !!v || 'Item is required']"
                 required
@@ -114,7 +114,7 @@ export default {
       },
       titles:[],
       genders:[],
-      statuss:[],
+      statusCuss:[],
     };
   },
   methods: {
@@ -147,9 +147,9 @@ export default {
     // ดึงข้อมูล Type ใส่ combobox
     getStatus() {
       http
-        .get("/status")
+        .get("/statusCustomer")
         .then(response => {
-          this.types = response.data;
+          this.statusCuss = response.data;
           console.log(response.data);
         })
         .catch(e => {
