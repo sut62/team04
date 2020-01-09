@@ -62,7 +62,7 @@ public class RoomBookApplication {
 
 			Stream.of("Studens", "Teacher","Normal Person").forEach(Status -> {
 				StatusCustomer statuscus = new StatusCustomer(); // สร้าง Object Status
-				statuscus.setStatus(Status); // set ชื่อ (StatusCustomer) ให้ Object ชื่อ Status
+				statuscus.setStatusCus(Status); // set ชื่อ (StatusCustomer) ให้ Object ชื่อ Status
 				statusCustomer.save(statuscus); // บันทึก Objcet ชื่อ Status
 			});
 
