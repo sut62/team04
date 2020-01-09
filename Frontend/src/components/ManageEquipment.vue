@@ -1,11 +1,24 @@
 <template>
   <div class="ManageEquipment">
     <div class="outside">
+      <v-row justify="center">
       <br>
-      <v-col cols = 12>
-        <v-container>
-          <v-layout row wrap>
-            <v-col cols = 3>
+      <!-- <v-col justify="center"> -->
+        <!-- <v-container> -->
+          <!-- <v-layout row wrap> -->
+            <v-col cols = 3 justify="center">
+
+              <v-toolbar color="black" dark flat>
+                <!-- กรอบข้างบนสีฟ้า -->
+                <v-toolbar-title>
+
+                  <h2 class="headline">ระบบจัดการอุปกรณ์</h2>
+
+                </v-toolbar-title>
+                <div class="flex-grow-1"></div>
+              </v-toolbar>
+              <br>
+              <br>
 
               <v-select
               v-model="ManageEquipment.EmName"
@@ -13,7 +26,7 @@
               label="Employee"
               item-text="em_name"
               item-value="em_id"
-
+              solo
               outlined
               dense
               ></v-select>
@@ -25,7 +38,7 @@
               label="EquipmentType"
               item-text="type"
               item-value="equipmenttype_id"
-
+              solo
               outlined
               dense
               ></v-select>
@@ -37,7 +50,7 @@
               label="EquipmentName"
               item-text="name"
               item-value="equipmentname_id"
-
+              solo
               outlined
               dense
               ></v-select>
@@ -48,14 +61,19 @@
               label="amount"
               :rules="[(v) => !!v || 'Item is required']"
               required
+              solo
               ></v-text-field>
 
-{{ManageEquipment}}
               <br>
-              <v-btn small @click="saveData">Add Menu</v-btn>
+              <v-btn small @click="saveData">Add Equipment</v-btn>
               <!-- @click="saveData" -->
             </v-col>
-            <v-col cols = 7>
+
+            <!-- <v-col cols = 7>
+              <br>
+              <br>
+              <br>
+              <br>
               <v-card
               class="mx-auto"
               max-width="550"
@@ -65,29 +83,28 @@
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">Menu name</th>
-                      <th class="text-left">Price</th>
-                      <th class="text-left">Category</th>
-                      <th class="text-left">Ingredient</th>
-                      <th class="text-left">Type</th>
+                      <th class="text-left">Employee</th>
+                      <th class="text-left">EquipmentType</th>
+                      <th class="text-left">EquipmentName</th>
+                      <th class="text-left">Amount</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="item in showtable" :key="item.name">
-                      <!-- <td class="text-center">{{ item.sel_patient.id }}</td>
-                      <td class="text-center">{{ item.sel_patient.name }}</td>
-                      <td class="text-center">{{ item.sel_cate.cname }}</td>
-                      <td class="text-center">{{ item.sel_ingre.iname }}</td>
-                      <td class="text-center">{{ item.sel_type.tname }}</td> -->
+                      <td class="text-center">{{ item.Employee.em_name }}</td>
+                      <td class="text-center">{{ item.EquipmentType.type }}</td>
+                      <td class="text-center">{{ item.EquipmentName.name }}</td>
+                      <td class="text-center">{{ item.manageEquipment_amount+" ea" }}</td>
                     </tr>
                   </tbody>
                 </template>
               </v-simple-table>
             </v-card>
-          </v-col>
-        </v-layout>
-      </v-container>
-    </v-col>
+          </v-col> -->
+        <!-- </v-layout> -->
+      <!-- </v-container> -->
+    <!-- </v-col> -->
+  </v-row>
   </div>
 </div>
 </template>
@@ -104,10 +121,14 @@ export default {
         EQname: "",
         Amount: "",
       },
-      showtable:[],
+
       Employee:[],
+
+      EquipmentName:[],
       EquipmentType:[],
-      EquipmentName:[]
+      EquipmentAmount:"",
+
+      showtable:[]
     };
   },
   methods:{
