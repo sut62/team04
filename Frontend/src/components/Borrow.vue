@@ -112,7 +112,9 @@ export default {
         employees:[],
         equips:[],
         EQNameID:[], //จัดการอุปรกรณ์
-        equipsFull:[]
+        equipsFull:[],
+        lock: "",
+        emid:''
     };
   },
   methods: {
@@ -131,7 +133,7 @@ export default {
     
     lockemployee(){
       this.emid = this.$route.params.em;
-      this.Borrow.EmployeeId  = this.emid;
+      this.Borrow.employeeId  = this.emid;
       this.lock = true;
     },
     back(){
@@ -145,7 +147,7 @@ export default {
     // ดึงข้อมูล Employee ใส่ combobox
     getEmployees() {
       http
-        .get("/employee")
+        .get("/employees")
         .then(response => {
           this.employees = response.data;
           console.log(response.data);
