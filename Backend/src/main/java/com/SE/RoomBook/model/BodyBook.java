@@ -10,6 +10,6 @@ public class BodyBook {
     private Long customerid;
     private Long roomid;
     private Long[] purosebook;
-    private Date start;
-    private Date end;
+    private String start;
+    private String end;
 }
