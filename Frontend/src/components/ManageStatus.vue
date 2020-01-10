@@ -82,6 +82,7 @@
                   :items="Employees"
                   item-text="em_name"
                   item-value="em_id"
+                  :readonly="true"
                   :rules="[(v) => !!v || 'Item is required']"
                   required
                 ></v-select>
@@ -121,6 +122,7 @@ export default {
       Employees:[],
       ManageStatuss:[],
       ManageStatusRoom:[],
+      emid:''
       
     };
   },
@@ -162,7 +164,7 @@ export default {
      // ดึงข้อมูล Employee ใส่ combobox
     getEmployees() {
       http
-        .get("/employee")
+        .get("/employees")
         .then(response => {
           this.Employees = response.data;
           console.log(response.data);
@@ -231,8 +233,9 @@ export default {
         });
 
       this.submitted = true;
-      alert("บันทึกข้อมูลสำเร็จ");
       window.location.reload()
+      alert("บันทึกข้อมูลสำเร็จ");
+      
     },
     
     // function เมื่อกดปุ่ม save
@@ -277,13 +280,13 @@ export default {
       //this.$v.$reset();
       this.ManageStatus.RoomId= 'Room';
       this.ManageStatus.StatusId= 'Status';
-      this.ManageStatus.EmployeeId= 'Employee';
+      // this.ManageStatus.EmployeeId= 'Employee';
 
     },
     refreshList() {
       this.getRooms();
       this.getStatuss();
-      this.getEmployees();
+      // this.getEmployees();
     }
     /* eslint-enable no-console */
   },
@@ -292,6 +295,7 @@ export default {
     this.getStatuss();
     this.getEmployees();
     this.getStatus_id();
+    this.lockemployee();
   },
   
 };
