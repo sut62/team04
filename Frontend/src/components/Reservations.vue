@@ -69,8 +69,11 @@
               </v-flex>
               <v-flex md7>
                 <br />
+
                 <v-select
+                  v-if="lock"
                   outlined
+                  :readonly="true"
                   class="mr-10"
                   :items="customers"
                   item-text="name"
@@ -257,7 +260,7 @@
             right
           >mdi-arrow-left</v-icon>
         </v-btn>
-        
+
       </v-flex>
     </v-layout>
   </v-container>
@@ -328,7 +331,8 @@ export default {
       customers: [], //ดึงข้อมูล สมาชิก
       resourcesRoom: [], //ลงข้อมูลห้องไว้ Table
       resvertion: [], //ดึงข้อมูลการจองม
-      lock:"",
+      lock: false,
+      cusid: "",
       // event: [
       //   {
       //     id: "1",
@@ -364,7 +368,7 @@ export default {
       this.lock = true;
     },
     back() {
-      this.$router.push("/")
+      this.$router.push("/");
     },
     //กด select All ใน combobox
     toggle() {
