@@ -130,7 +130,7 @@ export default {
       this.BookRanking.EmployeeId  = this.emid;
       this.lock = true;
     },
-    back(){
+    Back(){
       this.$router.push({name: 'Dashbord' , params: {em: this.emid} }); 
       },
 
