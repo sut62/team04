@@ -9,43 +9,36 @@
             <p></p>
             <v-row justify="center">
             <v-btn 
-            @click="Register"
+            @click="ManageEquipment"
             class="cyan lighten-1 white--text">
-            Register
+            Manage Equipment
             </v-btn>
             </v-row>
             <p></p>
             <v-row justify="center">
             <v-btn
-            @click="BookRanking"
+            @click="ManageStatus"
             class="cyan lighten-1 white--text">
-            Ranking
+            Manage Status
             </v-btn>
             </v-row>
             <p></p>
             <v-row justify="center">
             <v-btn
-            @click="BookLot"
+            @click="Borrow"
             class="cyan lighten-1 white--text">
-            AddBook
+            Borrow
             </v-btn>
             </v-row>
             <p></p>
             <v-row justify="center">
             <v-btn
-            @click="Receipt"
+            @click="Returns"
             class="cyan lighten-1 white--text">
-            SellBook
+            Returns
             </v-btn>
             </v-row>
             <p></p>
-            <v-row justify="center">
-            <v-btn
-            @click="Collect"
-            class="cyan lighten-1 white--text">
-            CollectPoint
-            </v-btn>
-            </v-row>
             <p></p>
             <v-row justify="center">
             <v-btn
@@ -75,20 +68,17 @@ getLockId(){
 Logout(){
     this.$router.push("/")
 },
-Register(){
-     this.$router.push({name: 'Register', params: {em: this.emid} });
+ManageEquipment(){
+     this.$router.push({name: 'ManageEquipment', params: {em: this.emid} });
  },
- BookLot(){
-     this.$router.push({name: 'AddBook', params: {em: this.emid} });
+ ManageStatus(){
+     this.$router.push({name: 'ManageStatus', params: {em: this.emid} });
  },
- BookRanking(){
-     this.$router.push({name: 'Ranking', params: {em: this.emid} });
+ Borrow(){
+     this.$router.push({name: 'Borrow', params: {em: this.emid} });
  },
- Receipt(){
-     this.$router.push({name: 'SellBook', params: {em: this.emid} });
- },
- Collect(){
-     this.$router.push({name: 'Collect', params: {em: this.emid} })
+ Returns(){
+     this.$router.push({name: 'Returns', params: {em: this.emid} });
  }
 },
 mounted(){
