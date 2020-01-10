@@ -35,7 +35,7 @@ public class Customer {
     @Column(name="Customer_Email")
     private @NonNull String Email;
     @Column(name="Customer_Phone")
-    private @NonNull String Phone;
+    private @NonNull Integer Phone;
 
 	@ManyToOne(fetch = FetchType.EAGER ,targetEntity = Gender.class)
 	@JoinColumn(name="Gender",insertable = true)

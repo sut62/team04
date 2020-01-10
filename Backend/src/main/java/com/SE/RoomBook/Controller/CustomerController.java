@@ -64,7 +64,7 @@ public class CustomerController {
         @PathVariable long Title_id, 
         @PathVariable long Gender_id,
         @PathVariable long Status_ID,
-        @PathVariable String Phone ) {
+        @PathVariable Integer Phone ) {
         
 
         TitleName TitleNames = titlenameRepository.findById(Title_id);
