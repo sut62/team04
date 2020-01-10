@@ -189,7 +189,9 @@ export default {
     },
     clear() {
         console.log( "clear");
-     window.location.reload();
+    //  window.location.reload();
+    this.Returns.borrowId = '';
+    this.Returns.customerId= '';
 
     }, 
      refreshList() {
