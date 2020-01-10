@@ -127,7 +127,7 @@ export default {
   methods: {
     lockemployee(){
       this.emid = this.$route.params.em;
-      this.BookRanking.EmployeeId  = this.emid;
+      this.ManageStatus.EmployeeId  = this.emid;
       this.lock = true;
     },
     Back(){
