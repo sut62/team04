@@ -226,14 +226,14 @@ export default {
         )
         .then(response => {
           console.log(response,"cc");
-          this.$router.push("/view");
+          
         })
         .catch(e => {
           console.log("error",e);    
         });
 
       this.submitted = true;
-      window.location.reload()
+      
       alert("บันทึกข้อมูลสำเร็จ");
       
     },
