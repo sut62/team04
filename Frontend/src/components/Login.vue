@@ -54,8 +54,6 @@
                 :rules="[(v) => !!v || 'Item is required']"
                 required
               ></v-select>
-              {{this.login.Username}}
-              {{this.login.Password}}
             </v-col>
           </v-row>
           <v-row
