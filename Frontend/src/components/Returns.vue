@@ -94,14 +94,16 @@ export default {
       items: [],
       customer: [],
       employees: [],
-      BorrowsResult: [] // ค่าใหม่ใช้กับ combobox
+      BorrowsResult: [], // ค่าใหม่ใช้กับ combobox
+      employee: ""
     };
   },
   methods: {
     /* eslint-disable no-console */
     lockemployee(){
       this.emid = this.$route.params.em;
-      this.Returns.EmployeeId  = this.emid;
+      this.employee = this.emid;
+      this.Returns.employeeId  = this.employee;
       this.lock = true;
     },
     back(){
