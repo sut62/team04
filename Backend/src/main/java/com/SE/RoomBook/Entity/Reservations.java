@@ -9,7 +9,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -30,17 +32,17 @@ public class Reservations {
     private @NonNull Long Reservations_id;
 
     @Column(name = "StartTime")
-    private @NonNull Date StartTime;
+    private @NonNull LocalDateTime StartTime;
 
     @Column(name = "EndTime")
-    private @NonNull Date EndTime;
+    private @NonNull LocalDateTime EndTime;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageStatus.class)
     @JoinColumn(name = "manageStatus_id", insertable = true)
     private ManageStatus manageStatus;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservations")
-    private Set<DetailPurpose> detailPurpose;
+    private List<DetailPurpose> detailPurpose;
 
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)

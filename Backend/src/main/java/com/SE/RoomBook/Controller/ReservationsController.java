@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -59,33 +60,24 @@ public class ReservationsController {
         this.manageStatusRepository = manageStatusRepository;
     }
 
-    @GetMapping("/re") // เลือกดูการจองทั้งหมด
-    public Collection<Reservations> reservations() {
+    @GetMapping("/reservationses") // เลือกดูการจองทั้งหมด
+    public Collection<Reservations> reservationss() {
         return reservationsRepository.findAll().stream().collect(Collectors.toList());
     }
 
     @PostMapping("/Reservation") // บันทึกการจองห้องค้นคว้าออนไลน์
-    public Reservations index(@RequestBody final BodyBook bodyBook)throws ParseException {
+    public Reservations index(@RequestBody final BodyBook bodyBook) throws ParseException {
         Reservations r = new Reservations();
         Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
         ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
         r.setManageStatus(m);
         r.setCustomer(c);
 
-        LocalDate date = LocalDate.now();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String start = new String();
-        start = bodyBook.getStart();
-        String end = new String();
-        end = bodyBook.getEnd();
-        String startTime = date + " " + start;
-        String endTime = date + " " + end;
-        System.out.println(formatter.parse(startTime));
-        r.setStartTime(formatter.parse(startTime));
-        r.setEndTime(formatter.parse(endTime));
-        r.setBookdate(new Date());
-
-
+        
+        LocalDateTime d = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getStart());
+        r.setStartTime(d);
+        LocalDateTime e = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getEnd());
+        r.setEndTime(e);
         for (Long purpose : bodyBook.getPurosebook()) {
             DetailPurpose dp = new DetailPurpose();
             PurposeRoom p = purposeRoomRepository.findById(purpose).get();
@@ -98,19 +90,6 @@ public class ReservationsController {
         return reservationsRepository.save(r);
     }
 
-    // @PostMapping("/retime/{start}/{end}")
-    // public Reservations newTime(Reservations r, @PathVariable String start, @PathVariable String end)
-    //         throws ParseException {
-    //     LocalDate date = LocalDate.now();
-    //     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    //     String startTime = date + " " + start;
-    //     String endTime = date + " " + end;
-    //     System.out.println(formatter.parse(startTime));
-
-    //     r.setStartTime(formatter.parse(startTime));
-    //     r.setEndTime(formatter.parse(endTime));
-    //     r.setBookdate(new Date());
-    //     return reservationsRepository.save(r);
-    // }
+    
 
 }
