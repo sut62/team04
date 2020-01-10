@@ -112,7 +112,7 @@ export default {
             this.login.Password = response.data.Password;
             // alert(this.login.Username)
             alert("Login complete");
-            this.$router.push({name: 'OrderBook' , params: {cus: this.customer.id} }); 
+            this.$router.push({name: 'Reservations' , params: {cus: this.customer.id} }); 
           } 
             else {
             alert("Username or Password is not valid");

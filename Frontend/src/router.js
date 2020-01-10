@@ -7,6 +7,7 @@ import Borrow from './components/Borrow'
 import ManageEquipment from './components/ManageEquipment'
 import ManageStatus from './components/ManageStatus'
 import Returns from './components/Returns'
+import Reservations from './components/Reservations'
 
 Vue.use(Router)
 
@@ -48,6 +49,11 @@ export default new Router({
       path: '/Returns',
       name:'Returns',
       component: Returns
+    },
+    {
+      path: '/Reservations',
+      name: 'Reservations',
+      component: Reservations
     },
   
   ]
