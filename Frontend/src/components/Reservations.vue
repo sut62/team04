@@ -388,16 +388,14 @@ export default {
 
     SaveRoom() {
       // กดปุ่ม save
-      this.testTime();
       if (
         this.CheckCorrectTime > 0 /*  && this.CheckCorrectTime <= 5 */ &&
         this.BookRoom.customerBook != "" &&
         this.BookRoom.Roomselect != "" &&
         this.BookRoom.typeselect != "" &&
         this.BookRoom.starttime != "" &&
-        this.BookRoom.endtimeBook != "" &&
+        this.BookRoom.endtimeBook != "" 
         // this.MustNotBeRepeat()
-        this.commit == true
       ) {
         http
           .post("/Reservation", {
@@ -499,24 +497,6 @@ export default {
     CheckcommitTime() {
       if (this.CheckCorrectTime > 0 && this.CheckCorrectTime <= 5) return true;
       else return false;
-    },
-    test5() {
-      let count = 0;
-
-      this.resvertion.forEach((value, index) => {
-        if (
-          this.resvertion[index].manageStatus.room.room_id ==
-          this.BookRoom.Roomselect
-        )
-          count++;
-      });
-      console.log(count);
-      return count;
-    },
-    testTimeee() {
-      let a = LocalDateTime.parse("2016-02-26T23:55:42.123");
-      let b = LocalDateTime.parse("2016-02-26T23:55:42.123");
-      return a.compareTo(b) == 0;
     }
   },
   watch: {
