@@ -133,7 +133,6 @@ export default {
     Back(){
       this.$router.push({name: 'Dashbord' , params: {em: this.emid} }); 
       },
-
     /* eslint-disable no-console */
     // ดึงข้อมูล Room ใส่ combobox
     getRooms() {
