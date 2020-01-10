@@ -101,7 +101,7 @@ export default {
     /* eslint-disable no-console */
     lockemployee(){
       this.emid = this.$route.params.em;
-      this.Borrow.EmployeeId  = this.emid;
+      this.Returns.EmployeeId  = this.emid;
       this.lock = true;
     },
     back(){
