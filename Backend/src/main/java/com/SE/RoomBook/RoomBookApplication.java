@@ -21,7 +21,8 @@ public class RoomBookApplication {
 	ApplicationRunner init(GenderRepository genderRepository, TitleNameRepository titleNameRepository,
 			StatusCustomerRepository statusCustomer, EmployeeRepository employeeRepository,
 			PurposeRoomRepository purposeRoomRepository, RoomRepository roomRepository,
-			StatusRepository statusRepository) {
+			StatusRepository statusRepository, EquipmentTypeRepository EquipmentTypeRepository,
+			EquipmentNameRepository EquipmentNameRepository) {
 		return args -> {
 			Employee em1 = new Employee();
 			em1.setEm_name("Dodo");
