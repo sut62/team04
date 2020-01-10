@@ -68,6 +68,7 @@
     <v-row class="text-center" cols="12" sm="4">
         <v-btn Style ="margin-left:500px;" @click="save" color="light-blue darken-4">Save</v-btn>
         <v-btn Style ="margin-left:450px;" @click="clear" color="light-blue darken-1">Clear</v-btn>
+        <v-btn Style ="margin-left:400px;" @click="back" color="green darken-2">Back</v-btn>
     </v-row>
 
   </v-container>
