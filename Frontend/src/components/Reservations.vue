@@ -150,7 +150,7 @@
                   class="mr-10"
                   :items="Room"
                   item-text="room.room_name"
-                  item-value="ManageStatus_id"
+                  item-value="manageStatus_id"
                   v-model="BookRoom.Roomselect"
                   label="RoomNumber"
                 ></v-select>
@@ -394,7 +394,7 @@ export default {
         this.BookRoom.Roomselect != "" &&
         this.BookRoom.typeselect != "" &&
         this.BookRoom.starttime != "" &&
-        this.BookRoom.endtimeBook != "" 
+        this.BookRoom.endtimeBook != ""
         // this.MustNotBeRepeat()
       ) {
         http
