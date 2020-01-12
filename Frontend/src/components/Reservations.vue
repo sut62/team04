@@ -150,7 +150,7 @@
                   class="mr-10"
                   :items="Room"
                   item-text="room.room_name"
-                  item-value="room.room_id"
+                  item-value="ManageStatus_id"
                   v-model="BookRoom.Roomselect"
                   label="RoomNumber"
                 ></v-select>
