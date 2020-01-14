@@ -20,5 +20,6 @@ jobs:
 
     - name: Run gradle test
       run: |
+        chmod 777 ./gradlew
         cd Backend
         ./gradlew test
