@@ -2,11 +2,14 @@ package com.SE.RoomBook.Entity;
 
 import lombok.*;
 
+import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import javax.validation.constraints.*;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,13 +32,25 @@ public class Customer {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="customer_seq")
 	@Column(name="Cus_id",unique = true, nullable = true)
     private @NonNull Long id;
+
+    @NotNull
     @Column(name="Customer_name")
-    private @NonNull String Name;
-    private @NonNull String Password;
+    private String Name;
+
+    @NotNull
+    private String Password;
+
+    @NotNull
+    @Email
     @Column(name="Customer_Email")
-    private @NonNull String Email;
+    private String Email;
+
+    @NotNull
+    @Pattern(regexp = "\\d{10}")
     @Column(name="Customer_Phone")
-    private @NonNull Integer Phone;
+    private String Phone;
+
+
 
 	@ManyToOne(fetch = FetchType.EAGER ,targetEntity = Gender.class)
 	@JoinColumn(name="Gender",insertable = true)
