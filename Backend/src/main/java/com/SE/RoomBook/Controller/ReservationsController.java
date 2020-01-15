@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
-public class ReservationsController {
+public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
 
     @Autowired
     private final PurposeRoomRepository purposeRoomRepository;
@@ -68,16 +68,17 @@ public class ReservationsController {
     @PostMapping("/Reservation") // บันทึกการจองห้องค้นคว้าออนไลน์
     public Reservations index(@RequestBody final BodyBook bodyBook) throws ParseException {
         Reservations r = new Reservations();
+
         Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
         ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
         r.setManageStatus(m);
         r.setCustomer(c);
 
-        
         LocalDateTime d = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getStart());
         r.setStartTime(d);
         LocalDateTime e = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getEnd());
         r.setEndTime(e);
+        r.setBookdate(new Date());
         for (Long purpose : bodyBook.getPurosebook()) {
             DetailPurpose dp = new DetailPurpose();
             PurposeRoom p = purposeRoomRepository.findById(purpose).get();
@@ -86,10 +87,7 @@ public class ReservationsController {
             detailPurposeRepository.save(dp);
         }
 
-        r.setBookdate(new Date());
         return reservationsRepository.save(r);
     }
-
-    
 
 }
