@@ -19,6 +19,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -31,11 +33,14 @@ public class Reservations {
     @Column(name = "Reservations_id", unique = true, nullable = true)
     private @NonNull Long Reservations_id;
 
+    @NotNull
+    @Future
     @Column(name = "StartTime")
-    private @NonNull LocalDateTime StartTime;
+    private  LocalDateTime StartTime;
 
+    @NotNull
     @Column(name = "EndTime")
-    private @NonNull LocalDateTime EndTime;
+    private  LocalDateTime EndTime;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageStatus.class)
     @JoinColumn(name = "manageStatus_id", insertable = true)
@@ -49,6 +54,7 @@ public class Reservations {
     @JoinColumn(name = "Cus_id", insertable = true)
     private Customer customer;
 
+    @NotNull
     @Column(name= "Date")
     private Date bookdate;
 }
