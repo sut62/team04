@@ -28,7 +28,7 @@ public class PurposeRoom {
     @Column(name = "PurposeRoom_id", unique = true, nullable = true)
     private @NonNull Long PurposeRoom_id;
 
-    // @Pattern(regexp = "[\\u0E00-\\u0E7F]")
+    // @Pattern(regexp = "[\\u0E00-\\u0E7F\\u0020]")
     @Column(name = "Name")
     private @NonNull String name;
 

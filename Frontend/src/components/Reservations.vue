@@ -260,7 +260,6 @@
             right
           >mdi-arrow-left</v-icon>
         </v-btn>
-
       </v-flex>
     </v-layout>
   </v-container>
@@ -285,39 +284,45 @@ export default {
         { idstarttime: 1, timestart: "08:00:00" }, //
         { idstarttime: 2, timestart: "08:30:00" }, // "08:30:00",
         { idstarttime: 3, timestart: "09:00:00" }, // "09:00:00",
-        { idstarttime: 4, timestart: "10:00:00" }, // "10:00:00",
-        { idstarttime: 5, timestart: "10:30:00" }, // "10:30:00",
-        { idstarttime: 6, timestart: "11:00:00" }, // "11:00:00",
-        { idstarttime: 7, timestart: "11:30:00" }, // "11:30:00",
-        { idstarttime: 8, timestart: "12:00:00" }, // "12:00:00",
-        { idstarttime: 9, timestart: "12:30:00" }, // "12:30:00",
-        { idstarttime: 10, timestart: "13:30:00" }, // "13:30:00",
-        { idstarttime: 11, timestart: "14:30:00" }, // "14:30:00",
-        { idstarttime: 12, timestart: "15:00:00" }, // "15:00:00",
-        { idstarttime: 13, timestart: "15:30:00" }, // "15:30:00",
-        { idstarttime: 14, timestart: "16:00:00" }, // "16:00:00",
-        { idstarttime: 15, timestart: "16:30:00" }, // "16:30:00",
-        { idstarttime: 16, timestart: "17:00:00" }, // "17:00:00",
-        { idstarttime: 17, timestart: "17:30:00" } // "17:30:00"
+        { idstarttime: 4, timestart: "09:30:00" },
+        { idstarttime: 5, timestart: "10:00:00" }, // "10:00:00",
+        { idstarttime: 6, timestart: "10:30:00" }, // "10:30:00",
+        { idstarttime: 7, timestart: "11:00:00" }, // "11:00:00",
+        { idstarttime: 8, timestart: "11:30:00" }, // "11:30:00",
+        { idstarttime: 9, timestart: "12:00:00" }, // "12:00:00",
+        { idstarttime: 10, timestart: "12:30:00" }, // "12:30:00",
+        { idstarttime: 11, timestart: "13:00:00" },
+        { idstarttime: 12, timestart: "13:30:00" }, // "13:30:00",
+        { idstarttime: 13, timestart: "14:00:00" },
+        { idstarttime: 14, timestart: "14:30:00" }, // "14:30:00",
+        { idstarttime: 15, timestart: "15:00:00" }, // "15:00:00",
+        { idstarttime: 16, timestart: "15:30:00" }, // "15:30:00",
+        { idstarttime: 17, timestart: "16:00:00" }, // "16:00:00",
+        { idstarttime: 18, timestart: "16:30:00" }, // "16:30:00",
+        { idstarttime: 19, timestart: "17:00:00" }, // "17:00:00",
+        { idstarttime: 20, timestart: "17:30:00" } // "17:30:00"
       ],
       EndTime: [
         { idendtime: 2, timeend: "08:30:00" }, // "08:30:00",
         { idendtime: 3, timeend: "09:00:00" }, // "09:00:00",
-        { idendtime: 4, timeend: "10:00:00" }, // "10:00:00",
-        { idendtime: 5, timeend: "10:30:00" }, // "10:30:00",
-        { idendtime: 6, timeend: "11:00:00" }, // "11:00:00",
-        { idendtime: 7, timeend: "11:30:00" }, // "11:30:00",
-        { idendtime: 8, timeend: "12:00:00" }, // "12:00:00",
-        { idendtime: 9, timeend: "12:30:00" }, // "12:30:00",
-        { idendtime: 10, timeend: "13:30:00" }, // "13:30:00",
-        { idendtime: 11, timeend: "14:30:00" }, // "14:30:00",
-        { idendtime: 12, timeend: "15:00:00" }, // "15:00:00",
-        { idendtime: 13, timeend: "15:30:00" }, // "15:30:00",
-        { idendtime: 14, timeend: "16:00:00" }, // "16:00:00",
-        { idendtime: 15, timeend: "16:30:00" }, // "16:30:00",
-        { idendtime: 16, timeend: "17:00:00" }, // "17:00:00",
-        { idendtime: 17, timeend: "17:30:00" }, // "17:30:00"
-        { idendtime: 18, timeend: "18:00:00" } //
+        { idendtime: 4, timeend: "09:30:00" },
+        { idendtime: 5, timeend: "10:00:00" }, // "10:00:00",
+        { idendtime: 6, timeend: "10:30:00" }, // "10:30:00",
+        { idendtime: 7, timeend: "11:00:00" }, // "11:00:00",
+        { idendtime: 8, timeend: "11:30:00" }, // "11:30:00",
+        { idendtime: 9, timeend: "12:00:00" }, // "12:00:00",
+        { idendtime: 10, timeend: "12:30:00" }, // "12:30:00",
+        { idendtime: 11, timeend: "13:00:00" },
+        { idendtime: 12, timeend: "13:30:00" }, // "13:30:00",
+        { idendtime: 13, timeend: "14:00:00" },
+        { idendtime: 14, timeend: "14:30:00" }, // "14:30:00",
+        { idendtime: 15, timeend: "15:00:00" }, // "15:00:00",
+        { idendtime: 16, timeend: "15:30:00" }, // "15:30:00",
+        { idendtime: 17, timeend: "16:00:00" }, // "16:00:00",
+        { idendtime: 18, timeend: "16:30:00" }, // "16:30:00",
+        { idendtime: 19, timeend: "17:00:00" }, // "17:00:00",
+        { idendtime: 20, timeend: "17:30:00" }, // "17:30:00"
+        { idendtime: 21, timeend: "18:00:00" } //
       ],
       BookRoom: {
         typeselect: [],
@@ -333,6 +338,7 @@ export default {
       resvertion: [], //ดึงข้อมูลการจองม
       lock: false,
       cusid: "",
+      checkTimeAndRoom: "", //เอาว้ check ว่าห้องว่างมั้ย
       // event: [
       //   {
       //     id: "1",
@@ -388,15 +394,19 @@ export default {
 
     SaveRoom() {
       // กดปุ่ม save
+      this.getCheckTimeAndRoom();
       if (
         this.CheckCorrectTime > 0 /*  && this.CheckCorrectTime <= 5 */ &&
         this.BookRoom.customerBook != "" &&
         this.BookRoom.Roomselect != "" &&
         this.BookRoom.typeselect != "" &&
         this.BookRoom.starttime != "" &&
-        this.BookRoom.endtimeBook != ""
+        this.BookRoom.endtimeBook != "" &&
+        this.checkTimeAndRoom == null
         // this.MustNotBeRepeat()
       ) {
+        // check
+
         http
           .post("/Reservation", {
             customerid: this.BookRoom.customerBook,
@@ -465,6 +475,25 @@ export default {
         .get("/reservationses")
         .then(response => {
           this.resvertion = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getCheckTimeAndRoom() {
+      http
+        .get(
+          "/reservationCheckTime" +
+            "/" +
+            this.StartTime[this.BookRoom.starttime - 1].timestart +
+            "/" +
+            this.EndTime[this.BookRoom.endtimeBook - 2].timeend +
+            "/" +
+            this.BookRoom.Roomselect
+        )
+        .then(response => {
+          console.log(response);
+          this.checkTimeAndRoom = response.data;
         })
         .catch(e => {
           console.log(e);
