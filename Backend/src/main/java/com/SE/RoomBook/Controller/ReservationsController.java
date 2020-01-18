@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.net.URLDecoder;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -50,9 +51,9 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
     @Autowired
     private final ManageStatusRepository manageStatusRepository;
 
-    ReservationsController(ReservationsRepository reservationsRepository, CustomerRepository customerRepository,
-            DetailPurposeRepository detailPurposeRepository, PurposeRoomRepository purposeRoomRepository,
-            ManageStatusRepository manageStatusRepository) {
+    ReservationsController(final ReservationsRepository reservationsRepository, final CustomerRepository customerRepository,
+            final DetailPurposeRepository detailPurposeRepository, final PurposeRoomRepository purposeRoomRepository,
+            final ManageStatusRepository manageStatusRepository) {
         this.detailPurposeRepository = detailPurposeRepository;
         this.reservationsRepository = reservationsRepository;
         this.customerRepository = customerRepository;
@@ -65,29 +66,46 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
         return reservationsRepository.findAll().stream().collect(Collectors.toList());
     }
 
+    @GetMapping("/reservationCheckTime/{startTime}/{endTime}/{idroom}")
+    public Reservations CheckTime(@PathVariable("startTime") final String startTime, @PathVariable("endTime") final String endTime,
+            @PathVariable("idroom") final Long idroom) {
+        final LocalDate startDate = LocalDate.now();
+        final String start = startDate.toString() + " " + startTime; // 17.00
+        final String end = startDate.toString() + " " + endTime; // 18.00
+        // Reservations checktime = reservationsRepository.findTime(start, end);
+
+        return reservationsRepository.findTime(start, end, idroom);
+    }
+
     @PostMapping("/Reservation") // บันทึกการจองห้องค้นคว้าออนไลน์
     public Reservations index(@RequestBody final BodyBook bodyBook) throws ParseException {
-        Reservations r = new Reservations();
+        final Reservations r = new Reservations();
 
-        Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
-        ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
+        final Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
+        final ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
         r.setManageStatus(m);
         r.setCustomer(c);
 
-        LocalDateTime d = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getStart());
+        final LocalDateTime d = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getStart());
         r.setStartTime(d);
-        LocalDateTime e = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getEnd());
+        final LocalDateTime e = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getEnd());
         r.setEndTime(e);
         r.setBookdate(new Date());
-        for (Long purpose : bodyBook.getPurosebook()) {
-            DetailPurpose dp = new DetailPurpose();
-            PurposeRoom p = purposeRoomRepository.findById(purpose).get();
+        for (final Long purpose : bodyBook.getPurosebook()) {
+            final DetailPurpose dp = new DetailPurpose();
+            final PurposeRoom p = purposeRoomRepository.findById(purpose).get();
             dp.setPurposeRoom(p);
             dp.setReservations(r);
             detailPurposeRepository.save(dp);
         }
 
         return reservationsRepository.save(r);
+    }
+    @DeleteMapping("/DeleteBook/{id}")
+    public boolean deletebook(@PathVariable("id") final Long id) {
+        reservationsRepository.deleteById(id);
+        return true;
+        
     }
 
 }
