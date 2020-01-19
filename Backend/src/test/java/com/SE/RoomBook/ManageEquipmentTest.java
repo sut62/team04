@@ -34,7 +34,7 @@ public class ManageEquipmentTest{
     }
 
     @Test
-    void testAmountOK(){
+    void B6009793_testAmountOK(){
         ManageEquipment ManageEquipment = new ManageEquipment();
         ManageEquipment.setManageEquipment_amount("20");
 
@@ -44,7 +44,7 @@ public class ManageEquipmentTest{
     }
 
    @Test
-    void testAmountMustNotBeNull() {
+    void B6009793_testAmountMustNotBeNull() {
         ManageEquipment ManageEquipment = new ManageEquipment();
         ManageEquipment.setManageEquipment_amount(null);
         Set<ConstraintViolation<ManageEquipment>> result = validator.validate(ManageEquipment);
@@ -59,7 +59,7 @@ public class ManageEquipmentTest{
     }
 
     @Test
-     void testAmountMustHaveNumber() {
+     void B6009793_testAmountMustHaveNumber() {
          ManageEquipment ManageEquipment = new ManageEquipment();
          ManageEquipment.setManageEquipment_amount("A1");
 
