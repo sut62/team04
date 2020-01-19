@@ -51,7 +51,7 @@ public class ManageEquipmentController {
   @PathVariable long em_id,
   @PathVariable long equipmenttype_id,
   @PathVariable long equipmentname_id,
-  @PathVariable Integer manageEquipment_amount) {
+  @PathVariable String manageEquipment_amount) {
 
     Employee Employee = EmployeeRepository.findById(em_id);
     EquipmentType EquipmentType = EquipmentTypeRepository.findById(equipmenttype_id);

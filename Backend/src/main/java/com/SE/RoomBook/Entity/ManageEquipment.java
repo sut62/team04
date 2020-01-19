@@ -12,13 +12,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import java.util.Date;
+import javax.validation.constraints.*;
 
-//import javax.persistence.CascadeType;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
-//import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
 @Entity
@@ -31,10 +33,13 @@ public class ManageEquipment {
     @Column(name="ManageEquipment_ID",unique = true, nullable = true)
     private @NonNull Long manageEquipment_id;
 
-    private @NonNull Date manageEquipment_date;
+  /*  private Date manageEquipment_date;*/
 
+    @NotNull
+     @Pattern(regexp = "\\d{1,2}")
     @Column(name="Amount")
-    private @NonNull Integer manageEquipment_amount;
+    private String manageEquipment_amount;
+
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = EquipmentType.class)
     @JoinColumn(name = "EquipmentType_ID", insertable = true)
