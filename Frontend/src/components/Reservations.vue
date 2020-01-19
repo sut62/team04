@@ -1,33 +1,34 @@
-/* eslint-disable no-console */
 <template>
-  <v-container grid-list-md>
-    <v-layout
-      row
-      wrap
-    >
-      <v-flex
-        text-center
+  <v-app>
+    <CustomerNavigation></CustomerNavigation>
+    <v-container grid-list-md>
+      <v-layout
+        row
         wrap
       >
-        <h1 class="ma-5 display-4">จองห้องค้นคว้าออนไลน์</h1>
-      </v-flex>
-      <v-flex>
-        <FullCalendar
-          schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
-          :plugins="calendarPlugins"
-          defaultView="resourceTimelineDay"
-          resourceGroupField="building"
-          minTime="08:00:00"
-          maxTime="18:00:00"
-          eventTextColor="white"
-          :aspectRatio="1.5"
-          :header="{
+        <v-flex
+          text-center
+          wrap
+        >
+          <h1 class="ma-5 display-4">จองห้องค้นคว้าออนไลน์</h1>
+        </v-flex>
+        <v-flex>
+          <FullCalendar
+            schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
+            :plugins="calendarPlugins"
+            defaultView="resourceTimelineDay"
+            resourceGroupField="building"
+            minTime="08:00:00"
+            maxTime="18:00:00"
+            eventTextColor="white"
+            :aspectRatio="1.5"
+            :header="{
             left: 'today prev,next',
             center: 'title',
             right:
               'resourceTimelineDay,resourceTimelineThreeDay,resourceTimelineWeek,listWeekAll'
           }"
-          :views="{
+            :views="{
             resourceTimelineThreeDay: {
               type: 'resourceTimeline',
               duration: { days: 3 },
@@ -39,234 +40,237 @@
               buttonText: 'listweek'
             }
           }"
-          :resourceColumns="[
+            :resourceColumns="[
             {
               labelText: 'Room',
               field: 'title'
             }
           ]"
-          :resources="resourcesRoom"
-          :events="event"
-        />
-      </v-flex>
-      <v-flex md12>
-        <v-layout
-          row
-          wrap
-        >
-          <v-flex md12>
-            <v-layout
-              row
-              wrap
-            >
-              <v-flex
-                md3
-                text-center
+            :resources="resourcesRoom"
+            :events="event"
+          />
+        </v-flex>
+        <v-flex md12>
+          <v-layout
+            row
+            wrap
+          >
+            <v-flex md12>
+              <v-layout
+                row
                 wrap
               >
-                <br />
-                <h2 class="mt-2">ชื่อผู้ใช้บริการ</h2>
-              </v-flex>
-              <v-flex md7>
-                <br />
+                <v-flex
+                  md3
+                  text-center
+                  wrap
+                >
+                  <br />
+                  <h2 class="mt-2">ชื่อผู้ใช้บริการ</h2>
+                </v-flex>
+                <v-flex md7>
+                  <br />
 
-                <v-select
-                  v-if="lock"
-                  outlined
-                  :readonly="true"
-                  class="mr-10"
-                  :items="customers"
-                  item-text="name"
-                  item-value="id"
-                  v-model="BookRoom.customerBook"
-                  label="Customer"
-                ></v-select>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-          <v-flex md12>
-            <v-layout
-              row
-              wrap
-            >
-              <v-flex
-                md3
-                text-center
+                  <v-select
+                    v-if="lock"
+                    outlined
+                    :readonly="true"
+                    class="mr-10"
+                    :items="customers"
+                    item-text="name"
+                    item-value="id"
+                    v-model="BookRoom.customerBook"
+                    label="Customer"
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex md12>
+              <v-layout
+                row
                 wrap
               >
-                <br />
-                <h2 class="mt-2">จุดประสงค์การใช้ห้อง</h2>
-              </v-flex>
-              <v-flex md7>
-                <br />
-                <v-select
-                  outlined
-                  multiple
-                  class="mr-10"
-                  :items="type"
-                  item-text="name"
-                  item-value="purposeRoom_id"
-                  v-model="BookRoom.typeselect"
-                  label="PurposeRoom"
-                ><template v-slot:prepend-item>
-                    <v-list-item
-                      ripple
-                      @click="toggle"
-                    >
-                      <v-list-item-action>
-                        <v-icon :color="
+                <v-flex
+                  md3
+                  text-center
+                  wrap
+                >
+                  <br />
+                  <h2 class="mt-2">จุดประสงค์การใช้ห้อง</h2>
+                </v-flex>
+                <v-flex md7>
+                  <br />
+                  <v-select
+                    outlined
+                    multiple
+                    class="mr-10"
+                    :items="type"
+                    item-text="name"
+                    item-value="purposeRoom_id"
+                    v-model="BookRoom.typeselect"
+                    label="PurposeRoom"
+                  ><template v-slot:prepend-item>
+                      <v-list-item
+                        ripple
+                        @click="toggle"
+                      >
+                        <v-list-item-action>
+                          <v-icon :color="
                             BookRoom.typeselect.length > 0
                               ? 'indigo darken-4'
                               : ''
                           ">{{ icon }}</v-icon>
-                      </v-list-item-action>
-                      <v-list-item-content>
-                        <v-list-item-title>Select All</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-divider class="mt-2"></v-divider>
-                  </template>
-                </v-select>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-          <v-flex md12>
-            <v-layout
-              row
-              wrap
-            >
-              <v-flex
-                md3
-                text-center
+                        </v-list-item-action>
+                        <v-list-item-content>
+                          <v-list-item-title>Select All</v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                      <v-divider class="mt-2"></v-divider>
+                    </template>
+                  </v-select>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex md12>
+              <v-layout
+                row
                 wrap
               >
-                <br />
-                <h2 class="mt-2">หมายเลขห้อง</h2>
-              </v-flex>
-              <v-flex md7>
-                <br />
-                <v-select
-                  outlined
-                  class="mr-10"
-                  :items="Room"
-                  item-text="room.room_name"
-                  item-value="manageStatus_id"
-                  v-model="BookRoom.Roomselect"
-                  label="RoomNumber"
-                ></v-select>
-              </v-flex>
-            </v-layout>
-          </v-flex>
+                <v-flex
+                  md3
+                  text-center
+                  wrap
+                >
+                  <br />
+                  <h2 class="mt-2">หมายเลขห้อง</h2>
+                </v-flex>
+                <v-flex md7>
+                  <br />
+                  <v-select
+                    outlined
+                    class="mr-10"
+                    :items="Room"
+                    item-text="room.room_name"
+                    item-value="manageStatus_id"
+                    v-model="BookRoom.Roomselect"
+                    label="RoomNumber"
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+            </v-flex>
 
-          <v-flex md12>
-            <v-layout
-              row
-              wrap
-            >
-              <v-flex
-                md3
-                text-center
+            <v-flex md12>
+              <v-layout
+                row
                 wrap
               >
-                <br />
-                <h2 class="mt-2">เวลาเริ่มต้น</h2>
-              </v-flex>
-              <v-flex md7>
-                <br />
-                <v-select
-                  outlined
-                  class="mr-10"
-                  :items="StartTime"
-                  item-text="timestart"
-                  item-value="idstarttime"
-                  v-model="BookRoom.starttime"
-                  label="StartTime"
-                ></v-select>
-              </v-flex>
-            </v-layout>
-          </v-flex>
+                <v-flex
+                  md3
+                  text-center
+                  wrap
+                >
+                  <br />
+                  <h2 class="mt-2">เวลาเริ่มต้น</h2>
+                </v-flex>
+                <v-flex md7>
+                  <br />
+                  <v-select
+                    outlined
+                    class="mr-10"
+                    :items="StartTime"
+                    item-text="timestart"
+                    item-value="idstarttime"
+                    v-model="BookRoom.starttime"
+                    label="StartTime"
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+            </v-flex>
 
-          <v-flex md12>
-            <v-layout
-              row
-              wrap
-            >
-              <v-flex
-                md3
-                text-center
+            <v-flex md12>
+              <v-layout
+                row
                 wrap
               >
-                <br />
-                <h2 class="mt-2">เวลาสิ้นสุด</h2>
-              </v-flex>
-              <v-flex md7>
-                <br />
-                <v-select
-                  outlined
-                  class="mr-10"
-                  :items="EndTime"
-                  item-text="timeend"
-                  item-value="idendtime"
-                  v-model="BookRoom.endtimeBook"
-                  label="EndTime"
-                ></v-select>
-              </v-flex>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-        <v-btn
-          style="margin:0 5% 0 25%"
-          x-large
-          justify="center"
-          outline
-          color="primary"
-          dark
-          v-on:click="SaveRoom"
-        >
-          ยืนยันการจอง
-          <v-icon
-            large
+                <v-flex
+                  md3
+                  text-center
+                  wrap
+                >
+                  <br />
+                  <h2 class="mt-2">เวลาสิ้นสุด</h2>
+                </v-flex>
+                <v-flex md7>
+                  <br />
+                  <v-select
+                    outlined
+                    class="mr-10"
+                    :items="EndTime"
+                    item-text="timeend"
+                    item-value="idendtime"
+                    v-model="BookRoom.endtimeBook"
+                    label="EndTime"
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+            </v-flex>
+          </v-layout>
+          <v-btn
+            style="margin:0 5% 0 25%"
+            x-large
+            justify="center"
+            outline
+            color="primary"
             dark
-            right
-          >mdi-checkbox-marked-circle</v-icon>
-        </v-btn>
-        <v-btn
-          style="margin:0 2% 0 2%"
-          x-large
-          outline
-          color="blue-grey"
-          dark
-          v-on:click="clear"
-        >
-          เคลียร์ข้อมูล
-          <v-icon
-            large
+            v-on:click="SaveRoom"
+          >
+            ยืนยันการจอง
+            <v-icon
+              large
+              dark
+              right
+            >mdi-checkbox-marked-circle</v-icon>
+          </v-btn>
+          <v-btn
+            style="margin:0 2% 0 2%"
+            x-large
+            outline
+            color="blue-grey"
             dark
-            right
-          >mdi-cancel</v-icon>
-        </v-btn>
-        <v-btn
-          style="margin:0 0 0 5%"
-          x-large
-          outline
-          color="red"
-          dark
-          v-on:click="back"
-        >
-          ออกจากระบบ
-          <v-icon
-            large
+            v-on:click="clear"
+          >
+            เคลียร์ข้อมูล
+            <v-icon
+              large
+              dark
+              right
+            >mdi-cancel</v-icon>
+          </v-btn>
+          <v-btn
+            style="margin:0 0 0 5%"
+            x-large
+            outline
+            color="red"
             dark
-            right
-          >mdi-arrow-left</v-icon>
-        </v-btn>
-      </v-flex>
-    </v-layout>
-  </v-container>
+            v-on:click="back"
+          >
+            ออกจากระบบ
+            <v-icon
+              large
+              dark
+              right
+            >mdi-arrow-left</v-icon>
+          </v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
 /*eslint-disable */
+import CustomerNavigation from "./CustomerNavigation";
+
 import FullCalendar from "@fullcalendar/vue";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import listPlugin from "@fullcalendar/list";
@@ -275,7 +279,8 @@ import { formatDate } from "@fullcalendar/core";
 import { LocalDate, LocalDateTime, LocalTime } from "js-joda";
 export default {
   components: {
-    FullCalendar
+    FullCalendar,
+    CustomerNavigation
   },
   data() {
     return {
@@ -338,7 +343,7 @@ export default {
       resvertion: [], //ดึงข้อมูลการจองม
       lock: false,
       cusid: "",
-      checkTimeAndRoom: "", //เอาว้ check ว่าห้องว่างมั้ย
+      checkTimeAndRoom: false, //เอาว้ check ว่าห้องว่างมั้ย
       // event: [
       //   {
       //     id: "1",
@@ -369,11 +374,13 @@ export default {
   },
   methods: {
     lockemployee() {
-      this.cusid = this.$route.params.cus;
-      this.BookRoom.customerBook = this.cusid;
+      // this.cusid = this.$route.params.cus;
+      // this.BookRoom.customerBook = this.cusid;
+      this.BookRoom.customerBook = this.$store.getters.customer;
       this.lock = true;
     },
     back() {
+      this.$store.dispatch("setOpendrawer", false);
       this.$router.push("/");
     },
     //กด select All ใน combobox
@@ -392,40 +399,65 @@ export default {
       });
     },
 
+    // กดปุ่ม save
     SaveRoom() {
-      // กดปุ่ม save
-      this.getCheckTimeAndRoom();
-      if (
-        this.CheckCorrectTime > 0 /*  && this.CheckCorrectTime <= 5 */ &&
-        this.BookRoom.customerBook != "" &&
-        this.BookRoom.Roomselect != "" &&
-        this.BookRoom.typeselect != "" &&
-        this.BookRoom.starttime != "" &&
-        this.BookRoom.endtimeBook != "" &&
-        this.checkTimeAndRoom == null
-        // this.MustNotBeRepeat()
-      ) {
-        // check
+      // this.getCheckTimeAndRoom();
+      this.checkTimeAndRoom = false;
+      http
+        .get(
+          "/reservationCheckTime" +
+            "/" +
+            this.StartTime[this.BookRoom.starttime - 1].timestart +
+            "/" +
+            this.EndTime[this.BookRoom.endtimeBook - 2].timeend +
+            "/" +
+            this.BookRoom.Roomselect
+        )
+        .then(response => {
+          console.log(response);
+          // this.checkTimeAndRoom = response.data;
 
-        http
-          .post("/Reservation", {
-            customerid: this.BookRoom.customerBook,
-            roomid: this.BookRoom.Roomselect,
-            purosebook: this.BookRoom.typeselect,
-            start: this.StartTime[this.BookRoom.starttime - 1].timestart,
-            end: this.EndTime[this.BookRoom.endtimeBook - 2].timeend
-          })
-          .then(res => {
-            alert("บันทึกข้อมูลการจองห้องค้นคว้าสำเร็จ");
-            this.clear();
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      } else {
-        alert("โปรดตรวจสอบข้อมูลของท่านใหม่");
-        this.clear();
-      }
+          if (response.data == "") {
+            this.checkTimeAndRoom = true;
+            alert(checkTimeAndRoom);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
+      setTimeout(() => {
+        if (
+          this.CheckCorrectTime > 0 /*  && this.CheckCorrectTime <= 5 */ &&
+          this.BookRoom.customerBook != "" &&
+          this.BookRoom.Roomselect != "" &&
+          this.BookRoom.typeselect != "" &&
+          this.BookRoom.starttime != "" &&
+          this.BookRoom.endtimeBook != "" &&
+          // this.checkTimeAndRoom == null
+
+          this.checkTimeAndRoom == true
+        ) {
+          http
+            .post("/Reservation", {
+              customerid: this.BookRoom.customerBook,
+              roomid: this.BookRoom.Roomselect,
+              purosebook: this.BookRoom.typeselect,
+              start: this.StartTime[this.BookRoom.starttime - 1].timestart,
+              end: this.EndTime[this.BookRoom.endtimeBook - 2].timeend
+            })
+            .then(res => {
+              alert("บันทึกข้อมูลการจองห้องค้นคว้าสำเร็จ");
+              this.clear();
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        } else {
+          alert("โปรดตรวจสอบข้อมูลของท่านใหม่");
+          // this.clear();
+        }
+      }, 1000);
     },
 
     clear() {
@@ -475,25 +507,6 @@ export default {
         .get("/reservationses")
         .then(response => {
           this.resvertion = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    getCheckTimeAndRoom() {
-      http
-        .get(
-          "/reservationCheckTime" +
-            "/" +
-            this.StartTime[this.BookRoom.starttime - 1].timestart +
-            "/" +
-            this.EndTime[this.BookRoom.endtimeBook - 2].timeend +
-            "/" +
-            this.BookRoom.Roomselect
-        )
-        .then(response => {
-          console.log(response);
-          this.checkTimeAndRoom = response.data;
         })
         .catch(e => {
           console.log(e);

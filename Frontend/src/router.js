@@ -14,47 +14,47 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/Register',
       name: 'Register',
       component: Register
     },
     {
       path: '/',
-      name:'Login',
+      name: 'Login',
       component: Login
     },
     {
       path: '/Dashbord',
-      name:'Dashbord',
+      name: 'Dashbord',
       component: Dashbord
     },
     {
       path: '/Borrow',
-      name:'Borrow',
+      name: 'Borrow',
       component: Borrow
     },
     {
       path: '/ManageEquipment',
-      name:'ManageEquipment',
+      name: 'ManageEquipment',
       component: ManageEquipment
     },
     {
       path: '/ManageStatus',
-      name:'ManageStatus',
+      name: 'ManageStatus',
       component: ManageStatus
     },
     {
       path: '/Returns',
-      name:'Returns',
+      name: 'Returns',
       component: Returns
     },
     {
       path: '/Reservations',
       name: 'Reservations',
       component: Reservations
-    },
-  
+    }
+    
+
   ]
 })
