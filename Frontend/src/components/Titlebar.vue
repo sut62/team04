@@ -1,6 +1,17 @@
 <template>
-<nav>
-    <v-app-bar app class="light-blue darken-4">
+  <nav>
+
+    <CustomerNavigation v-bind:drawer="drawer"></CustomerNavigation>
+    <v-app-bar
+      app
+      clipped-left
+      class="light-blue darken-4"
+    >
+      <v-app-bar-nav-icon
+        class="white--text"
+        v-if="$store.getters.Opendrawer"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title class="headline text-uppercase white--text">
         <span class="Reg">Room </span>
         <span class="Reg"> Book</span>
@@ -14,5 +25,22 @@
         <span class="mr-2 white--text">Latest Release</span>
       </v-btn>
     </v-app-bar>
-</nav>
-</template>>
+  </nav>
+</template>
+
+<script>
+/*eslint-disable */
+// import { mapGetters } from "vuex";
+import CustomerNavigation from "./CustomerNavigation";
+export default {
+  components: {
+    CustomerNavigation
+  },
+  data() {
+    return {
+      drawer: false
+    };
+  }
+};
+/*eslint-disable */
+</script>

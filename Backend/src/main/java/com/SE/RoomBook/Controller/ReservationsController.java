@@ -69,9 +69,9 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
     @GetMapping("/reservationCheckTime/{startTime}/{endTime}/{idroom}")
     public Reservations CheckTime(@PathVariable("startTime") final String startTime, @PathVariable("endTime") final String endTime,
             @PathVariable("idroom") final Long idroom) {
-        final LocalDate startDate = LocalDate.now();
-        final String start = startDate.toString() + " " + startTime; // 17.00
-        final String end = startDate.toString() + " " + endTime; // 18.00
+         LocalDate startDate = LocalDate.now();
+         String start = startDate.toString() + " " + startTime; // 17.00
+         String end = startDate.toString() + " " + endTime; // 18.00
         // Reservations checktime = reservationsRepository.findTime(start, end);
 
         return reservationsRepository.findTime(start, end, idroom);

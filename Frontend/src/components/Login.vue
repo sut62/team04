@@ -101,6 +101,7 @@
 </template>
 
 <script>
+/*eslint-disable */
 import http from "../http-common";
 export default {
   name: "Login",
@@ -155,10 +156,18 @@ export default {
               this.login.Password = response.data.password;
               // alert(this.login.Username)
               alert("Login complete");
+
+              this.$store.dispatch("setOpendrawer", true);
+              this.$store.dispatch("setCustomer", this.customer.id);
+              alert(this.$store.getters.customer);
               this.$router.push({
                 name: "Reservations",
                 params: { cus: this.customer.id }
               });
+              // this.$router.push({
+              //   name: "Customer",
+              //   params: { cus: this.customer.id }
+              // });
             } else {
               alert("Username or Password is not valid");
             }
@@ -170,6 +179,7 @@ export default {
     }
   }
 };
+/*eslint-disable */
 </script>
 <style scoped>
 div.LoginPage {
