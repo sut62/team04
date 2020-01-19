@@ -159,7 +159,6 @@ export default {
 
               this.$store.dispatch("setOpendrawer", true);
               this.$store.dispatch("setCustomer", this.customer.id);
-              alert(this.$store.getters.customer);
               this.$router.push({
                 name: "Reservations",
                 params: { cus: this.customer.id }
