@@ -51,6 +51,12 @@ public class CustomerController {
     public Collection<Customer> Customers() {
         return customerRepository.findAll().stream().collect(Collectors.toList());
     }
+
+    @GetMapping("/customer/{Cus_id}")
+    public Customer getCustomersDetail(@PathVariable("Cus_id")long id) {
+        return customerRepository.findById(id);
+    }
+
     @GetMapping("/customer/{Customer_Email}/{Password}")
     public Customer getPatientByName(@PathVariable("Customer_Email") String Email, @PathVariable("Password") String Password) {
         return customerRepository.findPatientByCustomer(Email,Password);

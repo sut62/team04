@@ -4,6 +4,7 @@
     app
     :clipped="$vuetify.breakpoint.lgAndUp"
     color="grey lighten-4"
+    temporary
   >
 
     <!-- v-list -->
@@ -25,7 +26,7 @@
     <div class="pa-2">
       <v-btn
         block
-        to="/"
+        to="Profile"
       >Profile</v-btn>
     </div>
     <v-divider
@@ -33,14 +34,14 @@
       class="my-3"
     ></v-divider>
 
-    <!-- <template v-slot:append>
+    <template v-slot:append>
       <div class="pa-2">
         <v-btn
           block
-          to="/"
+          @click="Logout"
         >Logout</v-btn>
       </div>
-    </template> -->
+    </template>
   </v-navigation-drawer>
 
 </template>
@@ -57,6 +58,10 @@ export default {
         name: "Reservations"
         // params: { cus: this.customer.id }
       });
+    },
+    Logout(){
+      this.$store.dispatch("setOpendrawer", false);
+      this.$router.push("/");
     }
   }
 };
