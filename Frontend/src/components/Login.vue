@@ -97,6 +97,12 @@
         </v-form>
       </v-card>
     </div>
+    <div v-if = "clickLogin == true">
+      <div v-if = "checkLogin == true"/>
+      <div v-if ="checkLogin == false">
+        <v-alert type="error">Username or Password is not valid</v-alert>
+      </div>
+    </div>
   </v-container>
 </template>
 
@@ -114,14 +120,18 @@ export default {
       },
       employee: [],
       customer: [],
-      Chooses: ["Employee", "Customer"]
+      Chooses: ["Employee", "Customer"],
+      checkLogin: false,
+      clickLogin: false,
     };
   },
 
   methods: {
     Login() {
+      this.clickLogin = true;
       if (!this.login.Username || !this.login.Password || !this.login.Choose) {
-        alert("Plese input all data");
+        this.checkLogin = false;
+        // alert("Plese input all data");
       } else if (this.login.Choose == "Employee") {
         http
           .get("/employee/" + this.login.Username + "/" + this.login.Password)
@@ -133,8 +143,8 @@ export default {
               this.employee = response.data;
               this.login.Username = response.data.em_name;
               this.login.Password = response.data.password;
-              // alert(this.login.Username)
-              alert("Login complete");
+              this.checkLogin = true;
+              // alert("Login complete");
               this.$router.push({
                 name: "Dashbord",
                 params: { em: this.employee.em_id }
@@ -154,8 +164,8 @@ export default {
               this.customer = response.data;
               this.login.Username = response.data.email;
               this.login.Password = response.data.password;
-              // alert(this.login.Username)
-              alert("Login complete");
+              this.checkLogin = true;
+              // alert("Login complete");
 
               this.$store.dispatch("setOpendrawer", true);
               this.$store.dispatch("setCustomer", this.customer.id);
@@ -168,7 +178,8 @@ export default {
               //   params: { cus: this.customer.id }
               // });
             } else {
-              alert("Username or Password is not valid");
+              this.checkLogin = false;
+              // alert("Username or Password is not valid");
             }
           });
       }

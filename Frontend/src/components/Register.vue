@@ -77,6 +77,14 @@
     </div>
     <footer>
       <v-container class="ml-auto mt-3 pt-3 mr-auto">
+        <div v-if = "clickRegister == true">
+        <div v-if = "registerCheck == true">
+          <v-alert type="success">Register Completed</v-alert>
+        </div>
+        <div v-if = "registerCheck == false">
+          <v-alert type="error">Can't Register</v-alert>
+        </div>
+        </div>
         <v-row justify="center">
             <v-btn
               @click="RegisterCustomer"
@@ -115,6 +123,8 @@ export default {
       titles:[],
       genders:[],
       statusCuss:[],
+      registerCheck: false,
+      clickRegister: false,
     };
   },
   methods: {
@@ -158,11 +168,14 @@ export default {
     },
     // function เมื่อกดปุ่ม Register
     RegisterCustomer() {
+      this.clickRegister = true;
       if(!this.customer.Name||!this.customer.LastName||!this.customer.Password||!this.customer.Phone||!this.customer.Email||!this.customer.GenderId||!this.customer.TitleId||!this.customer.StatusId)
       {
-        alert("Can't not register")
+        // this.registerCheck = false;
+        // alert("Can't not register")
       }
       else{
+        this.registerCheck = true;
       http
         .post("/customer/" +
             this.customer.Name +
@@ -189,7 +202,15 @@ export default {
         .catch(e => {
           console.log(e);
         });
-      alert('Register complete')
+        this.customer.GenderId = ""
+        this.customer.TitleId = ""
+        this.customer.StatusId = ""
+        this.customer.Name = ""
+        this.customer.LastName = ""
+        this.customer.Password = ""
+        this.customer.Email = ""
+        this.customer.Phone=""
+      // alert('Register complete')
       
       }
     },
@@ -205,7 +226,8 @@ export default {
       this.customer.Password = ""
       this.customer.Email = ""
       this.customer.Phone=""
-      
+      this.registerCheck=false;
+      this.clickRegister=false;
     },
     back(){
       this.$router.push("/");
