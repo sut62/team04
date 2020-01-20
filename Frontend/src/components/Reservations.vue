@@ -270,21 +270,7 @@
               right
             >mdi-cancel</v-icon>
           </v-btn>
-          <v-btn
-            style="margin:0 0 0 5%"
-            x-large
-            outline
-            color="red"
-            dark
-            v-on:click="back"
-          >
-            ออกจากระบบ
-            <v-icon
-              large
-              dark
-              right
-            >mdi-arrow-left</v-icon>
-          </v-btn>
+
         </v-flex>
         <v-alert
           type="success"
@@ -419,10 +405,7 @@ export default {
       this.BookRoom.customerBook = this.$store.getters.customer;
       this.lock = true;
     },
-    back() {
-      this.$store.dispatch("setOpendrawer", false);
-      this.$router.push("/");
-    },
+
     //กด select All ใน combobox
     toggle() {
       this.$nextTick(() => {
@@ -488,7 +471,6 @@ export default {
               end: this.EndTime[this.BookRoom.endtimeBook - 2].timeend
             })
             .then(res => {
-             
               if (res.status == 200) {
                 this.alertSuccessDodo = true;
                 this.getEventInTable();

@@ -10,11 +10,12 @@
       <v-app-bar-nav-icon
         class="white--text"
         v-if="$store.getters.Opendrawer"
-        @click.stop="drawer = !drawer"
+        @click.stop="CheckTitle"
       ></v-app-bar-nav-icon>
       <v-toolbar-title class="headline text-uppercase white--text">
         <span class="Reg">Room </span>
         <span class="Reg"> Book</span>
+
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+//drawer = ! drawer
 /*eslint-disable */
 // import { mapGetters } from "vuex";
 import CustomerNavigation from "./CustomerNavigation";
@@ -40,7 +42,20 @@ export default {
     return {
       drawer: false
     };
+  },
+  methods: {
+    CheckTitle() {
+      this.drawer = !this.drawer;
+      this.$store.commit("setDrawer", this.drawer);
+    },
+    upDateDrawer(upDateDrawer) {
+      this.drawer = upDateDrawer;
+    }
+  },
+  computed: {},
+  watch: {
+    drawer() {}
   }
-};
+}; //v-bind:drawer="drawer"
 /*eslint-disable */
 </script>

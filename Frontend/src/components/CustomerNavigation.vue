@@ -1,14 +1,11 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
+    v-model="checkShow"
     app
     :clipped="$vuetify.breakpoint.lgAndUp"
     color="grey lighten-4"
-    temporary
   >
-
-    <!-- v-list -->
-
+    
     <v-divider
       dark
       class="my-3"
@@ -38,7 +35,7 @@
       <div class="pa-2">
         <v-btn
           block
-          @click="Logout"
+          v-on:click="Logout"
         >Logout</v-btn>
       </div>
     </template>
@@ -47,10 +44,14 @@
 </template>
 
 <script>
+/*eslint-disable */
 export default {
-  props: { drawer: Boolean },
+  props: { drawer: { type: Boolean } },
+  // props: ["value"],
   data() {
-    return {};
+    return {
+      checkShow: ""
+    };
   },
   methods: {
     Resvationopen() {
@@ -59,12 +60,27 @@ export default {
         // params: { cus: this.customer.id }
       });
     },
-    Logout(){
-      this.$store.dispatch("setOpendrawer", false);
+    Logout() {
+      this.$store.commit("setDrawer", false);
+      this.$store.commit("setOpendrawer", false);
+      // this.checkShow = false;
+      this.checkShow = this.$store.getters.drawer;
       this.$router.push("/");
+    },
+    ShowDrawer() {
+      this.checkShow = this.drawer;
+      this.checkShow = this.$store.getter.drawer;
     }
-  }
+  },
+  watch: {
+    drawer() {
+      this.ShowDrawer();
+    }
+  },
+  computed: {},
+  mounted() {}
 };
+/*eslint-disable */
 </script>
 
 <style>

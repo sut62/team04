@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         Opendrawer: '',
-        customer: ''
+        customer: '',
+        drawer: ''
     },
     mutations: {
         setOpendrawer(state, value) {
@@ -14,11 +15,15 @@ export const store = new Vuex.Store({
         },
         setCustomer(state, value) {
             state.customer = value;
+        },
+        setDrawer(state, value) {
+            state.drawer = value;
         }
     },
     getters: {
         Opendrawer: state => state.Opendrawer,
-        customer: state => state.customer
+        customer: state => state.customer,
+        drawer: state => state.drawer
     },
     actions: {
         setOpendrawer(context, payload) {
@@ -26,6 +31,9 @@ export const store = new Vuex.Store({
         },
         setCustomer(context, payload) {
             context.commit("setCustomer", payload);
+        },
+        setDrawer(context, payload) {
+            context.commit("setDrawer", payload);
         }
     }
 })
