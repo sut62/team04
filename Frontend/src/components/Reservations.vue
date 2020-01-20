@@ -19,7 +19,7 @@
             defaultView="resourceTimelineDay"
             resourceGroupField="building"
             minTime="08:00:00"
-            maxTime="18:00:00"
+            maxTime="21:00:00"
             eventTextColor="white"
             :aspectRatio="1.5"
             :header="{
@@ -109,6 +109,8 @@
                     item-value="purposeRoom_id"
                     v-model="BookRoom.typeselect"
                     label="PurposeRoom"
+                    :menu-props="{ closeOnClick: false, closeOnContentClick: close, 
+                    disableKeys: true, openOnClick: false, maxHeight: 350  }"
                   ><template v-slot:prepend-item>
                       <v-list-item
                         ripple
@@ -126,9 +128,30 @@
                         </v-list-item-content>
                       </v-list-item>
                       <v-divider class="mt-2"></v-divider>
+
+                    </template>
+                    <template v-slot:append-item>
+                      <v-divider class="mb-2"></v-divider>
+                      <v-list-item
+                        ripple
+                        @click="eventClose"
+                      >
+                        <v-list-item-action>
+                          <v-icon>
+                            mdi-close
+                          </v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                          <v-list-item-title>
+                            Close SelectBox
+                          </v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
                     </template>
                   </v-select>
+
                 </v-flex>
+
               </v-layout>
             </v-flex>
             <v-flex md12>
@@ -215,6 +238,7 @@
               </v-layout>
             </v-flex>
           </v-layout>
+
           <v-btn
             style="margin:0 5% 0 25%"
             x-large
@@ -262,6 +286,26 @@
             >mdi-arrow-left</v-icon>
           </v-btn>
         </v-flex>
+        <v-alert
+          type="success"
+          class="alertSuccess "
+          border="left"
+          outlined
+          text
+          v-if="alertSuccessDodo"
+        >
+          <strong>บันทึกข้อมูลการจองห้องค้นคว้าสำเร็จ</strong>
+        </v-alert>
+        <v-alert
+          type="error"
+          class="alertSuccess "
+          border="left"
+          outlined
+          text
+          v-if="alertErrorDodo"
+        >
+          <strong>ปรดตรวจสอบข้อมูลของท่านใหม่</strong>
+        </v-alert>
       </v-layout>
     </v-container>
   </v-app>
@@ -305,7 +349,13 @@ export default {
         { idstarttime: 17, timestart: "16:00:00" }, // "16:00:00",
         { idstarttime: 18, timestart: "16:30:00" }, // "16:30:00",
         { idstarttime: 19, timestart: "17:00:00" }, // "17:00:00",
-        { idstarttime: 20, timestart: "17:30:00" } // "17:30:00"
+        { idstarttime: 20, timestart: "17:30:00" }, // "17:30:00"
+        { idstarttime: 21, timestart: "18:00:00" },
+        { idstarttime: 22, timestart: "18:30:00" },
+        { idstarttime: 23, timestart: "19:00:00" },
+        { idstarttime: 24, timestart: "19:30:00" },
+        { idstarttime: 25, timestart: "20:00:00" },
+        { idstarttime: 26, timestart: "20:30:00" }
       ],
       EndTime: [
         { idendtime: 2, timeend: "08:30:00" }, // "08:30:00",
@@ -327,7 +377,13 @@ export default {
         { idendtime: 18, timeend: "16:30:00" }, // "16:30:00",
         { idendtime: 19, timeend: "17:00:00" }, // "17:00:00",
         { idendtime: 20, timeend: "17:30:00" }, // "17:30:00"
-        { idendtime: 21, timeend: "18:00:00" } //
+        { idendtime: 21, timeend: "18:00:00" }, //
+        { idendtime: 22, timeend: "18:30:00" },
+        { idendtime: 23, timeend: "19:00:00" },
+        { idendtime: 24, timeend: "19:30:00" },
+        { idendtime: 25, timeend: "20:00:00" },
+        { idendtime: 26, timeend: "20:30:00" },
+        { idendtime: 27, timeend: "21:00:00" }
       ],
       BookRoom: {
         typeselect: [],
@@ -343,36 +399,20 @@ export default {
       resvertion: [], //ดึงข้อมูลการจองม
       lock: false,
       cusid: "",
-      checkTimeAndRoom: false, //เอาว้ check ว่าห้องว่างมั้ย
-      // event: [
-      //   {
-      //     id: "1",
-      //     title: "TEST EVENT",
-      //     start: "2020-01-08",
-      //     resourceId: "i",
-      //     color: "green",
-      //     textColor: "yellow"
-      //   },
-
-      //   {
-      //     id: "2",
-      //     title: "FLEX N GATE",
-      //     start: "2019-12-13T10:00:00",
-      //     end: "2019-12-13T12:00:00",
-      //     resourceId: "c"
-      //   },
-      //   {
-      //     id: "3",
-      //     title: "FLEX N GATE",
-      //     start: "2019-12-14T10:00:00",
-      //     end: "2019-12-14T12:00:00",
-      //     resourceId: "a"
-      //   }
-      // ]
+      checkTimeAndRoom: false, //เอาไว้ check ว่าห้องว่างมั้ย
+      close: false, // เอาไว้  selectbox กดปุ่มปิดได้
+      alertSuccessDodo: false, //แสดง v-alert Success
+      alertErrorDodo: false, // แสดง v-alert Error
       event: []
     };
   },
   methods: {
+    eventClose() {
+      this.close = true;
+      setTimeout(() => {
+        this.close = false;
+      }, 10);
+    },
     lockemployee() {
       // this.cusid = this.$route.params.cus;
       // this.BookRoom.customerBook = this.cusid;
@@ -403,6 +443,8 @@ export default {
     SaveRoom() {
       // this.getCheckTimeAndRoom();
       this.checkTimeAndRoom = false;
+      this.alertSuccessDodo = false;
+      this.alertErrorDodo = false;
       http
         .get(
           "/reservationCheckTime" +
@@ -419,7 +461,6 @@ export default {
 
           if (response.data == "") {
             this.checkTimeAndRoom = true;
-            alert(checkTimeAndRoom);
           }
         })
         .catch(e => {
@@ -447,15 +488,19 @@ export default {
               end: this.EndTime[this.BookRoom.endtimeBook - 2].timeend
             })
             .then(res => {
-              alert("บันทึกข้อมูลการจองห้องค้นคว้าสำเร็จ");
-              this.clear();
+             
+              if (res.status == 200) {
+                this.alertSuccessDodo = true;
+                this.getEventInTable();
+                this.clear();
+              }
             })
             .catch(error => {
               console.error(error);
             });
         } else {
-          alert("โปรดตรวจสอบข้อมูลของท่านใหม่");
-          // this.clear();
+          this.alertErrorDodo = true;
+          this.clear();
         }
       }, 1000);
     },
@@ -511,6 +556,21 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    getEventInTable() {
+      this.event = [];
+      let i = 1;
+      this.resvertion.forEach(value => {
+        // console.log(value.endTime);
+        this.event.push({
+          id: ++i,
+          title: value.customer.name,
+          start: value.startTime,
+          end: value.endTime,
+          resourceId: value.manageStatus.room.room_id
+          // textColor: "black"
+        });
+      });
     }
   },
   mounted() {
@@ -519,6 +579,7 @@ export default {
     this.getCustomers();
     this.getResvertionRoom();
     this.lockemployee();
+    this.getEventInTable();
   },
   computed: {
     likesAllPurpose() {
@@ -591,9 +652,14 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="css">
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/timeline/main.css";
 @import "~@fullcalendar/resource-timeline/main.css";
 @import "~@fullcalendar/list/main.css";
+.alertSuccess {
+  margin: 3% auto auto auto;
+  text-align: center;
+  width: 50%;
+}
 </style>
