@@ -25,7 +25,8 @@ import javax.persistence.FetchType;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="CUSTOMER")
+@Table(name="CUSTOMER" ,uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"Customer_Email"}) })
 public class Customer {
 	@Id
 	@SequenceGenerator(name="customer_seq",sequenceName="customer_seq")
@@ -42,7 +43,7 @@ public class Customer {
 
     @NotNull
     @Email
-    @Column(name="Customer_Email")
+    @Column(name="Customer_Email",unique = true)
     private String Email;
 
     @NotNull
