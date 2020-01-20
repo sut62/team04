@@ -64,9 +64,9 @@ public class ManageStatusController {
         return ManageStatusRepository.findRoomNull(Room_id);
     }
 
-    @PostMapping("/ManageStatus/{Room_id}/{Status_id}/{Employee_id}")
+    @PostMapping("/ManageStatus/{Room_id}/{Status_id}/{Employee_id}/{ManageStatus_note}")
     public ManageStatus newManageStatus(ManageStatus newManageStatus, @PathVariable long Room_id,
-            @PathVariable long Status_id, @PathVariable long Employee_id) {
+            @PathVariable long Status_id, @PathVariable long Employee_id,@PathVariable String ManageStatus_note) {
 
         Room room = RoomRepository.findById(Room_id);
         Status status = StatusRepository.findById(Status_id);
@@ -85,6 +85,8 @@ public class ManageStatusController {
 
         newManageStatus.setCreate_at(new Date());
         newManageStatus.setDelete_at(null);
+        newManageStatus.setManageStatus_note(ManageStatus_note);
+
 
         return ManageStatusRepository.save(newManageStatus); // บันทึก Objcet ชื่อ ManageStatus
     }

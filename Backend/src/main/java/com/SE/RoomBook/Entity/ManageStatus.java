@@ -21,6 +21,8 @@ import com.SE.RoomBook.Entity.Room;
 import com.SE.RoomBook.Entity.Status;
 import com.SE.RoomBook.Entity.Employee;
 
+import javax.validation.constraints.*;
+
 import javax.persistence.*; // เพื่อใช้ @NamedQuery
 
 @Data
@@ -58,10 +60,17 @@ public class ManageStatus {
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
     private Employee employee;
 
+    @NotNull
     @Column(name="CREATE_AT")
     private Date Create_at;
 
     @Column(name="DELETE_AT")
     private Date Delete_at;
+
+    @NotNull
+    @Pattern(regexp = "[a-zA-Z0-9ก-๙-]*")
+    @Size(min=0, max=50)
+    @Column(name="NOTE")
+    private String ManageStatus_note;
 
 }
