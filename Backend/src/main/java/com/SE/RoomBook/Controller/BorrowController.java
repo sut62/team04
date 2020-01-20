@@ -24,7 +24,7 @@ import com.SE.RoomBook.Entity.*;
 import com.SE.RoomBook.Repository.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class BorrowController {
     @Autowired
