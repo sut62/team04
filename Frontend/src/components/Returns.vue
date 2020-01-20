@@ -9,8 +9,6 @@
       <v-spacer></v-spacer>
     </v-app-bar>
     <br/><br/>
-    <br/><br/>
-    <br/><br/>
     <v-container fluid>
     <v-row align="center" justify="center">
       <v-col class="d-flex" cols="12" sm="6">
@@ -57,12 +55,23 @@
           :rules="[(v) => !!v || 'Item is required']"
           required
         ></v-select>
-        
+
       </v-col>
     </v-row>
-    
-    
-    <br/><br/>
+
+     <v-row align="center" justify="center">
+      <v-col
+        sm="6"
+        cols="6"
+      >
+      <br/><br/>
+      <v-text-field
+          v-model="Returns.note"
+          label="หมายเหตุ(ต้องใส่ทุกครั้ง)"
+        ></v-text-field>
+        </v-col>
+        </v-row>
+
     <br/><br/>
    
     <v-row class="text-center" cols="12" sm="4">
@@ -70,6 +79,15 @@
         <v-btn Style ="margin-left:450px;" @click="clear" color="light-blue darken-1">Clear</v-btn>
         <v-btn Style ="margin-left:400px;" @click="back" color="green darken-2">Back</v-btn>
     </v-row>
+
+     <div v-if = "clickReturns == true">
+        <div v-if = "returnsCheck == true">
+          <v-alert type="success">Returns Completed</v-alert>
+        </div>
+        <div v-if = "returnsCheck == false">
+          <v-alert type="error">Can't Returns</v-alert>
+        </div>
+        </div>
 
   </v-container>
   </v-app>
@@ -87,7 +105,8 @@ export default {
       Returns: {
         borrowId: "",
         customerId: "",
-        employeeId: ""
+        employeeId: "",
+        note: ""
       },
      // object: [], //ค่าที่มาจาการกรอง Receipt
       Borrows: [],
@@ -95,7 +114,9 @@ export default {
       customer: [],
       employees: [],
       BorrowsResult: [], // ค่าใหม่ใช้กับ combobox
-      employee: ""
+      employee: "",
+      returnsCheck: false,
+      clickReturns: false,
     };
   },
   methods: {
@@ -140,6 +161,8 @@ export default {
       .then(response => {
         this.Borrows = response.data;
         console.log(response.data);
+
+      
       })
       .catch(e => {
         console.log(e);
@@ -147,10 +170,17 @@ export default {
     },
 
      save() {
+       this.clickReturns = true;
+       if(this.Returns.customerId==''||this.Returns.employeeId==''||this.Returns.borrowId==''){
+       this.returnsCheck = false;
+       }
+      else{
+      this.returnsCheck = true;
       console.log("Save");
       console.log( this.Returns.customerId );
       console.log( this.Returns.borrowId);
       console.log( this.Returns.employeeId);
+      console.log(this.Returns.note);
       http
         .post(
           "/returns/" +
@@ -158,7 +188,9 @@ export default {
             "/" +
              this.Returns.borrowId +
             "/" +
-            this.Returns.employeeId,
+            this.Returns.employeeId +
+            "/" +
+            this.Returns.note,
           this.Returns
         )
         .then(responses => {
@@ -168,19 +200,13 @@ export default {
         .catch(e => {
           console.log(e);
         });
+      }
     },
     comboboxBorrow(){
-        // BorrowsResult
-      this.Borrows.find((value) =>{
-        // console.log(value.bid);
-        // console.log(value.manageequipment.manageEquipment_amount);
-        // console.log(value.manageequipment.equipmentName);
-
+      this.Borrows.forEach((value) =>{
         this.BorrowsResult.push({
-          // "bid": value.bid,
-          // "name": "หมายเลขการยืม "+value.bid+"  สิ่งของที่ยืม  "+"value.manageequipment.equipmentName"+"  จำนวนที่ยืม  "+value.manageequipment.manageEquipment_amount
           "bid": value.bid,
-          "name": `หมายเลขการยืม `+value.bid+`  สิ่งของที่ยืม  `+value.manageequipment.equipmentName+`  จำนวนที่ยืม  `+value.manageequipment.manageEquipment_amount
+          "name": `หมายเลขการยืม `+value.bid+`  สิ่งของที่ยืม  `+value.manageequipment.equipmentName.name+`  จำนวนที่ยืม  `+value.manageequipment.manageEquipment_amount
 
         });
       
@@ -192,6 +218,7 @@ export default {
     //  window.location.reload();
     this.Returns.borrowId = '';
     this.Returns.customerId= '';
+    this.clickReturns = false;
 
     }, 
      refreshList() {
@@ -199,6 +226,7 @@ export default {
     this.getCustomers();
     this.getBorrows();
     this.lockemployee();
+    this.note();
       
     }
     
@@ -209,6 +237,7 @@ export default {
     this.getCustomers();
     this.getBorrows();
     this.lockemployee();
+    this.note();
     
   },
   watch:{
