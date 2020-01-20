@@ -39,6 +39,7 @@ public class Reservations {
     private  LocalDateTime StartTime;
 
     @NotNull
+    @Future
     @Column(name = "EndTime")
     private  LocalDateTime EndTime;
 

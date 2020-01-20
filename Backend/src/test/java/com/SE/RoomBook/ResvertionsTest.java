@@ -46,12 +46,12 @@ public class ResvertionsTest {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String dateInString = "31-08-1982 10:20:56";
         Date date = sdf.parse(dateInString);
-        LocalDateTime d = LocalDateTime.parse("2018-12-30T19:34:50.63");
+        // LocalDateTime d = LocalDateTime.parse("2018-12-30T19:34:50.63");
         LocalDateTime futureDate = LocalDateTime.now();
         futureDate = futureDate.plusHours(1);
         r.setBookdate(date);
         r.setStartTime(futureDate);
-        r.setEndTime(d);
+        r.setEndTime(futureDate);
 
         r = reservationsRepository.saveAndFlush(r);
         Optional<Reservations> found = reservationsRepository.findById(r.getReservations_id());
@@ -65,8 +65,10 @@ public class ResvertionsTest {
         assertEquals(date, found.get().getBookdate());
         // เพื่อให้แน่ใจว่าค่าที่ออกมาจะต้องเป็นตัวเดิม
         assertEquals(sdf.parse("31-08-1982 10:20:56"), found.get().getBookdate());
+
+
         assertEquals(futureDate, found.get().getStartTime());
-        assertEquals(LocalDateTime.parse("2018-12-30T19:34:50.63"), found.get().getEndTime());
+        assertEquals(futureDate, found.get().getEndTime());
     }
 
     @Test
@@ -75,9 +77,10 @@ public class ResvertionsTest {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String dateInString = "31-08-1982 10:20:56";
         Date date = sdf.parse(dateInString);
-        LocalDateTime d = LocalDateTime.parse("2018-12-30T19:34:50.63");
+        LocalDateTime d = LocalDateTime.now();
         // สร้าง Reservation และทำการใส่ เวลา (Date and LocalDate)
         Reservations r = new Reservations();
+        d = d.plusHours(2);
         r.setBookdate(date);
         r.setEndTime(d);
         r.setStartTime(null);
@@ -100,15 +103,13 @@ public class ResvertionsTest {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String dateInString = "31-08-1982 10:20:56";
         Date date = sdf.parse(dateInString);
-        LocalDateTime d = LocalDateTime.parse("2018-12-30T19:34:50.63");
+        LocalDateTime d = LocalDateTime.now();
+        LocalDateTime dayNext = d.plusDays(1);
         // สร้าง Reservation และทำการใส่ เวลา (Date and LocalDate)
         Reservations r = new Reservations();
         r.setBookdate(date);
-        r.setEndTime(d);
+        r.setEndTime(dayNext);
 
-        //เตรียมเวลา อนาคต ของ StartTime
-        // LocalDateTime futureDate = LocalDateTime.now();
-        // futureDate = futureDate.plusHours(1);
         r.setStartTime(d);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
@@ -129,7 +130,7 @@ public class ResvertionsTest {
         String dateInString = "31-08-1982 10:20:56";
         Date date = sdf.parse(dateInString);
         LocalDateTime d = LocalDateTime.now();
-        d = d.plusHours(1); 
+        d = d.plusHours(1);
         // สร้าง Reservation และทำการใส่ เวลา (Date and LocalDate)
         Reservations r = new Reservations();
         r.setBookdate(date);
@@ -145,6 +146,33 @@ public class ResvertionsTest {
         // error message ตรงชนิด และถูก field
         ConstraintViolation<Reservations> v = result.iterator().next();
         assertEquals("must not be null", v.getMessage());
+        assertEquals("EndTime", v.getPropertyPath().toString());
+    }
+    
+    @Test
+    void B6014681_testfielEndTimeNoFutureResvertion() throws ParseException {
+        //เตรียมเวลา ทั้ง Date และ LocalDate
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        String dateInString = "31-08-1982 10:20:56";
+        Date date = sdf.parse(dateInString);
+        LocalDateTime d = LocalDateTime.now();
+        LocalDateTime dayNext = d.plusDays(1);
+        // สร้าง Reservation และทำการใส่ เวลา (Date and LocalDate)
+        Reservations r = new Reservations();
+        r.setBookdate(date);
+        r.setEndTime(d);
+        
+        r.setStartTime(dayNext);
+
+        // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
+        Set<ConstraintViolation<Reservations>> result = validator.validate(r);
+
+        // result ต้องมี error 1 ค่าเท่านั้น 
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Reservations> v = result.iterator().next();
+        assertEquals("must be a future date", v.getMessage());
         assertEquals("EndTime", v.getPropertyPath().toString());
     }
 
