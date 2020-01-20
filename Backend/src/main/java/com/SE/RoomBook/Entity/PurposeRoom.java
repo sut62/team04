@@ -6,7 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -28,11 +30,13 @@ public class PurposeRoom {
     @Column(name = "PurposeRoom_id", unique = true, nullable = true)
     private @NonNull Long PurposeRoom_id;
 
-    // @Pattern(regexp = "[\\u0E00-\\u0E7F\\u0020]")
-    @Column(name = "Name")
-    private @NonNull String name;
+    @Pattern(regexp = "[\\u0E00-\\u0E7F|\\u0020]+") // \\u0020
+    @NotNull
+    @Size( min = 3 ,max=40)
+    @Column(name = "Name", unique = true)
+    private String name;
 
     @OneToMany(fetch = FetchType.EAGER)
-    //, mappedBy = "purposeRoom"
+    // , mappedBy = "purposeRoom"
     private Collection<DetailPurpose> detailPurpose;
 }
