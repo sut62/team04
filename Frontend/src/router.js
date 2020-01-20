@@ -8,6 +8,7 @@ import ManageEquipment from './components/ManageEquipment'
 import ManageStatus from './components/ManageStatus'
 import Returns from './components/Returns'
 import Reservations from './components/Reservations'
+import Profile from './components/Profile'
 
 Vue.use(Router)
 
@@ -53,7 +54,13 @@ export default new Router({
       path: '/Reservations',
       name: 'Reservations',
       component: Reservations
-    }
+    },
+    {
+      path: '/Profile',
+      name: 'Profile',
+      component: Profile
+    },
+
     
 
   ]

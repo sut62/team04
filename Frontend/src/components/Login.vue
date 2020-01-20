@@ -98,9 +98,11 @@
       </v-card>
     </div>
     <div v-if = "clickLogin == true">
-      <div v-if = "checkLogin == true"/>
+      <div v-if = "checkLogin == true">
+        <v-alert type="success">Login Success</v-alert>
+      </div>
       <div v-if ="checkLogin == false">
-        <v-alert type="error">Username or Password is not valid</v-alert>
+        <v-alert type="error">Username or Password is not valid or Input not complete</v-alert>
       </div>
     </div>
   </v-container>
@@ -133,6 +135,7 @@ export default {
         this.checkLogin = false;
         // alert("Plese input all data");
       } else if (this.login.Choose == "Employee") {
+        this.checkLogin = true;
         http
           .get("/employee/" + this.login.Username + "/" + this.login.Password)
           .then(response => {
@@ -143,14 +146,15 @@ export default {
               this.employee = response.data;
               this.login.Username = response.data.em_name;
               this.login.Password = response.data.password;
-              this.checkLogin = true;
+              
               // alert("Login complete");
               this.$router.push({
                 name: "Dashbord",
                 params: { em: this.employee.em_id }
               });
             } else {
-              alert("Username or Password is not valid");
+              this.checkLogin = false;
+              // alert("Username or Password is not valid");
             }
           });
       } else if (this.login.Choose == "Customer") {
@@ -161,10 +165,10 @@ export default {
               this.login.Username == response.data.email &&
               this.login.Password == response.data.password
             ) {
+              this.checkLogin = true;
               this.customer = response.data;
               this.login.Username = response.data.email;
               this.login.Password = response.data.password;
-              this.checkLogin = true;
               // alert("Login complete");
 
               this.$store.dispatch("setOpendrawer", true);

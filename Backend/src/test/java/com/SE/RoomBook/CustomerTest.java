@@ -40,6 +40,7 @@ public class CustomerTest{
         customer.setPassword("Test");
         customer.setEmail("Test@ex.com");
         customer.setPhone("0930949139");
+        
 
         customer = customerRepository.saveAndFlush(customer);
         Optional<Customer> found = customerRepository.findById(customer.getId());
@@ -47,6 +48,7 @@ public class CustomerTest{
         assertEquals("Test", found.get().getPassword());
         assertEquals("Test@ex.com", found.get().getEmail());
         assertEquals("0930949139", found.get().getPhone());
+        
     }
     @Test
     void testCustomerNameMustNotBeNull() {
@@ -55,6 +57,7 @@ public class CustomerTest{
         customer.setPassword("Test");
         customer.setEmail("Test@ex.com");
         customer.setPhone("0930949139");
+        
 
         Set<ConstraintViolation<Customer>> result = validator.validate(customer);
 
@@ -74,6 +77,7 @@ public class CustomerTest{
         customer.setPassword("Test");
         customer.setEmail("Testex.com");
         customer.setPhone("0930949139");
+        
 
         Set<ConstraintViolation<Customer>> result = validator.validate(customer);
 
@@ -93,6 +97,7 @@ public class CustomerTest{
         customer.setPassword("Test");
         customer.setEmail("Testex@ex.com");
         customer.setPhone("A123456789");
+        
 
         Set<ConstraintViolation<Customer>> result = validator.validate(customer);
 
@@ -104,5 +109,24 @@ public class CustomerTest{
         assertEquals("must match \"\\d{10}\"", v.getMessage());
         assertEquals("Phone", v.getPropertyPath().toString());
     }
-
+    @Test
+    void testCustomerEmailMustBeUnique() {
+        Customer customer = new Customer();
+        customer.setName("Test");
+        customer.setPassword("Test");
+        customer.setEmail("Test@ex.com");
+        customer.setPhone("0930949139");
+        customerRepository.saveAndFlush(customer);
+        
+        
+        
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            Customer customer2 = new Customer();
+            customer2.setName("Test2");
+            customer2.setPassword("Test2");
+            customer2.setEmail("Test@ex.com");
+            customer2.setPhone("0849835818");
+            customerRepository.saveAndFlush(customer2);
+        });
+    }
 }
