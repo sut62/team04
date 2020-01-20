@@ -26,15 +26,14 @@
         <v-img v-bind="props" gradient="to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)"></v-img>
       </template>
 
-    
 
   <v-toolbar-title>ระบบจัดการสถานะ</v-toolbar-title>
 
-      <v-spacer></v-spacer>
+      <v-spacer></v-spacer> 
       
 
     </v-app-bar>
-
+   
      
 
       <v-sheet id="scrolling-techniques-5"  >
@@ -72,7 +71,7 @@
                   :rules="[(v) => !!v || 'Item is required']"
                   required
                 ></v-select>
-                <p   class="display-1 font-weight-black  px-0"
+        <p   class="display-1 font-weight-black  px-0"
         style="margin: 10px "
         >Employee</p>
          <v-select
@@ -86,19 +85,45 @@
                   :rules="[(v) => !!v || 'Item is required']"
                   required
                 ></v-select>
-        <v-row  align="center" justify="center">
-        <v-col>
+
+          <p class="display-1 font-weight-black  px-0"
+          style="margin: 10px ">Note</p>
+          <v-text-field
+              class=" px-0"
+              label="ManageStatus_note"
+              outlined
+              v-model="ManageStatus.ManageStatus_note"
+            ></v-text-field>
+
+          <v-row  align="center" justify="center">
+                <v-col>
                 <v-btn  @click="saveManageStatus"  color="green"  >save</v-btn>
                 <v-btn style="margin-left:12px;" @click="clear"  color="red">clear</v-btn>
                 <v-btn style="margin-left:15px;" @click="Back"  color="teal lighten-1">back</v-btn>
                  <!-- {{ManageStatuss[0].status.status_id}} -->
-        </v-col>
-        </v-row>
+
+                 
+                <p></p>
+                 <div v-if = "clickManageStatus == true">
+                <div v-if = "ManageCheck == true">
+                  <v-alert type="success">บันทึกข้อมูลสำเร็จ</v-alert>
+                </div>
+                <div v-if = "Check1 == true">
+                   <v-alert type="error">กรุณากรอกข้อมูลให้ครบถ้วน </v-alert>
+                </div>
+                <div v-if = "Check2 == true">
+                  <v-alert type="error">กรุณากรอก note ให้ถูกต้อง (ความยาวห้ามเกิน 50 อักขระ , ห้ามใส่สัญลักษณ์ ,ถ้าหากไม่ป้อนใส่ -)</v-alert>
+                </div>
+                <div v-if = "Check3 == true">
+                  <v-alert type="error">สถานะซ้ำ</v-alert>
+                </div>
+            </div>
+               </v-col>
+           </v-row>
           </v-col>
         </v-row>
       </v-card-text>
       </v-form>
-      
     </v-sheet>
    
   </v-card>
@@ -115,15 +140,22 @@ export default {
       ManageStatus: {
         RoomId: "",
         StatusId: "",
-        EmployeeId: ""
+        EmployeeId: "",
+        ManageStatus_note: ""
+
       },
       Rooms:[],
       Statuss:[],
       Employees:[],
       ManageStatuss:[],
       ManageStatusRoom:[],
-      emid:''
-      
+      emid:'',
+      // ManageStatus_note:[],
+      Check1: false,
+      Check2: false,
+      Check3: false,
+      clickManageStatus: false,
+      ManageCheck: false
     };
   },
   methods: {
@@ -197,7 +229,11 @@ export default {
           if(typeof response.data == 'object'){
             console.log("object");
             if(response.data.status.status_id == this.ManageStatus.StatusId){
-              alert("ซ้ำ");
+              this.Check3 = true; 
+              this.Check1 = false;
+               this.Check2 = false;
+               this.ManageCheck = false;
+              // alert("สถานะของห้องซ้ำ");
             }else{
               console.log("ไม่ซ้ำ");
               this.savePost()
@@ -214,6 +250,7 @@ export default {
     },
 
     savePost(){
+      this.ManageCheck = true;
       http
         .post(
           "/ManageStatus/" +
@@ -221,8 +258,10 @@ export default {
             "/" +
             this.ManageStatus.StatusId+
             "/"+
-             this.ManageStatus.EmployeeId 
-             ,this.ManageStatus
+             this.ManageStatus.EmployeeId+
+            "/"+
+            this.ManageStatus.ManageStatus_note
+            //  ,this.ManageStatus
         )
         .then(response => {
           console.log(response,"cc");
@@ -233,18 +272,46 @@ export default {
         });
 
       this.submitted = true;
+      this.Check1 = false;
+        this.Check2 = false;
+        this.Check3 = false;
       
-      alert("บันทึกข้อมูลสำเร็จ");
+      
+      // alert("บันทึกข้อมูลสำเร็จ");
       
     },
     
     // function เมื่อกดปุ่ม save
     saveManageStatus() {
-      // var check = false;
-      if(this.ManageStatus.RoomId == "" || 
-      this.ManageStatus.StatusId == "" || 
-      this.ManageStatus.EmployeeId == ""){
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+      
+      // var check = false
+      this.clickManageStatus =true;
+
+      if(this.ManageStatus.RoomId == '' || 
+      this.ManageStatus.StatusId == '' ||
+      this.ManageStatus.EmployeeId == ''||
+      this.ManageStatus.ManageStatus_note == ''
+
+      // this.ManageStatus.ManageStatus_note.length >50 ||
+      // !this.ManageStatus.ManageStatus_note.match(/^([a-zA-z0-9ก-๙])+$/i)
+       ){
+         this.Check1 = true;
+        this.ManageCheck = false;
+        this.Check2 = false;
+        this.Check3 = false;
+        // alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+      }
+
+      else if(this.ManageStatus.ManageStatus_note.length >50 ||
+      !this.ManageStatus.ManageStatus_note.match(/^([a-zA-z0-9ก-๙-|\u0020])+$/i)
+
+      ){
+        
+        this.Check2 =true;
+        this.Check1 = false;
+        this.Check3 = false;
+        this.ManageCheck = false;
+        // alert("กรุณากรอก note ให้ถูกต้อง (ความยาวห้ามเกิน 50 อักขระ , ห้ามใส่สัญลักษณ์ ,ถ้าหากไม่ป้อนใส่ -)");
       }
       
 
@@ -278,15 +345,24 @@ export default {
     clear() {
       //this.$refs.form.reset();
       //this.$v.$reset();
-      this.ManageStatus.RoomId= 'Room';
-      this.ManageStatus.StatusId= 'Status';
+      this.ManageStatus.RoomId= '';
+      this.ManageStatus.StatusId= '';
+      this.ManageStatus.ManageStatus_note='';
       // this.ManageStatus.EmployeeId= 'Employee';
+      this.Check1= false,
+      this.Check2= false,
+      this.Check3= false,
+      this.clickManageStatus= false,
+      this.ManageCheck= false
+      
 
     },
     refreshList() {
       this.getRooms();
       this.getStatuss();
+
       // this.getEmployees();
+      
     }
     /* eslint-enable no-console */
   },
@@ -296,6 +372,7 @@ export default {
     this.getEmployees();
     this.getStatus_id();
     this.lockemployee();
+    this.getManageStatus_note();
   },
   
 };
