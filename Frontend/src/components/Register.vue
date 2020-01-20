@@ -28,7 +28,7 @@
           </v-row>
           <v-row>
             <v-col class="ml-12" cols="10" sm="6" md="6">
-              <v-text-field v-model="customer.Phone" label="Phone-Number" :type="'number'" :rules="[(v) => !!v || 'Item is required']" required></v-text-field>
+              <v-text-field v-model="customer.Phone" label="Phone-Number" :type="'number'" :rules="[(v) => !!v || 'Item is required',(v) => !!v && v.length == 10 || 'Phone must be equal 10']" required></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -169,7 +169,7 @@ export default {
     // function เมื่อกดปุ่ม Register
     RegisterCustomer() {
       this.clickRegister = true;
-      if(!this.customer.Name||!this.customer.LastName||!this.customer.Password||!this.customer.Phone||!this.customer.Email||!this.customer.GenderId||!this.customer.TitleId||!this.customer.StatusId)
+      if(!this.customer.Name||!this.customer.LastName||!this.customer.Password||!this.customer.Phone||!this.customer.Email||!this.customer.GenderId||!this.customer.TitleId||!this.customer.StatusId||this.customer.Phone.length!=10)
       {
         // this.registerCheck = false;
         // alert("Can't not register")
