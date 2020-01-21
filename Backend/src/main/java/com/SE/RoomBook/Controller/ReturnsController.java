@@ -45,8 +45,8 @@ public class ReturnsController {
         return returnsRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/returns/{C}/{bid}/{E}")
-    public Returns newReturns(Returns newReturns, @PathVariable long C, @PathVariable long bid, @PathVariable long E) {
+    @PostMapping("/returns/{C}/{bid}/{E}/{N}")
+    public Returns newReturns(Returns newReturns, @PathVariable long C, @PathVariable long bid, @PathVariable long E,@PathVariable String N) {
 
         Employee employee = employeeRepository.findById(E);
         Borrow borrow = borrowRepository.findById(bid);
@@ -56,6 +56,7 @@ public class ReturnsController {
         newReturns.setCustomer(customer);
         newReturns.setEmployee(employee);
         newReturns.setReturnsdate(new Date());
+        newReturns.setNote(N);
 
         return returnsRepository.save(newReturns);
 
