@@ -46,10 +46,11 @@ public class BorrowController {
         return BorrowRepository.findAll().stream().collect(Collectors.toList());
     }
     
-    @PostMapping("/Borrow/{id}/{em_id}/{manageEquipment_id}")
+    @PostMapping("/Borrow/{id}/{em_id}/{manageEquipment_id}/{bornote}")
     public Borrow newBorrow (final Borrow newBorrow,
     @PathVariable final long id,//customer
     @PathVariable final long em_id,//employee
+    @PathVariable final String bornote,
     @PathVariable final long manageEquipment_id)//equipment
     {
     
@@ -61,6 +62,7 @@ public class BorrowController {
     newBorrow.setEmployee(Employee);
     newBorrow.setBordate(new Date());
     newBorrow.setManageequipment(ManageEquipment);
+    newBorrow.setBornote(bornote);
     
     
     return BorrowRepository.save(newBorrow); //บันทึก Objcet ชื่อ Borrow
