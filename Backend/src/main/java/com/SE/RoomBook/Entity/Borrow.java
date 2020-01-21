@@ -8,19 +8,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.SE.RoomBook.Entity.*;
+import javax.validation.constraints.NotNull;
+
 
 @Data
 @Entity
@@ -32,8 +33,16 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="borrow_seq")
     @Column(name = "borrow__id", unique = true, nullable = true)
     private @NonNull Long bid;
-    @Column(name="borrow_date",unique = false, nullable = true)
-    private @NonNull Date bordate;
+
+    @NotNull
+    @Column(name="borrow_date")
+    private Date bordate;
+
+    @NotNull
+    @Size(min=0, max=50)
+    @Pattern(regexp = "[a-zA-Z0-9ก-๙]*")
+    @Column(name="borrow_note")
+    private String bornote;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
