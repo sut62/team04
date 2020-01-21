@@ -1,12 +1,7 @@
 <template>
   <nav>
-
-    <CustomerNavigation v-bind:drawer="drawer"></CustomerNavigation>
-    <v-app-bar
-      app
-      clipped-left
-      class="light-blue darken-4"
-    >
+    <CustomerNavigation v-bind:drawer="getDrawerStore"></CustomerNavigation>
+    <v-app-bar app clipped-left class="light-blue darken-4">
       <v-app-bar-nav-icon
         class="white--text"
         v-if="$store.getters.Opendrawer"
@@ -15,7 +10,6 @@
       <v-toolbar-title class="headline text-uppercase white--text">
         <span class="Reg">Room </span>
         <span class="Reg"> Book</span>
-
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -30,9 +24,7 @@
 </template>
 
 <script>
-//drawer = ! drawer
 /*eslint-disable */
-// import { mapGetters } from "vuex";
 import CustomerNavigation from "./CustomerNavigation";
 export default {
   components: {
@@ -40,22 +32,19 @@ export default {
   },
   data() {
     return {
-      drawer: false
+      drawer: ''
     };
   },
   methods: {
     CheckTitle() {
-      this.drawer = !this.drawer;
-      this.$store.commit("setDrawer", this.drawer);
-    },
-    upDateDrawer(upDateDrawer) {
-      this.drawer = upDateDrawer;
+      this.$store.dispatch("setChangeDrawer");
     }
   },
-  computed: {},
-  watch: {
-    drawer() {}
+  computed: {
+    getDrawerStore() {
+      return this.$store.state.drawer;
+    }
   }
-}; //v-bind:drawer="drawer"
+}; //v-bind:drawer="drawer"    v-on:childToParent="drawer = $event"
 /*eslint-disable */
 </script>
