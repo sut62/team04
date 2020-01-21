@@ -17,6 +17,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.SE.RoomBook.Entity.*;
 
@@ -31,8 +34,15 @@ public class Returns{
     @Column(name = "Returns_id", unique = true, nullable = true)
     private Long id;
 
+    @NotNull
     @Column(name = "Returnsdate")
     private Date returnsdate;
+
+    @NotNull
+    @Pattern(regexp = "[a-zA-Z0-9ก-๙-]*")
+    @Size(min=0, max=45)
+    @Column(name="NOTE")
+    private String note;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
     @JoinColumn(name = "Customer_id", insertable = true)
@@ -42,7 +52,7 @@ public class Returns{
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "Emp_id", insertable = true)
     @JsonManagedReference
-    private @NotNull Employee employee;
+    private  Employee employee;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Borrow.class)
     @JoinColumn(name = "Borrow_id", insertable = true)
