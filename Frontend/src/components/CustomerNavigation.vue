@@ -5,42 +5,23 @@
     :clipped="$vuetify.breakpoint.lgAndUp"
     color="grey lighten-4"
   >
-    
-    <v-divider
-      dark
-      class="my-3"
-    ></v-divider>
+    drawer {{ drawer }}
+    <v-divider dark class="my-3"></v-divider>
     <div class="pa-2">
-      <v-btn
-        block
-        v-on:click="Resvationopen"
-      >Reservation</v-btn>
+      <v-btn block v-on:click="Resvationopen">Reservation</v-btn>
     </div>
-    <v-divider
-      dark
-      class="my-3"
-    ></v-divider>
+    <v-divider dark class="my-3"></v-divider>
     <div class="pa-2">
-      <v-btn
-        block
-        to="Profile"
-      >Profile</v-btn>
+      <v-btn block to="Profile">Profile</v-btn>
     </div>
-    <v-divider
-      dark
-      class="my-3"
-    ></v-divider>
+    <v-divider dark class="my-3"></v-divider>
 
     <template v-slot:append>
       <div class="pa-2">
-        <v-btn
-          block
-          v-on:click="Logout"
-        >Logout</v-btn>
+        <v-btn block v-on:click="Logout" v-on:change="ShowAlert">Logout</v-btn>
       </div>
     </template>
   </v-navigation-drawer>
-
 </template>
 
 <script>
@@ -63,13 +44,12 @@ export default {
     Logout() {
       this.$store.commit("setDrawer", false);
       this.$store.commit("setOpendrawer", false);
-      // this.checkShow = false;
       this.checkShow = this.$store.getters.drawer;
       this.$router.push("/");
     },
     ShowDrawer() {
-      this.checkShow = this.drawer;
-      this.checkShow = this.$store.getter.drawer;
+      this.checkShow = this.$store.state.drawer;
+      // หรือ เขียนว่า this.checkShow = this.drawer;
     }
   },
   watch: {
@@ -83,5 +63,4 @@ export default {
 /*eslint-disable */
 </script>
 
-<style>
-</style>
+<style></style>
