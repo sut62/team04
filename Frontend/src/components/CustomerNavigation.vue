@@ -5,20 +5,37 @@
     :clipped="$vuetify.breakpoint.lgAndUp"
     color="grey lighten-4"
   >
-    drawer {{ drawer }}
-    <v-divider dark class="my-3"></v-divider>
+    <v-divider
+      dark
+      class="my-3"
+    ></v-divider>
     <div class="pa-2">
-      <v-btn block v-on:click="Resvationopen">Reservation</v-btn>
+      <v-btn
+        block
+        v-on:click="Resvationopen"
+      >Reservation</v-btn>
     </div>
-    <v-divider dark class="my-3"></v-divider>
+    <v-divider
+      dark
+      class="my-3"
+    ></v-divider>
     <div class="pa-2">
-      <v-btn block to="Profile">Profile</v-btn>
+      <v-btn
+        block
+        to="Profile"
+      >Profile</v-btn>
     </div>
-    <v-divider dark class="my-3"></v-divider>
+    <v-divider
+      dark
+      class="my-3"
+    ></v-divider>
 
     <template v-slot:append>
       <div class="pa-2">
-        <v-btn block v-on:click="Logout" v-on:change="ShowAlert">Logout</v-btn>
+        <v-btn
+          block
+          v-on:click="Logout"
+        >Logout</v-btn>
       </div>
     </template>
   </v-navigation-drawer>
