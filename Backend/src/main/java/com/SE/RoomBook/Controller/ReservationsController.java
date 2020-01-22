@@ -73,7 +73,7 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
          String start = startDate.toString() + " " + startTime; // 17.00
          String end = startDate.toString() + " " + endTime; // 18.00
         // Reservations checktime = reservationsRepository.findTime(start, end);
-
+                
         return reservationsRepository.findTime(start, end, idroom);
     }
 
@@ -91,6 +91,7 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
         final LocalDateTime e = LocalDateTime.parse(LocalDate.now() + "T" + bodyBook.getEnd());
         r.setEndTime(e);
         r.setBookdate(new Date());
+        r.setConfrimBook(true);
         for (final Long purpose : bodyBook.getPurosebook()) {
             final DetailPurpose dp = new DetailPurpose();
             final PurposeRoom p = purposeRoomRepository.findById(purpose).get();

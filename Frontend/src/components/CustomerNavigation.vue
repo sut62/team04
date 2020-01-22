@@ -18,7 +18,19 @@
     <v-divider
       dark
       class="my-3"
-    ></v-divider>
+    >
+    </v-divider>
+    <div class="pa-2">
+      <v-btn
+        block
+        v-on:click="DeleteResvertion"
+      >Delete Resvertion</v-btn>
+    </div>
+    <v-divider
+      dark
+      class="my-3"
+    >
+    </v-divider>
     <div class="pa-2">
       <v-btn
         block
@@ -58,12 +70,16 @@ export default {
         // params: { cus: this.customer.id }
       });
     },
+    DeleteResvertion() {
+      this.$router.push("DeleteResvertion");
+    },
     Logout() {
       this.$store.commit("setDrawer", false);
       this.$store.commit("setOpendrawer", false);
       this.checkShow = this.$store.getters.drawer;
       this.$router.push("/");
     },
+    //ตัวเปิดปิด Nagavitor Drawer
     ShowDrawer() {
       this.checkShow = this.$store.state.drawer;
       // หรือ เขียนว่า this.checkShow = this.drawer;

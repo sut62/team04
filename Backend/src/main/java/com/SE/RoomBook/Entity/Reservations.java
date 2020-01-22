@@ -21,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Data
 @Entity
@@ -36,12 +37,12 @@ public class Reservations {
     @NotNull
     @Future
     @Column(name = "StartTime")
-    private  LocalDateTime StartTime;
+    private LocalDateTime StartTime;
 
     @NotNull
     @Future
     @Column(name = "EndTime")
-    private  LocalDateTime EndTime;
+    private LocalDateTime EndTime;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageStatus.class)
     @JoinColumn(name = "manageStatus_id", insertable = true)
@@ -50,12 +51,15 @@ public class Reservations {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "reservations")
     private List<DetailPurpose> detailPurpose;
 
-
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
     @JoinColumn(name = "Cus_id", insertable = true)
     private Customer customer;
 
     @NotNull
-    @Column(name= "Date")
+    @Column(name = "Date")
     private Date bookdate;
+
+    @NotNull
+    @Column(name = "confrimBook")
+    private Boolean confrimBook;
 }
