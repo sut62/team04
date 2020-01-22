@@ -51,10 +51,10 @@ public class CustomerController {
     public Collection<Customer> Customers() {
         return customerRepository.findAll().stream().collect(Collectors.toList());
     }
-
+    
     @GetMapping("/customer/{Cus_id}")
     public Customer getCustomersDetail(@PathVariable("Cus_id")long id) {
-        return customerRepository.findById(id);
+    return customerRepository.findById(id);
     }
 
     @GetMapping("/customer/{Customer_Email}/{Password}")

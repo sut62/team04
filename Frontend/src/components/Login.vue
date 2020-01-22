@@ -158,6 +158,7 @@ export default {
             }
           });
       } else if (this.login.Choose == "Customer") {
+        this.checkLogin = true;
         http
           .get("/customer/" + this.login.Username + "/" + this.login.Password)
           .then(response => {
