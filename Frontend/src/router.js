@@ -9,6 +9,7 @@ import ManageStatus from './components/ManageStatus'
 import Returns from './components/Returns'
 import Reservations from './components/Reservations'
 import Profile from './components/Profile'
+import DeleteResvertion from './components/DeleteResvertion'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/Profile',
       name: 'Profile',
       component: Profile
+    },
+    {
+      path: '/DeleteResvertion',
+      name: 'DeleteResvertion',
+      component: DeleteResvertion
     },
 
     
