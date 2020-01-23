@@ -1,5 +1,8 @@
 package com.SE.RoomBook.Repository;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import com.SE.RoomBook.Entity.Reservations;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +16,13 @@ public interface ReservationsRepository extends JpaRepository<Reservations, Long
 
 	@Query(value = "SELECT * FROM RESERVATIONS WHERE CONFRIM_BOOK = true AND MANAGE_STATUS_ID = :idroom AND (( START_TIME = :start  OR  END_TIME =  :end )  OR (START_TIME > :start  AND  START_TIME <  :end)  OR  (START_TIME > :start  AND  END_TIME <  :end)  OR (START_TIME < :start  AND  END_TIME >  :end) OR  (END_TIME > :start  AND  END_TIME <  :end))", nativeQuery = true)
 	Reservations findTime(@Param("start") String start, @Param("end") String end, @Param("idroom") Long idroom);
+
+	@Query(value = "SELECT * FROM RESERVATIONS WHERE CONFRIM_BOOK = true AND RESERVATIONS_ID = :id", nativeQuery = true)
+	Reservations findReservationById(@Param("id") Long id);
+
+	@Query(value = "SELECT * FROM RESERVATIONS WHERE CONFRIM_BOOK = true ", nativeQuery = true)
+	Collection<Reservations> findByReservationAll();
+
+	@Query(value = "SELECT * FROM RESERVATIONS WHERE CONFRIM_BOOK = true AND 	CUS_ID =:id AND Start_time > CURDATE() ", nativeQuery = true)
+	Collection<Reservations> findCustomerofReservationByIdAlllist(@Param("id") Long id);
 }

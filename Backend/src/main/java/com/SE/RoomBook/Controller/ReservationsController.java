@@ -51,9 +51,9 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
     @Autowired
     private final ManageStatusRepository manageStatusRepository;
 
-    ReservationsController(final ReservationsRepository reservationsRepository, final CustomerRepository customerRepository,
-            final DetailPurposeRepository detailPurposeRepository, final PurposeRoomRepository purposeRoomRepository,
-            final ManageStatusRepository manageStatusRepository) {
+    ReservationsController(final ReservationsRepository reservationsRepository,
+            final CustomerRepository customerRepository, final DetailPurposeRepository detailPurposeRepository,
+            final PurposeRoomRepository purposeRoomRepository, final ManageStatusRepository manageStatusRepository) {
         this.detailPurposeRepository = detailPurposeRepository;
         this.reservationsRepository = reservationsRepository;
         this.customerRepository = customerRepository;
@@ -61,19 +61,19 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
         this.manageStatusRepository = manageStatusRepository;
     }
 
-    @GetMapping("/reservationses") // เลือกดูการจองทั้งหมด
+    @GetMapping("/reservationses") // เลือกดูการจองทั้งหมดที่มี bookconfrim = true
     public Collection<Reservations> reservationss() {
-        return reservationsRepository.findAll().stream().collect(Collectors.toList());
+        return reservationsRepository.findByReservationAll().stream().collect(Collectors.toList());
     }
 
     @GetMapping("/reservationCheckTime/{startTime}/{endTime}/{idroom}")
-    public Reservations CheckTime(@PathVariable("startTime") final String startTime, @PathVariable("endTime") final String endTime,
-            @PathVariable("idroom") final Long idroom) {
-         LocalDate startDate = LocalDate.now();
-         String start = startDate.toString() + " " + startTime; // 17.00
-         String end = startDate.toString() + " " + endTime; // 18.00
+    public Reservations CheckTime(@PathVariable("startTime") final String startTime,
+            @PathVariable("endTime") final String endTime, @PathVariable("idroom") final Long idroom) {
+        LocalDate startDate = LocalDate.now();
+        String start = startDate.toString() + " " + startTime;
+        String end = startDate.toString() + " " + endTime;
         // Reservations checktime = reservationsRepository.findTime(start, end);
-                
+
         return reservationsRepository.findTime(start, end, idroom);
     }
 
@@ -101,12 +101,6 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
         }
 
         return reservationsRepository.save(r);
-    }
-    @DeleteMapping("/DeleteBook/{id}")
-    public boolean deletebook(@PathVariable("id") final Long id) {
-        reservationsRepository.deleteById(id);
-        return true;
-        
     }
 
 }
