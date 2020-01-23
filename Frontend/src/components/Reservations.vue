@@ -243,7 +243,7 @@
             style="margin:0 5% 0 25%"
             x-large
             justify="center"
-            outline
+            outlined
             color="primary"
             dark
             v-on:click="SaveRoom"
@@ -258,7 +258,7 @@
           <v-btn
             style="margin:0 2% 0 2%"
             x-large
-            outline
+            outlined
             color="blue-grey"
             dark
             v-on:click="clear"
@@ -290,7 +290,7 @@
           text
           v-if="alertErrorDodo"
         >
-          <strong>ปรดตรวจสอบข้อมูลของท่านใหม่</strong>
+          <strong>โปรดตรวจสอบข้อมูลของท่านใหม่</strong>
         </v-alert>
       </v-layout>
     </v-container>
@@ -473,6 +473,7 @@ export default {
             .then(res => {
               if (res.status == 200) {
                 this.alertSuccessDodo = true;
+                this.getResvertionRoom();
                 this.getEventInTable();
                 this.clear();
               }
@@ -617,18 +618,7 @@ export default {
       });
     },
     resvertion() {
-      let i = 1;
-      this.resvertion.forEach(value => {
-        // console.log(value.endTime);
-        this.event.push({
-          id: ++i,
-          title: value.customer.name,
-          start: value.startTime,
-          end: value.endTime,
-          resourceId: value.manageStatus.room.room_id
-          // textColor: "black"
-        });
-      });
+      this.getEventInTable();
     }
   }
 };
