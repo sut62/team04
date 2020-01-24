@@ -1,102 +1,115 @@
 <template>
-  <v-app id="inspire">
-    <v-app-bar app clipped-right color="#00796B" dark>
+  <v-container>
+    <v-layout text-center wrap>
+      <v-flex>
+        <v-app id="inspire">
+          <v-content>
+            <v-container class="fill-height" fluid>
+              <v-row align="center" justify="center">
+                <v-col cols="12" sm="6" md="6">
+                 
+                  <v-card class="elevation-12">
+                    <v-toolbar color="blue-grey lighten-2" dark flat>
+                      <!-- กรอบข้างบนสีฟ้า -->
+                      <v-toolbar-title>
+                        <h2>Manage Status</h2>
+                      </v-toolbar-title>
+                      <div class="flex-grow-1"></div>
+                    </v-toolbar>
 
-      <v-toolbar-title>
-        <h1>Returns</h1>
-      </v-toolbar-title>
+                    <v-form>
+                      <v-card-text>
+                        <!-- ComboBox รายชื่อลูกค้า -->
+                        <v-row justify="center">
+                          <v-col cols="10">
+                             <v-select
+                               label="Customer"
+                               dense
+                               v-model="Returns.customerId"
+                               :items="customer"
+                               item-text="name"
+                               item-value="id"
+                               :rules="[(v) => !!v || 'Item is required']"
+                               required
+                              ></v-select>
+                          </v-col>
+                        </v-row>
 
-      <v-spacer></v-spacer>
-    </v-app-bar>
-    <br/><br/>
-    <v-container fluid>
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-select
-          label="Customer"
-          dense
-          v-model="Returns.customerId"
-          :items="customer"
-          item-text="name"
-          item-value="id"
-          :rules="[(v) => !!v || 'Item is required']"
-          required
-        ></v-select>
-      </v-col>
-    </v-row>
+                        <!-- ComboBox พนักงาน-->
+                        <v-row justify="center">
+                          <v-col cols="10">
+                            <v-select
+                             label="Employee"
+                             dense
+                             :readonly="true"
+                             v-model="Returns.employeeId"
+                             :items="employees"
+                             item-text="em_name"
+                             item-value="em_id"
+                             :rules="[(v) => !!v || 'Item is required']"
+                             required
+                            ></v-select>
+                          </v-col>
+                        </v-row>
 
-    <br/><br/>
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="12" sm="6">
-        <v-select
-          label="Employee"
-          dense
-          :readonly="true"
-          v-model="Returns.employeeId"
-          :items="employees"
-          item-text="em_name"
-          item-value="em_id"
-          :rules="[(v) => !!v || 'Item is required']"
-          required
-        ></v-select>
-      </v-col>
-    </v-row>
+                        <!-- ComboBox อุปกรณ์ -->
+                        <v-row justify="center">
+                          <v-col cols="10">
+                            <v-select
+                             label="Borrow"
+                             dense
+                             v-model="Returns.borrowId"
+                             :items="BorrowsResult"
+                             item-text="name"
+                             item-value="bid"
+                             :rules="[(v) => !!v || 'Item is required']"
+                             required
+                            ></v-select>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                    </v-form>
+                        <!-- text field note-->
+                    <v-row justify="center">
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                         v-model="Returns.note"
+                         label="หมายเหตุ(ต้องใส่ทุกครั้ง)"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    
+                    <v-card-actions >
+                      <!-- ปุ่มกด -->
+                        <div class="flex-grow-1" ></div>
+                      <v-btn  @click="save"  color="green"  >Save</v-btn>
+                      <v-btn style="margin-left:12px;" @click="clear"  color="red">Clear</v-btn>
+                      <v-btn style="margin-left:15px;" @click="back"  color="teal lighten-1">Back</v-btn>
+                    </v-card-actions>
+                    
+                  </v-card>
+                   
+                <p></p>
+              <div v-if = "clickReturns == true">
+              <div v-if = "returnsCheck == true">
+              <v-alert type="success">Returns Completed</v-alert>
+              </div>
+              <div v-if = "returnsCheck == false">
+              <v-alert type="error">Can't Returns</v-alert>
+              </div>
+              </div>
 
-    <br/><br/>
-    <v-row align="center" justify="center">
-      <v-col class="d-flex" cols="12" sm="6">
-         <v-select
-          label="Borrow"
-          dense
-          v-model="Returns.borrowId"
-          :items="BorrowsResult"
-          item-text="name"
-          item-value="bid"
-          :rules="[(v) => !!v || 'Item is required']"
-          required
-        ></v-select>
-
-      </v-col>
-    </v-row>
-
-     <v-row align="center" justify="center">
-      <v-col
-        sm="6"
-        cols="6"
-      >
-      <br/><br/>
-      <v-text-field
-          v-model="Returns.note"
-          label="หมายเหตุ(ต้องใส่ทุกครั้ง)"
-        ></v-text-field>
-        </v-col>
-        </v-row>
-
-    <br/><br/>
-   
-    <v-row class="text-center" cols="12" sm="4">
-        <v-btn Style ="margin-left:500px;" @click="save" color="light-blue darken-4">Save</v-btn>
-        <v-btn Style ="margin-left:450px;" @click="clear" color="light-blue darken-1">Clear</v-btn>
-        <v-btn Style ="margin-left:400px;" @click="back" color="green darken-2">Back</v-btn>
-    </v-row>
-
-     <div v-if = "clickReturns == true">
-        <div v-if = "returnsCheck == true">
-          <v-alert type="success">Returns Completed</v-alert>
-        </div>
-        <div v-if = "returnsCheck == false">
-          <v-alert type="error">Can't Returns</v-alert>
-        </div>
-        </div>
-
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-content>
+        </v-app>
+      </v-flex>
+    </v-layout>
   </v-container>
-  </v-app>
-  
-
-  
 </template>
-
 <script>
+
 import http from "../http-common";
 export default {
   name: "Returns",
@@ -171,10 +184,14 @@ export default {
 
      save() {
        this.clickReturns = true;
-       if(this.Returns.customerId==''||this.Returns.employeeId==''||this.Returns.borrowId==''){
+       if(this.Returns.customerId==''||this.Returns.employeeId==null||this.Returns.borrowId==''){
        this.returnsCheck = false;
        }
-      else{
+       else if(this.Returns.note.length >50 ||
+      !this.Returns.note.match(/^([a-zA-z0-9ก-๙-|\u0020])+$/i)){
+        this.returnsCheck = false;
+      }
+       else{
       this.returnsCheck = true;
       console.log("Save");
       console.log( this.Returns.customerId );
@@ -195,7 +212,7 @@ export default {
         )
         .then(responses => {
           console.log(responses);
-          alert("เรียบร้อยแล้ว");
+          //alert("เรียบร้อยแล้ว");
         })
         .catch(e => {
           console.log(e);
@@ -218,6 +235,7 @@ export default {
     //  window.location.reload();
     this.Returns.borrowId = '';
     this.Returns.customerId= '';
+    this.Returns.note='';
     this.clickReturns = false;
 
     }, 
