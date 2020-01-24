@@ -21,6 +21,9 @@ interface ManageStatusRepository extends JpaRepository<ManageStatus, Long> {
             nativeQuery = true)
   Collection<ManageStatus> findSellectRoomOnline();
 
+ @Query(value = "SELECT * FROM MANAGE_STATUS where DELETE_AT is null ",
+            nativeQuery = true)
+  Collection<ManageStatus> findSellectStatusRoom();
 
   ManageStatus findById(long id);
 }
