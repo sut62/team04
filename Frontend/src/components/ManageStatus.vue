@@ -1,110 +1,101 @@
 <template>
-<v-app
-    style="
-    background: #B1DAFA;;
-    font:50px Comic Sans MS, sans-serif;
-    font-style: normal;
-    line-height: 1.4em;
-    "
->
-  <v-card >
-    <v-app-bar
-      absolute
-      color="#43a047"
-      dark
-      shrink-on-scroll
-      prominent
-      src="https://picsum.photos/1020/1080?random"
-   
-      fade-img-on-scroll
-      scroll-target="#scrolling-techniques-5"
-      scroll-threshold="500"
-      
-    >
-     
-    <template v-slot:img="{ props }">
-        <v-img v-bind="props" gradient="to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)"></v-img>
-      </template>
-
-
-  <v-toolbar-title>ระบบจัดการสถานะ</v-toolbar-title>
-
-      <v-spacer></v-spacer> 
-      
-
-    </v-app-bar>
-   
-     
-
-      <v-sheet id="scrolling-techniques-5"  >
-      <v-container style="height: 120px;"></v-container>
-      <v-form>
-      <v-card-text>
-        <v-row align="center" justify="center">
-
-
-        <v-col cols="12" sm="5" md ="4">
-        <p  class="display-1 font-weight-black px-0"
-        style="margin: 10px ">Room</p>
-         <v-select
-                
-                  label="Room"
-                  outlined
-                  v-model="ManageStatus.RoomId"
-                  :items="Rooms"
-                  item-text="room_name"
-                  item-value="room_id"
-                  :rules="[(v) => !!v || 'Item is required']"
-                  required
-
-                ></v-select>
-        
-        <p class="display-1 font-weight-black  px-0"
-        style="margin: 10px ">Status</p>
-        <v-select
-                  label="Status"
-                  outlined
-                  v-model="ManageStatus.StatusId"
-                  :items="Statuss"
-                  item-text="status_name"
-                  item-value="status_id"
-                  :rules="[(v) => !!v || 'Item is required']"
-                  required
-                ></v-select>
-        <p   class="display-1 font-weight-black  px-0"
-        style="margin: 10px "
-        >Employee</p>
-         <v-select
-                  label="Employee"
-                  outlined
-                  v-model="ManageStatus.EmployeeId"
-                  :items="Employees"
-                  item-text="em_name"
-                  item-value="em_id"
-                  :readonly="true"
-                  :rules="[(v) => !!v || 'Item is required']"
-                  required
-                ></v-select>
-
-          <p class="display-1 font-weight-black  px-0"
-          style="margin: 10px ">Note</p>
-          <v-text-field
-              class=" px-0"
-              label="ManageStatus_note"
-              outlined
-              v-model="ManageStatus.ManageStatus_note"
-            ></v-text-field>
-
-          <v-row  align="center" justify="center">
-                <v-col>
-                <v-btn  @click="saveManageStatus"  color="green"  >save</v-btn>
-                <v-btn style="margin-left:12px;" @click="clear"  color="red">clear</v-btn>
-                <v-btn style="margin-left:15px;" @click="Back"  color="teal lighten-1">back</v-btn>
-                 <!-- {{ManageStatuss[0].status.status_id}} -->
-
+  <v-container>
+    <v-layout text-center wrap>
+      <v-flex>
+        <v-app id="inspire">
+          <v-content>
+            <v-container class="fill-height" fluid>
+              <v-row align="center" justify="center">
+                <v-col cols="12" sm="6" md="6">
                  
+                  <v-card class="elevation-12">
+                    <v-toolbar color="blue-grey lighten-2" dark flat>
+                      <!-- กรอบข้างบนสีฟ้า -->
+                      <v-toolbar-title>
+                        <h2>Manage Status</h2>
+                      </v-toolbar-title>
+                      <div class="flex-grow-1"></div>
+                    </v-toolbar>
+
+                    <v-form>
+                      <v-card-text>
+                        <!-- ComboBox รายชื่อห้อง -->
+                        <v-row justify="center">
+                          <v-col cols="10">
+                            <v-select
+                              label="Room"
+                              outlined
+                              v-model="ManageStatus.RoomId"
+                              :items="Rooms"
+                              item-text="room_name"
+                              item-value="room_id"
+                              :rules="[(v) => !!v || 'Item is required']"
+                              required
+                            ></v-select>
+                          </v-col>
+                        </v-row>
+
+                        <!-- ComboBox สถานะ-->
+                        <v-row justify="center">
+                          <v-col cols="10">
+                            <v-select
+                             label="Status"
+                              outlined
+                              v-model="ManageStatus.StatusId"
+                              :items="Statuss"
+                              item-text="status_name"
+                              item-value="status_id"
+                              :rules="[(v) => !!v || 'Item is required']"
+                              required
+                            ></v-select>
+                          </v-col>
+                        </v-row>
+
+                        <!-- ComboBox รายชื่อพนักงาน -->
+                        <v-row justify="center">
+                          <v-col cols="10">
+                            <v-select
+                              label="Employee"
+                              outlined
+                              v-model="ManageStatus.EmployeeId"
+                              :items="Employees"
+                              item-text="em_name"
+                              item-value="em_id"
+                              :readonly="true"
+                              :rules="[(v) => !!v || 'Item is required']"
+                              required
+                            ></v-select>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                    </v-form>
+                        <!-- text field note-->
+                    <v-row justify="center">
+                      <v-col cols="12" sm="6">
+                        <v-text-field
+                          label="Note"
+                           outlined
+                          v-model="ManageStatus.ManageStatus_note"
+                          :counter="50"
+                          required
+                          maxlength="50"
+
+                        >></v-text-field>
+                      </v-col>
+                    </v-row>
+                    
+                    <v-card-actions >
+                      <!-- ปุ่มกด -->
+                        <div class="flex-grow-1" ></div>
+                      <v-btn  @click="saveManageStatus"  color="green darken-1"  >save</v-btn>
+                      <v-btn style="margin-left:12px;" @click="clear"  color="red darken-1">clear</v-btn>
+                      <v-btn style="margin-left:15px;" @click="Back"  color="blue-grey lighten-1">back</v-btn>
+                    </v-card-actions>
+                    
+                  </v-card>
+                   
                 <p></p>
-                 <div v-if = "clickManageStatus == true">
+  
                 <div v-if = "ManageCheck == true">
                   <v-alert type="success">บันทึกข้อมูลสำเร็จ</v-alert>
                 </div>
@@ -117,20 +108,16 @@
                 <div v-if = "Check3 == true">
                   <v-alert type="error">สถานะซ้ำ</v-alert>
                 </div>
-            </div>
-               </v-col>
-           </v-row>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      </v-form>
-    </v-sheet>
-   
-  </v-card>
-  </v-app>
 
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-content>
+        </v-app>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
-
 <script>
 import http from "../http-common";
 export default {
@@ -222,12 +209,15 @@ export default {
     getManageStatusRoom(){
       http
       .get("/ManageStatusRoom/"+this.ManageStatus.RoomId)
+      //คิวรี่ room_id แะ Deleate_at = null มาเชค
        .then(response => {
           this.ManageStatusRoom = response.data;
           console.log("MSR"+this.ManageStatus.RoomId,response.data);
           console.log("ttt", typeof response.data);
+          //เชคว่ามีสถานะอยู่ในดาต้าเบสหรือป่าวถ้าไม่มี เข้าไปเชค ถ้ามี เซฟเลย
           if(typeof response.data == 'object'){
             console.log("object");
+            //เชคว่าสถานะที่พิมเข้ามา กับ สถานะของในดาต้าเบส เท่ากันหรือไม่  
             if(response.data.status.status_id == this.ManageStatus.StatusId){
               this.Check3 = true; 
               this.Check1 = false;
@@ -235,6 +225,7 @@ export default {
                this.ManageCheck = false;
               // alert("สถานะของห้องซ้ำ");
             }else{
+              //ถ้าไม่ซ้ำทำการเซฟลงดาต้าเบส
               console.log("ไม่ซ้ำ");
               this.savePost()
             }
@@ -271,8 +262,9 @@ export default {
           console.log("error",e);    
         });
 
-      this.submitted = true;
-      this.Check1 = false;
+        this.submitted = true;
+
+        this.Check1 = false;
         this.Check2 = false;
         this.Check3 = false;
       
@@ -283,19 +275,12 @@ export default {
     
     // function เมื่อกดปุ่ม save
     saveManageStatus() {
-      
-      // var check = false
-      this.clickManageStatus =true;
-
-      if(this.ManageStatus.RoomId == '' || 
-      this.ManageStatus.StatusId == '' ||
-      this.ManageStatus.EmployeeId == ''||
-      this.ManageStatus.ManageStatus_note == ''
-
-      // this.ManageStatus.ManageStatus_note.length >50 ||
-      // !this.ManageStatus.ManageStatus_note.match(/^([a-zA-z0-9ก-๙])+$/i)
+      if(this.ManageStatus.RoomId == "" || 
+      this.ManageStatus.StatusId == "" ||
+      this.ManageStatus.EmployeeId == null||
+      this.ManageStatus.ManageStatus_note == ""
        ){
-         this.Check1 = true;
+        this.Check1 = true;
         this.ManageCheck = false;
         this.Check2 = false;
         this.Check3 = false;
@@ -316,30 +301,10 @@ export default {
       
 
       else {
-        
-        // for (let i = 0; i < this.ManageStatuss.length; i++) {
-        //   let elementstatus = this.ManageStatuss[i].status.status_id;
-        //   let elementroom = this.ManageStatuss[i].room.room_id;
-        //   let elementdelete = this.ManageStatuss[i].Delete_at ;
-
-        //   if((elementstatus == this.ManageStatus.StatusId) &&
-        //    (elementroom == this.ManageStatus.RoomId  )&&
-        //    (elementdelete != null)
-        //    ){
-        //     alert("สถานะที่เลือกไม่ถูกต้อง");
-        //     check = true;
-        //     break;
-        //   } 
-
-        // }
-      
-        // if(check == false){
+        //ไปทำการเชคว่า ซ้ำ หรือไม่ ???
           this.getManageStatusRoom();
       
       }
-      
-      //
-      // }
       
     },
     clear() {
@@ -348,11 +313,9 @@ export default {
       this.ManageStatus.RoomId= '';
       this.ManageStatus.StatusId= '';
       this.ManageStatus.ManageStatus_note='';
-      // this.ManageStatus.EmployeeId= 'Employee';
       this.Check1= false,
       this.Check2= false,
       this.Check3= false,
-      this.clickManageStatus= false,
       this.ManageCheck= false
       
 
@@ -361,8 +324,6 @@ export default {
       this.getRooms();
       this.getStatuss();
 
-      // this.getEmployees();
-      
     }
     /* eslint-enable no-console */
   },
@@ -374,6 +335,6 @@ export default {
     this.lockemployee();
     this.getManageStatus_note();
   },
-  
+
 };
 </script>
