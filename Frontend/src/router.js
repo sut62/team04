@@ -10,6 +10,7 @@ import Returns from './components/Returns'
 import Reservations from './components/Reservations'
 import Profile from './components/Profile'
 import DeleteResvertion from './components/DeleteResvertion'
+import ShowEQT from "./components/ShowEQT"
 
 Vue.use(Router)
 
@@ -66,6 +67,12 @@ export default new Router({
       name: 'DeleteResvertion',
       component: DeleteResvertion
     },
+    {
+      path: '/ShowEQT',
+      name: 'ShowEQT',
+      component: ShowEQT
+    },
+
 
     
 
