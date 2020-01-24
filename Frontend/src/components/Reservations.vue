@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <CustomerNavigation></CustomerNavigation>
     <v-container grid-list-md>
       <v-layout
         row

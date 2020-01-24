@@ -1,10 +1,12 @@
 <template>
   <v-navigation-drawer
-    v-model="checkShow"
+    v-if="ShowLogin"
     app
-    :clipped="$vuetify.breakpoint.lgAndUp"
+    :clipped="true"
+    :permanent="true"
     color="grey lighten-4"
   >
+
     <v-divider
       dark
       class="my-3"
@@ -56,12 +58,9 @@
 <script>
 /*eslint-disable */
 export default {
-  props: { drawer: { type: Boolean } },
   // props: ["value"],
   data() {
-    return {
-      checkShow: ""
-    };
+    return {};
   },
   methods: {
     Resvationopen() {
@@ -75,14 +74,12 @@ export default {
     },
     Logout() {
       this.$store.commit("setDrawer", false);
-      this.$store.commit("setOpendrawer", false);
-      this.checkShow = this.$store.getters.drawer;
+      this.$store.dispatch("setLoginFalse");
       this.$router.push("/");
     },
     //ตัวเปิดปิด Nagavitor Drawer
     ShowDrawer() {
       this.checkShow = this.$store.state.drawer;
-      // หรือ เขียนว่า this.checkShow = this.drawer;
     }
   },
   watch: {
@@ -90,7 +87,11 @@ export default {
       this.ShowDrawer();
     }
   },
-  computed: {},
+  computed: {
+    ShowLogin() {
+      return this.$store.state.Login;
+    }
+  },
   mounted() {}
 };
 /*eslint-disable */
