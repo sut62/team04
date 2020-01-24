@@ -2,11 +2,14 @@
   <nav>
 
     <v-app-bar
-      app
-      clipped-left
-      class="light-blue darken-4"
+      dark
+      src="@/assets/book.jpg"
+      scroll-target="#scrolling-techniques-2"
     >
-
+      <template v-slot:img="{ props }">
+          <v-img v-bind="props" gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"></v-img>
+      </template>
+      
       <v-toolbar-title class="headline text-uppercase white--text">
         <span class="Reg">Room </span>
         <span class="Reg"> Book</span>
