@@ -39,10 +39,14 @@ public class Borrow {
     private Date bordate;
 
     @NotNull
+    @Pattern(regexp = "[a-zA-Z0-9ก-๙-]*")
     @Size(min=0, max=50)
-    @Pattern(regexp = "[a-zA-Z0-9ก-๙]*")
     @Column(name="borrow_note")
     private String bornote;
+
+    @NotNull
+    @Column(name="borrow_status")
+    private Boolean borstatus;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
