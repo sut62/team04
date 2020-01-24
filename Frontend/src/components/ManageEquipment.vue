@@ -79,17 +79,21 @@
         outlined
         ></v-text-field>
 
-        <br>
-        <!-- <v-btn
-        small
-        @click="saveData"
-        >Add Equipment</v-btn> -->
+        <!-- <br> -->
+
         <div class="text-center">
         <v-btn
         @click="saveData"
         tile
         color="success">Add equipment</v-btn>
       </div>
+  <br>
+      <div class="text-center">
+      <v-btn
+      @click="back"
+      tile
+      color="success">Back</v-btn>
+    </div>
 
 
         <v-snackbar
@@ -109,41 +113,6 @@
     <!-- @click="saveData" -->
   </v-col>
 
-  <!-- <v-col cols = 7>
-  <br>
-  <br>
-  <br>
-  <br>
-  <v-card
-  class="mx-auto"
-  max-width="550"
-  outlined
-  >
-  <v-simple-table style = "center" >
-  <template v-slot:default>
-  <thead>
-  <tr>
-  <th class="text-left">Employee</th>
-  <th class="text-left">EquipmentType</th>
-  <th class="text-left">EquipmentName</th>
-  <th class="text-left">Amount</th>
-</tr>
-</thead>
-<tbody>
-<tr v-for="item in showtable" :key="item.name">
-<td class="text-center">{{ item.Employee.em_name }}</td>
-<td class="text-center">{{ item.EquipmentType.type }}</td>
-<td class="text-center">{{ item.EquipmentName.name }}</td>
-<td class="text-center">{{ item.manageEquipment_amount+" ea" }}</td>
-</tr>
-</tbody>
-</template>
-</v-simple-table>
-</v-card>
-</v-col> -->
-<!-- </v-layout> -->
-<!-- </v-container> -->
-<!-- </v-col> -->
 </v-row>
 </div>
 </div>
@@ -193,35 +162,19 @@ export default {
         "/" +
         this.ManageEquipment.Amount
       )
-      //   .then(response => {
-      //     console.log(response);
-      //     //alert("เพิ่มเมนูสำเร็จ");
-      //     // location.reload();
-      //     // this.getDataTable();
-      //     this.ManageEquipment.Typename = "";
-      //     this.ManageEquipment.EQname = "";
-      //     this.ManageEquipment.Amount = "";
-      //   })
-      //   .catch(e => {
-      //     console.log(e);
-      //     //alert("เพิ่มเมนูไม่สำเร็จ");
-      //   });
-      // this.submitted = true;
-
       .then(response => {
         console.log(response);
         this.snackbar=true
         this.status="เพิ่มข้อมูลสำเร็จ!"
         this.cl="success"
-        //this.getDataTable();
+        this.getDataTable();
       })
       .catch(e => {
         console.log(e);
         this.snackbar=true
         this.cl="error"
         this.status="เพิ่มข้อมูลไม่สำเร็จ!"
-      })
-      ;
+      });
       this.submitted = true;
     },
     getEmployee() {
@@ -247,8 +200,12 @@ export default {
         this.showtable = response.data;
       });
       this.submitted = true;
-    }
+    },
+    back(){
+        this.$router.push({name: 'Dashbord' , params: {em: this.emid} });
+      }
   },
+
   mounted() {
     this.getEmployee();
     this.getEquipmentType();

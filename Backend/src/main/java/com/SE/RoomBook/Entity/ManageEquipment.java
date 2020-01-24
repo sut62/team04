@@ -36,9 +36,9 @@ public class ManageEquipment {
   /*  private Date manageEquipment_date;*/
 
     @NotNull
-     @Pattern(regexp = "\\d{1,2}")
+     // @Pattern(regexp = "\\d{1,2}")
     @Column(name="Amount")
-    private String manageEquipment_amount;
+    private Integer manageEquipment_amount;
 
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = EquipmentType.class)
