@@ -64,6 +64,11 @@ public class ManageStatusController {
         return ManageStatusRepository.findRoomNull(Room_id);
     }
 
+   @GetMapping("/StatusRoom")
+    public Collection<ManageStatus> ManageStatussFind() {
+        return ManageStatusRepository.findSellectStatusRoom();
+    }
+
     @PostMapping("/ManageStatus/{Room_id}/{Status_id}/{Employee_id}/{ManageStatus_note}")
     public ManageStatus newManageStatus(ManageStatus newManageStatus, @PathVariable long Room_id,
             @PathVariable long Status_id, @PathVariable long Employee_id,@PathVariable String ManageStatus_note) {
