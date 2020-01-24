@@ -63,6 +63,7 @@ public class BorrowController {
     newBorrow.setBordate(new Date());
     newBorrow.setManageequipment(ManageEquipment);
     newBorrow.setBornote(bornote);
+    newBorrow.setBorstatus(true);
     
     
     return BorrowRepository.save(newBorrow); //บันทึก Objcet ชื่อ Borrow
