@@ -1,7 +1,7 @@
 <template>
     <v-container class="ml-auto mt-3 pt-3 mr-auto">
         
-        <v-card justify="center">
+        <v-card justify="center" class="mx-auto" max-width="1000" color="blue-grey lighten-4">
             <h1 class="text mt-5 pt-5">
           <strong>Menu</strong>
             </h1>
@@ -10,7 +10,7 @@
             <v-row justify="center">
             <v-btn 
             @click="ManageEquipment"
-            class="cyan lighten-1 white--text">
+            class="indigo lighten-3">
             Manage Equipment
             </v-btn>
             </v-row>
@@ -18,15 +18,23 @@
             <v-row justify="center">
             <v-btn
             @click="ManageStatus"
-            class="cyan lighten-1 white--text">
+            class="indigo lighten-3">
             Manage Status
             </v-btn>
             </v-row>
             <p></p>
             <v-row justify="center">
             <v-btn
+            @click="ShowStatusRoom"
+            class="indigo lighten-3">
+            Show StatusRoom
+            </v-btn>
+            </v-row>
+            <p></p>
+            <v-row justify="center">
+            <v-btn
             @click="Borrow"
-            class="cyan lighten-1 white--text">
+            class="indigo lighten-3">
             Borrow
             </v-btn>
             </v-row>
@@ -34,7 +42,7 @@
             <v-row justify="center">
             <v-btn
             @click="Returns"
-            class="cyan lighten-1 white--text">
+            class="indigo lighten-3">
             Returns
             </v-btn>
             </v-row>
@@ -43,11 +51,12 @@
             <v-row justify="center">
             <v-btn
             @click="Logout"
-            class="red white--text">
+            class="red">
             Logout
             </v-btn>
             </v-row>
             <p></p>
+            <br/>
             </v-form>
         </v-card>
     </v-container>
@@ -73,6 +82,9 @@ ManageEquipment(){
  },
  ManageStatus(){
      this.$router.push({name: 'ManageStatus', params: {em: this.emid} });
+ },
+ShowStatusRoom(){
+     this.$router.push({name: 'ShowStatusRoom', params: {em: this.emid} });
  },
  Borrow(){
      this.$router.push({name: 'Borrow', params: {em: this.emid} });
