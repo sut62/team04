@@ -97,11 +97,11 @@
         </v-form>
       </v-card>
     </div>
-    <div v-if = "clickLogin == true">
-      <div v-if = "checkLogin == true">
+    <div v-if="clickLogin == true">
+      <div v-if="checkLogin == true">
         <v-alert type="success">Login Success</v-alert>
       </div>
-      <div v-if ="checkLogin == false">
+      <div v-if="checkLogin == false">
         <v-alert type="error">Username or Password is not valid or Input not complete</v-alert>
       </div>
     </div>
@@ -124,7 +124,7 @@ export default {
       customer: [],
       Chooses: ["Employee", "Customer"],
       checkLogin: false,
-      clickLogin: false,
+      clickLogin: false
     };
   },
 
@@ -146,7 +146,7 @@ export default {
               this.employee = response.data;
               this.login.Username = response.data.em_name;
               this.login.Password = response.data.password;
-              
+              this.$store.dispatch("setLoginFalse");
               // alert("Login complete");
               this.$router.push({
                 name: "Dashbord",
@@ -158,7 +158,6 @@ export default {
             }
           });
       } else if (this.login.Choose == "Customer") {
-        this.checkLogin = true;
         http
           .get("/customer/" + this.login.Username + "/" + this.login.Password)
           .then(response => {
@@ -170,9 +169,8 @@ export default {
               this.customer = response.data;
               this.login.Username = response.data.email;
               this.login.Password = response.data.password;
-              // alert("Login complete");
 
-              this.$store.dispatch("setOpendrawer", true);
+              this.$store.dispatch("setLoginTrue");
               this.$store.dispatch("setCustomer", this.customer.id);
               this.$router.push({
                 name: "Reservations",
