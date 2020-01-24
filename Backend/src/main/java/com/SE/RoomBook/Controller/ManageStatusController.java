@@ -65,7 +65,7 @@ public class ManageStatusController {
     }
 
    @GetMapping("/StatusRoom")
-    public Collection<ManageStatus> ManageStatussFind() {
+    public Collection<ManageStatus> ManageStatussFindStatusRoom() {
         return ManageStatusRepository.findSellectStatusRoom();
     }
 
