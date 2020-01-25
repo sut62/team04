@@ -44,6 +44,17 @@
       class="my-3"
     ></v-divider>
 
+    <div class="pa-2">
+      <v-btn
+        block
+        to="ShowEQT"
+      >Show Equipment</v-btn>
+    </div>
+    <v-divider
+      dark
+      class="my-3"
+    ></v-divider>
+
     <template v-slot:append>
       <div class="pa-2">
         <v-btn
@@ -71,6 +82,9 @@ export default {
     },
     DeleteResvertion() {
       this.$router.push("DeleteResvertion");
+    },
+    ShowEQT() {
+      this.$router.push("ShowEQT");
     },
     Logout() {
       this.$store.commit("setDrawer", false);
