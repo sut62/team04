@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -45,7 +46,17 @@ public class BorrowController {
     public Collection<Borrow> Borrows() {
         return BorrowRepository.findAll().stream().collect(Collectors.toList());
     }
-    
+
+    @GetMapping("/BorrowTrue")
+    public Collection<Borrow> BorrowsTrue() {
+        return BorrowRepository.findByBorrowTrue().stream().collect(Collectors.toList());
+    }
+
+    @GetMapping("/BorrowCustomerId/{id}")
+    public Collection<Borrow> BorrowCustomer(@PathVariable  Long id){
+        return BorrowRepository.findByCustomerId(id).stream().collect(Collectors.toList());
+    }
+
     @PostMapping("/Borrow/{id}/{em_id}/{manageEquipment_id}/{bornote}")
     public Borrow newBorrow (final Borrow newBorrow,
     @PathVariable final long id,//customer
@@ -57,6 +68,8 @@ public class BorrowController {
     final Customer Customer = CustomerRepository.findById(id);
     final Employee Employee = EmployeeRepository.findById(em_id);
     final ManageEquipment ManageEquipment = ManageEquipmentRepository.findById(manageEquipment_id);
+    ManageEquipment.setManageEquipment_amount(ManageEquipment.getManageEquipment_amount()-1);
+    ManageEquipmentRepository.save(ManageEquipment);
 
     newBorrow.setCustomer(Customer);
     newBorrow.setEmployee(Employee);
