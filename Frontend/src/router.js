@@ -90,6 +90,5 @@ export default new Router({
     name: 'ShowBorrow',
     component: ShowBorrow
     },
-
   ]
 })
