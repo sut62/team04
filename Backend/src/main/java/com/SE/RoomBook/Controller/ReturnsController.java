@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 public class ReturnsController {
     @Autowired
+    private ManageEquipmentRepository manageEquipmentRepository;
+    @Autowired
     private final ReturnsRepository returnsRepository;
     @Autowired
     private BorrowRepository borrowRepository;
@@ -36,7 +38,7 @@ public class ReturnsController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    ReturnsController(ReturnsRepository returnsRepository) {
+    ReturnsController(final ReturnsRepository returnsRepository) {
         this.returnsRepository = returnsRepository;
     }
 
@@ -45,12 +47,23 @@ public class ReturnsController {
         return returnsRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/returns/{C}/{bid}/{E}/{N}")
-    public Returns newReturns(Returns newReturns, @PathVariable long C, @PathVariable long bid, @PathVariable long E,@PathVariable String N) {
+    @PostMapping("/returns/{C}/{bid}/{E}/{man}/{N}")
+    public Returns newReturns(final Returns newReturns, @PathVariable final long C, 
+    @PathVariable final long bid, 
+    @PathVariable final long E,
+    @PathVariable final long man,
+    @PathVariable final String N) {
 
-        Employee employee = employeeRepository.findById(E);
-        Borrow borrow = borrowRepository.findById(bid);
-        Customer customer = customerRepository.findById(C);
+        final Employee employee = employeeRepository.findById(E);
+        final Borrow borrow = borrowRepository.findById(bid);
+        final Customer customer = customerRepository.findById(C);
+
+        final ManageEquipment  m = manageEquipmentRepository.findById(man);  
+        m.setManageEquipment_amount(m.getManageEquipment_amount()+1);
+        manageEquipmentRepository.save(m);
+
+        borrow.setBorstatus(false);
+       
 
         newReturns.setBorrow(borrow);
         newReturns.setCustomer(customer);
@@ -58,6 +71,7 @@ public class ReturnsController {
         newReturns.setReturnsdate(new Date());
         newReturns.setNote(N);
 
+        borrowRepository.save(borrow);
         return returnsRepository.save(newReturns);
 
     }
