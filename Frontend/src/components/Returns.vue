@@ -9,10 +9,10 @@
                 <v-col cols="12" sm="6" md="6">
                  
                   <v-card class="elevation-12">
-                    <v-toolbar color="blue-grey lighten-2" dark flat>
+                    <v-toolbar color="purple lighten-3" dark flat>
                       <!-- กรอบข้างบนสีฟ้า -->
                       <v-toolbar-title>
-                        <h2>Manage Status</h2>
+                        <h2>Returns</h2>
                       </v-toolbar-title>
                       <div class="flex-grow-1"></div>
                     </v-toolbar>
@@ -25,7 +25,7 @@
                              <v-select
                                label="Customer"
                                dense
-                               v-model="Returns.customerId"
+                               v-model="customerId"
                                :items="customer"
                                item-text="name"
                                item-value="id"
@@ -58,7 +58,7 @@
                             <v-select
                              label="Borrow"
                              dense
-                             v-model="Returns.borrowId"
+                             v-model="BorrowID"
                              :items="BorrowsResult"
                              item-text="name"
                              item-value="bid"
@@ -75,6 +75,7 @@
                         <v-text-field
                          v-model="Returns.note"
                          label="หมายเหตุ(ต้องใส่ทุกครั้ง)"
+                         :counter="45"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -82,13 +83,12 @@
                     <v-card-actions >
                       <!-- ปุ่มกด -->
                         <div class="flex-grow-1" ></div>
-                      <v-btn  @click="save"  color="green"  >Save</v-btn>
-                      <v-btn style="margin-left:12px;" @click="clear"  color="red">Clear</v-btn>
-                      <v-btn style="margin-left:15px;" @click="back"  color="teal lighten-1">Back</v-btn>
+                      <v-btn  @click="save"  color="green darken-2 "  >Save</v-btn>
+                      <v-btn style="margin-left:12px;" @click="clear"  color="red accent-2 ">Clear</v-btn>
+                      <v-btn style="margin-left:15px;" @click="back"  color="blue-grey darken-2">Back</v-btn>
                     </v-card-actions>
                     
                   </v-card>
-                   
                 <p></p>
               <div v-if = "clickReturns == true">
               <div v-if = "returnsCheck == true">
@@ -110,19 +110,25 @@
 </template>
 <script>
 
+/*eslint-disable */
 import http from "../http-common";
 export default {
   name: "Returns",
   data() {
     return {
+      BorrowID:0,
+      manageequipmentREAL:[],
+      commitMan:0,
+      customerId:'',
       Returns: {
-        borrowId: "",
-        customerId: "",
+        
         employeeId: "",
         note: ""
       },
      // object: [], //ค่าที่มาจาการกรอง Receipt
       Borrows: [],
+      BorrowID:[],
+      BorrowbyCustomerId:[],
       items: [],
       customer: [],
       employees: [],
@@ -142,6 +148,19 @@ export default {
     },
     back(){
       this.$router.push({name: 'Dashbord' , params: {em: this.emid} }); 
+    },
+    getCustomersBorrowID(){
+      http
+      .get("/BorrowCustomerId"+
+      "/" + 
+      this.customerId
+      )
+      .then(response =>{
+        this.BorrowbyCustomerId = [];
+        this.BorrowbyCustomerId = response.data;
+        this.getMangeEquiment();
+        this.comboboxBorrow();
+      }).catch(e =>{console.log(e)})
     },
     getCustomers() {
       http
@@ -170,21 +189,28 @@ export default {
 
      getBorrows() {
       http
-      .get("/Borrow")
+      .get("/BorrowTrue")
       .then(response => {
         this.Borrows = response.data;
-        console.log(response.data);
-
-      
+        // this.getMangeEquiment();
+        // this.comboboxBorrow();
       })
       .catch(e => {
         console.log(e);
       });
     },
+    // เก็บค่า  bid borrow กับ mangeeqiument รวมกัน
+    getMangeEquiment(){
+      this.manageequipmentREAL = [];
+      this.BorrowbyCustomerId.forEach((value) =>{
+          this.manageequipmentREAL.push({id:value.bid,
+            manid:value.manageequipment.manageEquipment_id});
+      })
+    },
 
      save() {
        this.clickReturns = true;
-       if(this.Returns.customerId==''||this.Returns.employeeId==null||this.Returns.borrowId==''){
+       if(this.customerId==''||this.Returns.employeeId==null||this.BorrowID==''){
        this.returnsCheck = false;
        }
        else if(this.Returns.note.length >50 ||
@@ -194,49 +220,64 @@ export default {
        else{
       this.returnsCheck = true;
       console.log("Save");
-      console.log( this.Returns.customerId );
+      console.log( this.customerId );
       console.log( this.Returns.borrowId);
       console.log( this.Returns.employeeId);
       console.log(this.Returns.note);
       http
         .post(
           "/returns/" +
-            this.Returns.customerId +
+            this.customerId +
             "/" +
-             this.Returns.borrowId +
+             this.BorrowID +
             "/" +
             this.Returns.employeeId +
+            "/" + 
+            this.commitMan +
+            // this.Borrows[this.BorrowID-1].manageequipment.manageEquipment_id +
             "/" +
             this.Returns.note,
           this.Returns
         )
         .then(responses => {
-          console.log(responses);
-          //alert("เรียบร้อยแล้ว");
+          
+         if(responses.status == 200){
+           console.log("บันทึกแล้ว");
+         }
+         
         })
         .catch(e => {
+
           console.log(e);
         });
       }
     },
+    //เอา borrow มาจัดรวมใส่ bombobox ใหม่
     comboboxBorrow(){
-      this.Borrows.forEach((value) =>{
+      this.BorrowsResult = [];
+      this.BorrowbyCustomerId.forEach((value) =>{
+
         this.BorrowsResult.push({
           "bid": value.bid,
-          "name": `หมายเลขการยืม `+value.bid+`  สิ่งของที่ยืม  `+value.manageequipment.equipmentName.name+`  จำนวนที่ยืม  `+value.manageequipment.manageEquipment_amount
+          "name": `หมายเลขการยืม `+value.bid+`  สิ่งของที่ยืม  `+value.manageequipment.equipmentName.name
 
         });
       
-
       })
     },
+    commitMangeEquiment(){
+      this.manageequipmentREAL.forEach((value,index)=>{
+       if(this.BorrowID == value.id){
+         this.commitMan = value.manid;
+       }
+     })
+    },
     clear() {
-        console.log( "clear");
-    //  window.location.reload();
-    this.Returns.borrowId = '';
-    this.Returns.customerId= '';
-    this.Returns.note='';
+    this.customerId = '' ;
+    this.BorrowID = '' ;
+    this.Returns.note = '' ;
     this.clickReturns = false;
+    this.commitMan = "";
 
     }, 
      refreshList() {
@@ -244,28 +285,34 @@ export default {
     this.getCustomers();
     this.getBorrows();
     this.lockemployee();
-    this.note();
       
     }
     
 },
      
   mounted() {
+    this.getBorrows();
     this.getEmployee();
     this.getCustomers();
-    this.getBorrows();
     this.lockemployee();
-    this.note();
+    // this.getMangeEquiment();
     
   },
+  
   watch:{
-
     Borrows(){
       this.comboboxBorrow();
+    },
+    BorrowID(){
+     this.commitMangeEquiment();
+    },
+    customerId(){
+      this.getCustomersBorrowID();
     }
   }
      
 };
 
- /* eslint-disable no-console */
+ 
+/*eslint-disable */
 </script>
