@@ -12,6 +12,7 @@ import Profile from './components/Profile'
 import DeleteResvertion from './components/DeleteResvertion'
 import ShowEQT from "./components/ShowEQT"
 import ShowStatusRoom from './components/ShowStatusRoom'
+import ShowReturns from './components/ShowReturns'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/ShowStatusRoom',
       name: 'ShowStatusRoom',
       component: ShowStatusRoom
+    },
+    {
+      path: '/ShowReturns',
+      name: 'ShowReturns',
+      component: ShowReturns
     },
 
 
