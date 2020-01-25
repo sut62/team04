@@ -11,5 +11,13 @@ import org.springframework.data.repository.query.Param;
 public
 interface BorrowRepository extends JpaRepository<Borrow, Long> {
     Borrow findById(long id);
+   
     
+	@Query(value = "SELECT * FROM BORROW WHERE BORROW_STATUS = TRUE", nativeQuery = true)
+    Collection<Borrow> findByBorrowTrue();
+    
+    @Query(value = "SELECT * FROM BORROW WHERE BORROW_STATUS = TRUE AND CUSTOMER_ID = :id", nativeQuery = true)
+    Collection<Borrow> findByCustomerId(@Param("id") Long id);
+    
+  
 }
