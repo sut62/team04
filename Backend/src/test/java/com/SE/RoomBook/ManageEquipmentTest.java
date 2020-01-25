@@ -58,35 +58,35 @@ public class ManageEquipmentTest{
         assertEquals("manageEquipment_amount", v.getPropertyPath().toString());
     }
 
-    // @Test
-    //  void B6009793_testAmountMustHaveeMaxIs2MinIs1() {
-    //      ManageEquipment ManageEquipment = new ManageEquipment();
-    //      ManageEquipment.setManageEquipment_amount("331");
-    //
-    //      Set<ConstraintViolation<ManageEquipment>> result = validator.validate(ManageEquipment);
-    //
-    //      // result ต้องมี error 1 ค่าเท่านั้น
-    //      assertEquals(1, result.size());
-    //
-    //      // error message ตรงชนิด และถูก field
-    //      ConstraintViolation<ManageEquipment> v = result.iterator().next();
-    //      assertEquals("must match \"\\d{1,2}\"", v.getMessage());
-    //      assertEquals("manageEquipment_amount", v.getPropertyPath().toString());
-    //  }
-    //
-    //      @Test
-    //  void B6009793_testAmountMustHaveNumber() {
-    //      ManageEquipment ManageEquipment = new ManageEquipment();
-    //      ManageEquipment.setManageEquipment_amount("A1");
-    //
-    //      Set<ConstraintViolation<ManageEquipment>> result = validator.validate(ManageEquipment);
-    //
-    //      // result ต้องมี error 1 ค่าเท่านั้น
-    //      assertEquals(1, result.size());
-    //
-    //      // error message ตรงชนิด และถูก field
-    //      ConstraintViolation<ManageEquipment> v = result.iterator().next();
-    //      assertEquals("must match \"\\d{1,2}\"", v.getMessage());
-    //      assertEquals("manageEquipment_amount", v.getPropertyPath().toString());
-    //  }
+    @Test
+     void B6009793_testAmountMustBeLessThan99() {
+         ManageEquipment ManageEquipment = new ManageEquipment();
+         ManageEquipment.setManageEquipment_amount(331);
+
+         Set<ConstraintViolation<ManageEquipment>> result = validator.validate(ManageEquipment);
+
+         // result ต้องมี error 1 ค่าเท่านั้น
+         assertEquals(1, result.size());
+
+         // error message ตรงชนิด และถูก field
+         ConstraintViolation<ManageEquipment> v = result.iterator().next();
+         assertEquals("must be less than 99", v.getMessage());
+         assertEquals("manageEquipment_amount", v.getPropertyPath().toString());
+     }
+
+         @Test
+     void B6009793_testAmountMustBeGreatThan1() {
+         ManageEquipment ManageEquipment = new ManageEquipment();
+         ManageEquipment.setManageEquipment_amount(-3);
+
+         Set<ConstraintViolation<ManageEquipment>> result = validator.validate(ManageEquipment);
+
+         // result ต้องมี error 1 ค่าเท่านั้น
+         assertEquals(1, result.size());
+
+         // error message ตรงชนิด และถูก field
+         ConstraintViolation<ManageEquipment> v = result.iterator().next();
+         assertEquals("must be great than 1", v.getMessage());
+         assertEquals("manageEquipment_amount", v.getPropertyPath().toString());
+     }
 }

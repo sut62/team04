@@ -36,8 +36,8 @@ public class ManageEquipment {
   /*  private Date manageEquipment_date;*/
 
     @NotNull
-     // @Pattern(regexp = "\\d{1,2}")
-    // @Max(value=99)
+    @Max(value=99,message = "must be less than 99")
+    @Min(value=1,message = "must be great than 1")
     @Column(name="Amount")
     private Integer manageEquipment_amount;
 
