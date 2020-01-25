@@ -47,6 +47,15 @@
             </v-btn>
             </v-row>
             <p></p>
+             <p></p>
+            <v-row justify="center">
+            <v-btn
+            @click="ShowReturns"
+            class="indigo lighten-3">
+            Show Returns
+            </v-btn>
+            </v-row>
+            <p></p>
             <p></p>
             <v-row justify="center">
             <v-btn
@@ -86,11 +95,14 @@ ManageEquipment(){
 ShowStatusRoom(){
      this.$router.push({name: 'ShowStatusRoom', params: {em: this.emid} });
  },
- Borrow(){
+Borrow(){
      this.$router.push({name: 'Borrow', params: {em: this.emid} });
  },
  Returns(){
      this.$router.push({name: 'Returns', params: {em: this.emid} });
+ },
+ ShowReturns(){
+     this.$router.push({name: 'ShowReturns', params: {em: this.emid} });
  }
 },
 mounted(){
