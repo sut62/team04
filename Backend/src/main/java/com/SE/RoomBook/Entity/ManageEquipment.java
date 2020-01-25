@@ -37,6 +37,7 @@ public class ManageEquipment {
 
     @NotNull
      // @Pattern(regexp = "\\d{1,2}")
+    // @Max(value=99)
     @Column(name="Amount")
     private Integer manageEquipment_amount;
 

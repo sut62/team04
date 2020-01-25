@@ -36,11 +36,11 @@ public class ManageEquipmentTest{
     @Test
     void B6009793_testAmountOK(){
         ManageEquipment ManageEquipment = new ManageEquipment();
-        ManageEquipment.setManageEquipment_amount("20");
+        ManageEquipment.setManageEquipment_amount(20);
 
         ManageEquipment = ManageEquipmentRepository.saveAndFlush(ManageEquipment);
         Optional<ManageEquipment> found = ManageEquipmentRepository.findById(ManageEquipment.getManageEquipment_id());
-        assertEquals("20", found.get().getManageEquipment_amount());
+        assertEquals(20, found.get().getManageEquipment_amount());
     }
 
    @Test
