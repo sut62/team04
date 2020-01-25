@@ -1,45 +1,38 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.checkpoint.CheckpointFactory as CheckpointFactory
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as MobileBuiltInKeywords
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testcase.TestCaseFactory as TestCaseFactory
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testdata.TestDataFactory as TestDataFactory
-import com.kms.katalon.core.testobject.ObjectRepository as ObjectRepository
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WSBuiltInKeywords
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUiBuiltInKeywords
-import internal.GlobalVariable as GlobalVariable
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-
-import com.thoughtworks.selenium.Selenium
-import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.WebDriver
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium
-import static org.junit.Assert.*
-import java.util.regex.Pattern
-import static org.apache.commons.lang3.StringUtils.join
-
-WebUI.openBrowser('https://www.google.com/')
-def driver = DriverFactory.getWebDriver()
-String baseUrl = "https://www.google.com/"
-selenium = new WebDriverBackedSelenium(driver, baseUrl)
-selenium.open("http://localhost:8080/")
-selenium.click("id=input-16")
-selenium.type("id=input-16", "min@hotmail.com")
-selenium.click("id=input-19")
-selenium.type("id=input-19", "1234")
-selenium.click("//div[3]/div/div/div/div/div/div")
-selenium.click("id=customer-list-item-37")
-selenium.click("//div[@id='app']/div[2]/main/div/div/div/div/form/div[4]/div/button/span/i")
-selenium.click("//div[@id='app']/div/nav/div/div[4]/a/span")
-selenium.click("//div[@id='app']/div/main/div/div/div/header/div")
-assertEquals("ระบบแสดงอุปกรณ์", selenium.getText("//div[@id='app']/div/main/div/div/div/header/div/div/h2"));
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>ShowEQT</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Untitled Test Case</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/<datalist><option>http://localhost:8080/</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-16<datalist><option>id=input-16</option><option>//input[@id='input-16']</option><option>//div[@id='app']/div/main/div/div/div/div/form/div/div/div/div/div/div/input</option><option>//input</option><option>css=#input-16</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-16<datalist><option>id=input-16</option><option>//input[@id='input-16']</option><option>//div[@id='app']/div/main/div/div/div/div/form/div/div/div/div/div/div/input</option><option>//input</option><option>css=#input-16</option></datalist></td><td>min@hotmail.com</td>
+</tr>
+<tr><td>click</td><td>id=input-19<datalist><option>id=input-19</option><option>//input[@id='input-19']</option><option>//div[@id='app']/div/main/div/div/div/div/form/div[2]/div/div/div/div/div/input</option><option>//div[2]/div/div/div/div/div/input</option><option>css=#input-19</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-19<datalist><option>id=input-19</option><option>//input[@id='input-19']</option><option>//div[@id='app']/div/main/div/div/div/div/form/div[2]/div/div/div/div/div/input</option><option>//div[2]/div/div/div/div/div/input</option><option>css=#input-19</option></datalist></td><td>1234</td>
+</tr>
+<tr><td>click</td><td>//div[3]/div/div/div/div/div/div<datalist><option>//div[3]/div/div/div/div/div/div</option><option>//div[@id='app']/div[2]/main/div/div/div/div/form/div[3]/div/div/div/div/div/div</option><option>css=div.v-select__selections</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=customer-list-item-37<datalist><option>id=customer-list-item-37</option><option>//div[@id='customer-list-item-37']</option><option>//div[@id='list-22']/div[2]/div/div</option><option>//div[2]/div/div</option><option>css=#customer-list-item-37</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='app']/div[2]/main/div/div/div/div/form/div[4]/div/button/span/i<datalist><option>//div[@id='app']/div[2]/main/div/div/div/div/form/div[4]/div/button/span/i</option><option>//span/i</option><option>css=i.v-icon.notranslate.v-icon--right.mdi.mdi-key-variant.theme--light</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='app']/div/nav/div/div[4]/a/span<datalist><option>//div[@id='app']/div/nav/div/div[4]/a/span</option><option>//div[4]/a/span</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='app']/div/main/div/div/div/header/div<datalist><option>//div[@id='app']/div/main/div/div/div/header/div</option><option>//div/header/div</option><option>css=header.v-sheet.v-sheet--tile.theme--dark.v-toolbar.v-toolbar--flat.black &gt; div.v-toolbar__content</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>//div[@id='app']/div/main/div/div/div/header/div/div/h2<datalist><option>//div[@id='app']/div/main/div/div/div/header/div/div/h2</option><option>//h2</option></datalist></td><td>ระบบแสดงอุปกรณ์</td>
+</tr>
+</tbody></table>
+</body>
+</html>
