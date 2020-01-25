@@ -38,11 +38,11 @@
             Borrow
             </v-btn>
             </v-row>
-	    <p></p>
+            <p></p>
             <v-row justify="center">
-            <v-btn 
+            <v-btn
             @click="ShowBorrow"
-            class="cyan lighten-1 white--text">
+            class="indigo lighten-3">
             ShowBorrow
             </v-btn>
             </v-row>
