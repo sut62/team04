@@ -13,6 +13,7 @@ import DeleteResvertion from './components/DeleteResvertion'
 import ShowEQT from "./components/ShowEQT"
 import ShowStatusRoom from './components/ShowStatusRoom'
 import ShowReturns from './components/ShowReturns'
+import ShowBorrow from './components/ShowBorrow'
 
 Vue.use(Router)
 
@@ -84,9 +85,11 @@ export default new Router({
     name: 'ShowReturns',
     component: ShowReturns
     },
-
-
-    
+   {
+    path: '/ShowBorrow',
+    name: 'ShowBorrow',
+    component: ShowBorrow
+    },
 
   ]
 })
