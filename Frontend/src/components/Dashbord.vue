@@ -38,6 +38,14 @@
             Borrow
             </v-btn>
             </v-row>
+	    <p></p>
+            <v-row justify="center">
+            <v-btn 
+            @click="ShowBorrow"
+            class="cyan lighten-1 white--text">
+            ShowBorrow
+            </v-btn>
+            </v-row>
             <p></p>
             <v-row justify="center">
             <v-btn
@@ -97,6 +105,9 @@ ShowStatusRoom(){
  },
 Borrow(){
      this.$router.push({name: 'Borrow', params: {em: this.emid} });
+ },
+ShowBorrow(){
+     this.$router.push({name: 'ShowBorrow', params: {em: this.emid} });
  },
  Returns(){
      this.$router.push({name: 'Returns', params: {em: this.emid} });
