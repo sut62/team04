@@ -7,22 +7,23 @@
             <v-container class="fill-height" fluid>
               <v-row align="center" justify="center">
                 <v-col cols="12" sm="8" md="4">
-                  <div v-if="clickBorrow == true">
-                    <div v-if="BorrowCheck == false">
-                      <v-alert type="error">เลือกไม่ครบจ้า</v-alert>
-                    </div>
+                  <div v-if="BorrowCheck == true">
+                    <v-alert type="success">ทำรายการเรียบร้อยแล้ว</v-alert>
                   </div>
-                  <div v-if="clickBorrow == true">
-                    <div v-if="BorrowCheck == true">
-                      <v-alert type="success">ทำรายการเรียบร้อยแล้ว</v-alert>
-                    </div>
+
+                  <div v-if="checkAll == true">
+                    <v-alert type="error">ใส่ข้อมูลหื้อหมดเด้</v-alert>
+                  </div>
+
+                  <div v-if="checkNote == true">
+                    <v-alert type="error">ใส่ข้อความหื้อถูกเด้ (ถ้าบ่ใส่ หื้อใส่ " - ")</v-alert>
                   </div>
 
                   <v-card class="elevation-12">
                     <v-toolbar color="primary" dark flat>
                       <!-- กรอบข้างบนสีฟ้า -->
                       <v-toolbar-title>
-                        <h2>ยืมอุปกรณ์</h2>
+                        <h2>Borrow</h2>
                       </v-toolbar-title>
                       <div class="flex-grow-1"></div>
                     </v-toolbar>
@@ -54,13 +55,12 @@
                               v-model="Borrow.equipId"
                               :items="Result"
                               item-text="name"
-                              item-value="equipmentname_id"
+                              item-value="Manid"
                               :rules="[(v) => !!v || 'Item is required']"
                               required
                             ></v-select>
                           </v-col>
                         </v-row>
-
                         <!-- ComboBox รายชื่อพนักงาน -->
                         <v-row justify="center">
                           <v-col cols="10">
@@ -79,13 +79,12 @@
                         </v-row>
                       </v-card-text>
                     </v-form>
-
                     <v-row justify="center">
                       <v-col cols="12" sm="6">
                         <v-text-field
                           label="Note"
                           outlined
-                          v-model="Borrow.bornoteId"
+                          v-model="Borrow.bornote"
                           :counter="50"
                           :rules="Notes"
                           required
@@ -94,12 +93,14 @@
                         >></v-text-field>
                       </v-col>
                     </v-row>
+                    <!-- manageEquipmentss {{manageEquipmentss}} -->
+
                     <v-card-actions>
                       <!-- ปุ่มกด -->
                       <div class="flex-grow-1"></div>
-                      <v-btn color="primary" @click="save">ยืมอุปกรณ์</v-btn>
-                      <v-btn color="primary" @click="clear">ล้างข้อมูล</v-btn>
-                      <v-btn color="primary" @click="clearNote">ลบ Note</v-btn>
+                      <v-btn color="success" @click="save">ยืมอุปกรณ์</v-btn>
+                      <v-btn color="error" @click="clear">ล้างข้อมูล</v-btn>
+                      <v-btn color="error" @click="clearNote">ลบ Note</v-btn>
                       <v-btn color="primary" @click="back">ย้อนกลับ</v-btn>
                     </v-card-actions>
                   </v-card>
@@ -125,8 +126,7 @@ export default {
         customerId: "",
         employeeId: "",
         equipId: "",
-        bornoteId: ""
-        
+        bornote: ""
       },
       Notes: [
         v => !!v || "Note is required",
@@ -136,13 +136,12 @@ export default {
       customers: [],
       employees: [],
       equips: [],
-      EQNameID: [], //จัดการอุปรกรณ์
       equipsFull: [],
-      bornotes: [],
       lock: "",
       emid: "",
-      clickBorrow: false,
-      BorrowCheck: false
+      BorrowCheck: false,
+      checkAll: false,
+      checkNote: false
     };
   },
   methods: {
@@ -154,7 +153,9 @@ export default {
     CheckSum() {
       if (this.manageEquipmentss != null) return true;
     },
-
+    CheckSumA() {
+      if (this.manageEquipmentss != null) return true;
+    },
     lockemployee() {
       this.emid = this.$route.params.em;
       this.Borrow.employeeId = this.emid;
@@ -166,7 +167,6 @@ export default {
     SumAllEq() {
       this.manageEquipmentss.forEach((element1, index1) => {});
     },
-
     // ดึงข้อมูล Employee ใส่ combobox
     getEmployees() {
       http
@@ -179,7 +179,6 @@ export default {
           console.log(e);
         });
     },
-
     getCustomers() {
       http
         .get("/customer")
@@ -191,7 +190,6 @@ export default {
           console.log(e);
         });
     },
-
     getManageequipments() {
       http
         .get("/manageEquipments")
@@ -203,19 +201,24 @@ export default {
           console.log(e);
         });
     },
-
     save() {
-      this.clickBorrow = true;
       if (
-        this.Borrow.employeeId == "" ||
+        this.Borrow.employeeId == null ||
         this.Borrow.customerId == "" ||
         this.Borrow.equipId == "" ||
-        this.Borrow.bornoteId == ""
+        this.Borrow.bornote == ""
       ) {
+        this.checkAll = true;
+        this.checkNote = false;
         this.BorrowCheck = false;
-        //  alert("เลือกให้ครบจ้า");
+      } else if (
+        this.Borrow.bornote.length > 50 ||
+        !this.Borrow.bornote.match(/^([a-zA-z0-9ก-๙-|\u0020])+$/i)
+      ) {
+        this.checkNote = true;
+        this.checkAll = false;
+        this.BorrowCheck = false;
       } else {
-        this.BorrowCheck = true;
         http
           .post(
             "/Borrow/" +
@@ -225,19 +228,21 @@ export default {
               "/" +
               this.Borrow.equipId +
               "/" +
-              this.Borrow.bornoteId,
+              this.Borrow.bornote,
             // "/" +
             // this.Borrow.bornoteId +
             this.Borrow
           )
           .then(response => {
             console.log(response);
-            //  alert("ทำรายการเรียบร้อยแล้ว");
+            this.BorrowCheck = true;
+            this.checkNote = false;
+            this.checkAll = false;
+            // this.refreshList(this.equipId = false);
           })
           .catch(e => {
             console.log(e);
           });
-
         this.submitted = true;
       }
     },
@@ -249,20 +254,24 @@ export default {
       this.Borrow.equipId = "";
       this.BorrowCheck = false;
       this.clickBorrow = false;
+      this.checkAll = false;
+      this.checkNote = false;
     },
     clearNote() {
       //this.$refs.form.reset();
       //this.$v.$reset();
-      this.Borrow.bornoteId = "";
+      this.Borrow.bornote = "";
       this.BorrowCheck = false;
-      this.clickBorrow = false;
+      this.checkAll = false;
+      this.checkNote = false;
     },
     refreshList() {
       // this.getEmployees();
       this.getCustomers();
       this.getManageequipments();
       this.BorrowCheck = false;
-      this.clickBorrow = false;
+      this.checkAll = false;
+      this.checkNote = false;
       //this.lockemployee();
     }
   },
@@ -272,26 +281,55 @@ export default {
     this.getManageequipments();
     this.lockemployee();
     this.ResultALL();
-    this.bornotes();
+    // this.bornote();
   },
   computed: {
     Result() {
       let result1 = new Set();
       let result = new Array();
-      // let a = new Array();
+      let resultName = new Set();
+      // let Name = [];
+      let Manid = 0;
+
       if (this.CheckSum()) {
+        // เก็บ  ไอดี ของอุปรกรณ์
         for (let i = 0; i < this.manageEquipmentss.length; i++) {
           result1.add(this.manageEquipmentss[i].equipmentName.equipmentname_id);
         }
-      }
-      result1.forEach(value => {
+        // เก็บ ชื่ออุปกรณ์
         for (let i = 0; i < this.manageEquipmentss.length; i++) {
-          let name = this.manageEquipmentss[i].equipmentName.equipmentname_id;
-          if (value === name) {
-            result.push(this.manageEquipmentss[i].equipmentName);
-            break;
+          resultName.add(this.manageEquipmentss[i].equipmentName.name);
+        }
+      }
+
+      // const setIter = resultName.values();
+      let array = [...resultName];
+      // console.log(array);
+
+      let j = 0;
+      result1.forEach(value => {
+        let amount = 0;
+        // console.log(index);
+        for (let i = 0; i < this.manageEquipmentss.length; i++) {
+          let id = this.manageEquipmentss[i].equipmentName.equipmentname_id;
+
+          if (
+            value == id /*  หากค่าของ id  เท่ากับ ค่าของ lopp id ที่เก็บก่อนหน้า*/
+          ) {
+            Manid = this.manageEquipmentss[i].manageEquipment_id;
+            // Name =  this.resultName[i];
+            amount = amount + this.manageEquipmentss[i].manageEquipment_amount;
+            // console.log(Name);
+          }
+          if (i == this.manageEquipmentss.length - 1 && amount > 0) {
+            result.push({
+              name: array.slice(j, j + 1),
+              amount: amount,
+              Manid: Manid
+            });
           }
         }
+        j++;
       });
       return result;
     }
