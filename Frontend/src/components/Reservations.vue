@@ -480,10 +480,12 @@ export default {
             .catch(error => {
               console.error(error);
               this.alertErrorDodo = true;
+            
             });
         } else {
           this.alertErrorDodo = true;
           this.clear();
+
         }
       }, 1000);
     },
