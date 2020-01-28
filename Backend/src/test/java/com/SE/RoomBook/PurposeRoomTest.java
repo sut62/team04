@@ -82,6 +82,21 @@ public class PurposeRoomTest {
     }
 
     @Test
+    void B6014681_testNameMustNotBe2CharactersPurposeRoom() {
+        PurposeRoom room = new PurposeRoom();
+        room.setName("ฟฟ");
+
+        Set<ConstraintViolation<PurposeRoom>> result = validator.validate(room);
+
+        assertEquals(1, result.size());
+
+        ConstraintViolation<PurposeRoom> v = result.iterator().next();
+        assertEquals("size must be between 3 and 40", v.getMessage());
+        assertEquals("name", v.getPropertyPath().toString());
+
+    }
+
+    @Test
     void B6014681_testNameMustNotBeDigitsPurposeRoom() {
         PurposeRoom room = new PurposeRoom();
         room.setName("1234567890");
@@ -92,7 +107,7 @@ public class PurposeRoomTest {
 
         ConstraintViolation<PurposeRoom> v = result.iterator().next();
         assertEquals("must match \"[\\u0E00-\\u0E7F|\\u0020]+\"", v.getMessage());
-        // assertEquals("name", v.getPropertyPath().toString());
+        assertEquals("name", v.getPropertyPath().toString());
 
     }
 
