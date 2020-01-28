@@ -11,10 +11,10 @@ public interface StatusReservationRepository extends JpaRepository<StatusReserva
 
     StatusReservation findById(long StatusReservation_id);
 
-    @Query(value = "SELECT * FROM STATUS_RESERVATION  WHERE STATUS_RESERVATION_NAME = 'confirm'", nativeQuery = true)
-    StatusReservation findConfirmByName();
+    @Query(value = "SELECT * FROM STATUS_RESERVATION  WHERE STATUS_RESERVATION_ID = 1", nativeQuery = true)
+    StatusReservation findConfirmById();
 
-    @Query(value = "SELECT * FROM STATUS_RESERVATION  WHERE STATUS_RESERVATION_NAME = 'cancel'", nativeQuery = true)
-    StatusReservation findCancelByName();
+    @Query(value = "SELECT * FROM STATUS_RESERVATION  WHERE STATUS_RESERVATION_ID = 2", nativeQuery = true)
+    StatusReservation findCancelById();
 
 }
