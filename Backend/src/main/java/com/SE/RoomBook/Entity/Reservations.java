@@ -55,11 +55,12 @@ public class Reservations {
     @JoinColumn(name = "Cus_id", insertable = true)
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = StatusReservation.class)
+    @JoinColumn(name = "StatusReservation_id", insertable = true)
+    private StatusReservation statusReservation;
+
     @NotNull
     @Column(name = "Date")
     private Date bookdate;
 
-    @NotNull
-    @Column(name = "confrimBook")
-    private Boolean confrimBook;
 }

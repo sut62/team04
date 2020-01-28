@@ -91,6 +91,7 @@ export default {
       selectdata: [], // ข้อมูลการจองห้องของลูกค้าใน selectbox
       alertSuccessDodo: "",
       alertErrorDodo: "",
+      idBook: 0,
       headers: [
         {
           text: "RESERVATIONS_ID",
@@ -144,9 +145,12 @@ export default {
           room: value.manageStatus.room.room_name,
           date: datecon
         });
+
+        this.idBook = value.reservations_id;
+
         this.selectdata.push({
-          id: value.reservations_id,
-          name: `รหัสการจองห้องที่   ` + value.reservations_id
+          id: this.idBook,
+          name: `รหัสการจองห้องที่   ` + this.idBook
         });
       });
     },
