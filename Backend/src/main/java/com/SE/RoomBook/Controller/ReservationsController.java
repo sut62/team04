@@ -74,7 +74,7 @@ public class ReservationsController { // Tue Aug 31 10:20:56 ICT 1982
 
         Customer c = customerRepository.findById(bodyBook.getCustomerid()).get();
         ManageStatus m = manageStatusRepository.findById(bodyBook.getRoomid()).get();
-        StatusReservation s = statusReservationRepository.findConfirmByName();
+        StatusReservation s = statusReservationRepository.findConfirmById();
         
         r.setStatusReservation(s);
         r.setManageStatus(m);

@@ -43,7 +43,7 @@ public class DeleteReservationController {
     public Reservations updateReservation(@PathVariable("reservationid") Long id) {
 
         Reservations rchange = reservationsRepository.findReservationById(id);
-        StatusReservation statusChange = statusReservationRepository.findCancelByName();
+        StatusReservation statusChange = statusReservationRepository.findCancelById();
 
         rchange.setStatusReservation(statusChange);
         return reservationsRepository.save(rchange);
