@@ -44,10 +44,6 @@ public class Borrow {
     @Column(name="borrow_note")
     private String bornote;
 
-    @NotNull
-    @Column(name="borrow_status")
-    private Boolean borstatus;
-
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
     private Employee employee;
@@ -59,4 +55,8 @@ public class Borrow {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageEquipment.class)
     @JoinColumn(name = "ManageEquipment_ID", insertable = true)
     private ManageEquipment manageequipment;
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = StatusReservation.class)
+    @JoinColumn(name = "BorrowStatus_id", insertable = true)
+    private BorrowStatus BorrowStatus;
 }
