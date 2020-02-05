@@ -50,7 +50,7 @@ public class BorrowTest{
 
         borrow.setBordate(date);
         borrow.setBornote("test");
-        borrow.setBorstatus(true);
+        //borrow.setBorstatus(true);
 
         borrow = BorrowRepository.saveAndFlush(borrow);
 
@@ -59,7 +59,7 @@ public class BorrowTest{
         assertEquals(date, found.get().getBordate());
         assertEquals(sdf.parse("31-08-1982 10:20:56"), found.get().getBordate());
         assertEquals("test", found.get().getBornote());
-        assertEquals(true, found.get().getBorstatus());
+        //assertEquals(true, found.get().getBorstatus());
     }
     
     //test2 NotNull
@@ -75,7 +75,7 @@ public class BorrowTest{
         
         borrow.setBordate(null);
         borrow.setBornote("test");
-        borrow.setBorstatus(true);
+        //borrow.setBorstatus(true);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
@@ -102,7 +102,7 @@ public class BorrowTest{
         
         borrow.setBordate(date);
         borrow.setBornote("teststeststeststeststeststeststeststeststeststeststests");
-        borrow.setBorstatus(true);
+        //borrow.setBorstatus(true);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
@@ -126,7 +126,7 @@ public class BorrowTest{
         Borrow borrow = new Borrow();
         borrow.setBordate(date);
         borrow.setBornote("วุ่นวายยย++");
-        borrow.setBorstatus(true);
+        //borrow.setBorstatus(true);
 
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
         // result ต้องมี error 1 ค่าเท่านั้น
@@ -148,7 +148,7 @@ public class BorrowTest{
         Borrow borrow = new Borrow();
         borrow.setBordate(date);
         borrow.setBornote(null);
-        borrow.setBorstatus(true);
+        //borrow.setBorstatus(true);
 
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
@@ -163,7 +163,7 @@ public class BorrowTest{
         assertEquals("bornote", v.getPropertyPath().toString());
 
     }
-    @Test
+    /*@Test
     void B6007317_testBorrow_statusMustBeNotNull() throws ParseException {
         // //เตรียมเวลา ทั้ง Date และ LocalDate
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
@@ -187,6 +187,6 @@ public class BorrowTest{
         assertEquals("must not be null", v.getMessage());
         assertEquals("borstatus", v.getPropertyPath().toString());
 
-    }
+    }*/
 
 }
