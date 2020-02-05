@@ -36,10 +36,13 @@ public class BorrowController {
     private CustomerRepository CustomerRepository;
     @Autowired
     private EmployeeRepository EmployeeRepository;
+    @Autowired
+    private BorrowStatusRepository BorrowStatusRepository;
     
 
-    BorrowController(final BorrowRepository BorrowRepository) {
+    BorrowController(BorrowRepository BorrowRepository, BorrowStatusRepository BorrowStatusRepository) {
         this.BorrowRepository = BorrowRepository;
+        this.BorrowStatusRepository = BorrowStatusRepository;
     }
 
 	@GetMapping("/Borrow")
@@ -70,13 +73,16 @@ public class BorrowController {
     final ManageEquipment ManageEquipment = ManageEquipmentRepository.findById(manageEquipment_id);
     ManageEquipment.setManageEquipment_amount(ManageEquipment.getManageEquipment_amount()-1);
     ManageEquipmentRepository.save(ManageEquipment);
-
+    final BorrowStatus borrowStatus = BorrowStatusRepository.findBorrowById();
+    
     newBorrow.setCustomer(Customer);
     newBorrow.setEmployee(Employee);
     newBorrow.setBordate(new Date());
     newBorrow.setManageequipment(ManageEquipment);
     newBorrow.setBornote(bornote);
-    newBorrow.setBorstatus(true);
+
+    newBorrow.setBorrowStatus(borrowStatus);
+
     
     
     return BorrowRepository.save(newBorrow); //บันทึก Objcet ชื่อ Borrow
