@@ -37,7 +37,7 @@ public class ManageEquipment {
 
     @NotNull
     @Max(value=99,message = "must be less than 99")
-    @Min(value=1,message = "must be great than 1")
+    @Min(value=0,message = "must be great than 0")
     @Column(name="Amount")
     private Integer manageEquipment_amount;
 

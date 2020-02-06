@@ -75,7 +75,7 @@ public class ManageEquipmentTest{
      }
 
          @Test
-     void B6009793_testAmountMustBeGreatThan1() {
+     void B6009793_testAmountMustBeGreatThan0() {
          ManageEquipment ManageEquipment = new ManageEquipment();
          ManageEquipment.setManageEquipment_amount(-3);
 
@@ -86,7 +86,7 @@ public class ManageEquipmentTest{
 
          // error message ตรงชนิด และถูก field
          ConstraintViolation<ManageEquipment> v = result.iterator().next();
-         assertEquals("must be great than 1", v.getMessage());
+         assertEquals("must be great than 0", v.getMessage());
          assertEquals("manageEquipment_amount", v.getPropertyPath().toString());
      }
 }
