@@ -22,7 +22,8 @@ public class RoomBookApplication {
 			StatusCustomerRepository statusCustomer, EmployeeRepository employeeRepository,
 			PurposeRoomRepository purposeRoomRepository, RoomRepository roomRepository,
 			StatusRepository statusRepository, EquipmentTypeRepository EquipmentTypeRepository,
-			EquipmentNameRepository EquipmentNameRepository, StatusReservationRepository statusReservationRepository) {
+			EquipmentNameRepository EquipmentNameRepository, StatusReservationRepository statusReservationRepository,
+			BorrowStatusRepository borrowStatusRepository) {
 		return args -> {
 			Employee em1 = new Employee();
 			em1.setEm_name("Dodo");
@@ -99,6 +100,11 @@ public class RoomBookApplication {
 				statusReservationRepository.save(SR);
 			});
 
+			Stream.of("TRUE", "FALSE" ).forEach(name -> {
+				BorrowStatus borrowStatus = new BorrowStatus();
+				borrowStatus.setBorstatus(name);
+				borrowStatusRepository.save(borrowStatus);
+			});
 		};
 	}
 
