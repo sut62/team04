@@ -35,6 +35,6 @@ public class BorrowStatus {
     private @NonNull Long borstatus_id;
 
     @NotNull
-    private Boolean borstatus;
+    private String borstatus;
 }
 
