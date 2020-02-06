@@ -13,10 +13,10 @@ interface BorrowRepository extends JpaRepository<Borrow, Long> {
     Borrow findById(long id);
    
     
-	@Query(value = "SELECT * FROM BORROW WHERE BORROW_STATUS = TRUE", nativeQuery = true)
+	@Query(value = "SELECT * FROM BORROW WHERE BORROW_STATUS_ID = 1", nativeQuery = true)
     Collection<Borrow> findByBorrowTrue();
     
-    @Query(value = "SELECT * FROM BORROW WHERE BORROW_STATUS = TRUE AND CUSTOMER_ID = :id", nativeQuery = true)
+    @Query(value = "SELECT * FROM BORROW WHERE BORROW_STATUS_ID = 1 AND CUSTOMER_ID = :id", nativeQuery = true)
     Collection<Borrow> findByCustomerId(@Param("id") Long id);
     
   
