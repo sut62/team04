@@ -9,11 +9,16 @@
                 <v-col cols="12" sm="12" md="10">
                   <v-card>
                     <v-card-title>
-                      <u>ข้อมูลการยืมอุปกรณ์</u>
-                      <v-spacer></v-spacer>
-                      <v-text-field v-model="search" label="Search" single-line hide-details></v-text-field>
+                      <v-row align="center" justify="center">
+                        <v-col cols="12" sm="12" md="10">
+                          <v-chip class="ma-1" color="primary" text-color="white">
+                            <h2>ข้อมูลการยืมอุปกรณ์</h2>
+                            <v-icon right>mdi-star</v-icon>
+                          </v-chip>
+                        </v-col>
+                      </v-row>
                     </v-card-title>
-                    <v-data-table :headers="headers" :items="items" :search="search"></v-data-table>
+                    <v-data-table :headers="headers" :items="items"></v-data-table>
                     <v-row align="center" justify="center">
                       <v-col cols="12" sm="6" md="6">
                         <v-btn class="ma-2" outlined color="indigo" @click="back">ย้อนกลับ</v-btn>
@@ -35,7 +40,6 @@ import http from "../http-common";
 export default {
   data() {
     return {
-      search: "",
       headers: [
         {
           text: "ลำดับ",
@@ -47,7 +51,7 @@ export default {
         { text: "อุปกรณ์ที่ยืม", value: "manageequipment.equipmentName.name" },
         { text: "พนักงานที่ทำรายการ", value: "employee.em_name" },
         { text: "Note", value: "bornote" },
-        { text: "Status", value: "borstatus" },
+        { text: "Status", value: "borrowStatus.borstatus" },
         { text: "วัน/เวลาที่ยืม", value: "bordate" }
       ],
       items: []
