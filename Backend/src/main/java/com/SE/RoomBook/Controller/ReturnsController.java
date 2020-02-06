@@ -48,8 +48,8 @@ public class ReturnsController {
     }
 
     @PostMapping("/returns/{C}/{bid}/{E}/{man}/{N}")
-    public Returns newReturns(final Returns newReturns, @PathVariable final long C, 
-    @PathVariable final long bid, 
+    public Returns newReturns(final Returns newReturns, @PathVariable final long C,
+    @PathVariable final long bid,
     @PathVariable final long E,
     @PathVariable final long man,
     @PathVariable final String N) {
@@ -58,12 +58,12 @@ public class ReturnsController {
         final Borrow borrow = borrowRepository.findById(bid);
         final Customer customer = customerRepository.findById(C);
 
-        final ManageEquipment  m = manageEquipmentRepository.findById(man);  
+        final ManageEquipment  m = manageEquipmentRepository.findById(man);
         m.setManageEquipment_amount(m.getManageEquipment_amount()+1);
         manageEquipmentRepository.save(m);
 
         borrow.setBorstatus(false);
-       
+
 
         newReturns.setBorrow(borrow);
         newReturns.setCustomer(customer);
