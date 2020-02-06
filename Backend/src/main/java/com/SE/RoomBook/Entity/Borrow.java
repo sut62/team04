@@ -56,7 +56,7 @@ public class Borrow {
     @JoinColumn(name = "ManageEquipment_ID", insertable = true)
     private ManageEquipment manageequipment;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = StatusReservation.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = BorrowStatus.class)
     @JoinColumn(name = "BorrowStatus_id", insertable = true)
-    private BorrowStatus BorrowStatus;
+    private BorrowStatus borrowStatus;
 }
