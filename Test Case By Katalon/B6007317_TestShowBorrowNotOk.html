@@ -3,12 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>TestShowBorrow</title>
+	<title>TestShowBorrowNotOk</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ShowBorrowOk</td></tr>
+<tr><td rowspan="1" colspan="3">ShowBorrowNotOk</td></tr>
 </thead>
 <tbody>
 <tr><td>open</td><td>http://localhost:8080/<datalist><option>http://localhost:8080/</option></datalist></td><td></td>
@@ -29,9 +29,11 @@
 </tr>
 <tr><td>click</td><td>//div[@id='app']/div/main/div/div/div/form/div[5]/button/span<datalist><option>//div[@id='app']/div/main/div/div/div/form/div[5]/button/span</option><option>//div[5]/button/span</option></datalist></td><td></td>
 </tr>
-<tr><td>click</td><td>//div[@id='inspire']/div/main/div/div/div/div/div/div<datalist><option>//div[@id='inspire']/div/main/div/div/div/div/div/div</option><option>//div/div/div/main/div/div/div/div/div/div</option><option>css=div.v-card__title</option></datalist></td><td></td>
+<tr><td>click</td><td>//div[@id='inspire']/div/main/div/div/div/div/div/div/div/div/span/span<datalist><option>//div[@id='inspire']/div/main/div/div/div/div/div/div/div/div/span/span</option><option>//div/span/span</option><option>css=span.v-chip__content</option></datalist></td><td></td>
 </tr>
-<tr><td>assertText</td><td>//div[@id='inspire']/div/main/div/div/div/div/div/div/div/div/span/span/h2<datalist><option>//div[@id='inspire']/div/main/div/div/div/div/div/div/div/div/span/span/h2</option><option>//h2</option><option>css=h2</option></datalist></td><td>ข้อมูลการยืมอุปกรณ์</td>
+<tr><td>click</td><td>//div[@id='inspire']/div/main/div/div/div/div/div/div[2]/div/table/tbody/tr/td<datalist><option>//div[@id='inspire']/div/main/div/div/div/div/div/div[2]/div/table/tbody/tr/td</option><option>//td</option><option>css=td</option></datalist></td><td></td>
+</tr>
+<tr><td>assertText</td><td>//div[@id='inspire']/div/main/div/div/div/div/div/div[2]/div/table/tbody/tr/td<datalist><option>//div[@id='inspire']/div/main/div/div/div/div/div/div[2]/div/table/tbody/tr/td</option><option>//td</option><option>css=td</option></datalist></td><td>No data available</td>
 </tr>
 </tbody></table>
 </body>
