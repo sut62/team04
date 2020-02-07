@@ -32,7 +32,7 @@ public class CustomerTest{
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
-
+    //Test ข้อมูลครบถูกต้อง
     @Test
     void testCustomerOKFullData(){
         Customer customer = new Customer();
@@ -50,6 +50,7 @@ public class CustomerTest{
         assertEquals("0930949139", found.get().getPhone());
         
     }
+    // Test Name ของ Customer ต้องไม่มีค่าว่างอยู่
     @Test
     void testCustomerNameMustNotBeNull() {
         Customer customer = new Customer();
@@ -69,7 +70,67 @@ public class CustomerTest{
         assertEquals("must not be null", v.getMessage());
         assertEquals("Name", v.getPropertyPath().toString());
     }
+    // Test Password ของ Customer ต้องไม่มีค่าว่างอยู่
+    @Test
+    void testCustomerPWDMustNotBeNull() {
+        Customer customer = new Customer();
+        customer.setName("Test");
+        customer.setPassword(null);
+        customer.setEmail("Test@ex.com");
+        customer.setPhone("0930949139");
+        
 
+        Set<ConstraintViolation<Customer>> result = validator.validate(customer);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Customer> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("Password", v.getPropertyPath().toString());
+    }
+    // Test Email ของ Customer ต้องไม่มีค่าว่างอยู่
+    @Test
+    void testCustomerEmailMustNotBeNull() {
+        Customer customer = new Customer();
+        customer.setName("Test");
+        customer.setPassword("Test");
+        customer.setEmail(null);
+        customer.setPhone("0930949139");
+        
+
+        Set<ConstraintViolation<Customer>> result = validator.validate(customer);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Customer> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("Email", v.getPropertyPath().toString());
+    }
+    // Test Phone ของ Customer ต้องไม่มีค่าว่าง
+    @Test
+    void testCustomerPhoneMustNotBeNull() {
+        Customer customer = new Customer();
+        customer.setName("Test");
+        customer.setPassword("Test");
+        customer.setEmail("Test@ex.com");
+        customer.setPhone(null);
+        
+
+        Set<ConstraintViolation<Customer>> result = validator.validate(customer);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Customer> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("Phone", v.getPropertyPath().toString());
+    }
+    // Test Email ของ Customer ต้องอยู่ใน form ของ Email คือมี @
     @Test
     void testCustomerEmailMustHaveAddress() {
         Customer customer = new Customer();
@@ -89,7 +150,7 @@ public class CustomerTest{
         assertEquals("must be a well-formed email address", v.getMessage());
         assertEquals("Email", v.getPropertyPath().toString());
     }
-
+    // Test Phone ของ Customer ต้องมีเลข 10 ตัว
     @Test
     void testCustomePhoneMustHaveNumber() {
         Customer customer = new Customer();
@@ -109,6 +170,7 @@ public class CustomerTest{
         assertEquals("must match \"\\d{10}\"", v.getMessage());
         assertEquals("Phone", v.getPropertyPath().toString());
     }
+    // Test Email ของ Customer ต้องไม่ซ้ำกัน
     @Test
     void testCustomerEmailMustBeUnique() {
         Customer customer = new Customer();
