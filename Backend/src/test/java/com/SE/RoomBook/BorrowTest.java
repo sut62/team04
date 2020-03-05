@@ -25,57 +25,159 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
 @DataJpaTest
-public class BorrowTest{
+public class BorrowTest {
 
-    private Validator Validator;
+    Validator Validator;
 
     @Autowired
-    private BorrowRepository BorrowRepository;
+    BorrowRepository borrowRepository;
+    @Autowired
+    ManageEquipmentRepository manageEquipmentRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
+    @Autowired
+    GenderRepository genderRepository;
+    @Autowired
+    StatusCustomerRepository statusCustomerRepository;
+    @Autowired
+    TitleNameRepository titleNameRepository;
+    @Autowired
+    EquipmentNameRepository equipmentNameRepository;
+    @Autowired
+    EquipmentTypeRepository equipmentTypeRepository;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator = factory.getValidator();
     }
-    //test1
+
+    // test1
     @Test
-    void B6007317_testAllOK() throws ParseException {
-        
+    void B6007317_testAllOK() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
         Borrow borrow = new Borrow();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String dateInString = "31-08-1982 10:20:56";
-        Date date = sdf.parse(dateInString);
+        Date date = new Date();
 
         borrow.setBordate(date);
         borrow.setBornote("test");
-        //borrow.setBorstatus(true);
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
 
-        borrow = BorrowRepository.saveAndFlush(borrow);
+        borrow = borrowRepository.saveAndFlush(borrow);
 
-        Optional<Borrow> found = BorrowRepository.findById(borrow.getBid());
+        Borrow found = borrowRepository.findById(borrow.getBid()).get();
 
-        assertEquals(date, found.get().getBordate());
-        assertEquals(sdf.parse("31-08-1982 10:20:56"), found.get().getBordate());
-        assertEquals("test", found.get().getBornote());
-        //assertEquals(true, found.get().getBorstatus());
+        assertEquals(date, found.getBordate());
+        assertEquals("test", found.getBornote());
+        assertEquals(true, found.getBorrowStatus());
+        assertEquals(customer, found.getCustomer());
+        assertEquals(employee, found.getEmployee());
+        assertEquals(manageEquipment, found.getManageequipment());
+
     }
-    
-    //test2 NotNull
-    @Test
-    void B6007317_testDateMustBeNotNull() throws ParseException {
 
-       
+    @Test
+    void B6007317_testDateMustBeNotNull() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
         Borrow borrow = new Borrow();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String dateInString = "31-08-1982 10:20:56";
-        Date date = sdf.parse(dateInString);
-        
-        
+        Date date = new Date();
+
         borrow.setBordate(null);
         borrow.setBornote("test");
-        //borrow.setBorstatus(true);
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
@@ -87,22 +189,63 @@ public class BorrowTest{
         ConstraintViolation<Borrow> v = result.iterator().next();
         assertEquals("must not be null", v.getMessage());
         assertEquals("bordate", v.getPropertyPath().toString());
-    }
-    
-    //test3 @Size
-    @Test
-    void B6007317_testNoteMax50Digits() throws ParseException {
 
-        //เตรียมเวลา ทั้ง Date
+    }
+
+    @Test
+    void B6007317_testNoteMax50Digits() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
         Borrow borrow = new Borrow();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String dateInString = "31-08-1982 10:20:56";
-        Date date = sdf.parse(dateInString);
-        
-        
+        Date date = new Date();
+
         borrow.setBordate(date);
         borrow.setBornote("teststeststeststeststeststeststeststeststeststeststests");
-        //borrow.setBorstatus(true);
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
@@ -114,21 +257,66 @@ public class BorrowTest{
         ConstraintViolation<Borrow> v = result.iterator().next();
         assertEquals("size must be between 0 and 50", v.getMessage());
         assertEquals("bornote", v.getPropertyPath().toString());
-
     }
-    //test4 @Pattern
+
     @Test
-    void B6007317_testNotePattern() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String dateInString = "31-08-1982 10:20:56";
-        Date date = sdf.parse(dateInString);
+    void B6007317_testNotePattern() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
 
         Borrow borrow = new Borrow();
-        borrow.setBordate(date);
-        borrow.setBornote("วุ่นวายยย++");
-        //borrow.setBorstatus(true);
+        Date date = new Date();
 
+        borrow.setBordate(date);
+        borrow.setBornote("test++");
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
+
+        // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
+
         // result ต้องมี error 1 ค่าเท่านั้น
         assertEquals(1, result.size());
 
@@ -139,17 +327,58 @@ public class BorrowTest{
     }
 
     @Test
-    void B6007317_testBorrow_noteMustBeNotNull() throws ParseException {
-        // //เตรียมเวลา ทั้ง Date และ LocalDate
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String dateInString = "31-08-1982 10:20:56";
-        Date date = sdf.parse(dateInString);
-        // // สร้าง ManageStatus และทำการใส่ เวลา (Date and LocalDate)
+    void B6007317_testBorrow_noteMustBeNotNull() {
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
         Borrow borrow = new Borrow();
+        Date date = new Date();
+
         borrow.setBordate(date);
         borrow.setBornote(null);
-        //borrow.setBorstatus(true);
-
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
@@ -163,18 +392,61 @@ public class BorrowTest{
         assertEquals("bornote", v.getPropertyPath().toString());
 
     }
-    /*@Test
-    void B6007317_testBorrow_statusMustBeNotNull() throws ParseException {
-        // //เตรียมเวลา ทั้ง Date และ LocalDate
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String dateInString = "31-08-1982 10:20:56";
-        Date date = sdf.parse(dateInString);
-        // // สร้าง ManageStatus และทำการใส่ เวลา (Date and LocalDate)
+
+    @Test
+    void B6007317_testBorrow_statusNotNull() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
         Borrow borrow = new Borrow();
+        Date date = new Date();
+
         borrow.setBordate(date);
         borrow.setBornote("test");
-        borrow.setBorstatus(null);
-
+        borrow.setBorrowStatus(null);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
 
         // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
         Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
@@ -185,8 +457,169 @@ public class BorrowTest{
         // error message ตรงชนิด และถูก field
         ConstraintViolation<Borrow> v = result.iterator().next();
         assertEquals("must not be null", v.getMessage());
-        assertEquals("borstatus", v.getPropertyPath().toString());
+        assertEquals("borrowStatus", v.getPropertyPath().toString());
 
-    }*/
+    }
 
+    @Test
+    void B6007317_testEmployeeMustNotBeNull() {
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(null);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
+        Borrow borrow = new Borrow();
+        Date date = new Date();
+
+        borrow.setBordate(date);
+        borrow.setBornote("test");
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(null);
+        borrow.setManageequipment(manageEquipment);
+
+        // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
+        Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Borrow> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("employee", v.getPropertyPath().toString());
+
+    }
+
+    @Test
+    void B6007317_testCustomerMustNotBeNull() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        EquipmentName equipmentName = new EquipmentName();
+        equipmentName.setName("equipmentName");
+        equipmentName = equipmentNameRepository.saveAndFlush(equipmentName);
+
+        EquipmentType equipmentType = new EquipmentType();
+        equipmentType.setType("equipmentType");
+        equipmentType = equipmentTypeRepository.saveAndFlush(equipmentType);
+
+        ManageEquipment manageEquipment = new ManageEquipment();
+        manageEquipment.setManageEquipment_amount(5);
+        manageEquipment.setEquipmentType(equipmentType);
+        manageEquipment.setEquipmentName(equipmentName);
+        manageEquipment.setEmployee(employee);
+        manageEquipment = manageEquipmentRepository.saveAndFlush(manageEquipment);
+
+        Borrow borrow = new Borrow();
+        Date date = new Date();
+
+        borrow.setBordate(date);
+        borrow.setBornote("test");
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(null);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(manageEquipment);
+
+        // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
+        Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Borrow> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("customer", v.getPropertyPath().toString());
+
+    }
+
+    @Test
+    void B6007317_testManegeEquipmentNotNull() {
+
+        Employee employee = new Employee();
+        employee.setEm_name("employeetest");
+        employee.setPassword("employeetest1234");
+        employee = employeeRepository.saveAndFlush(employee);
+
+        Gender gender = new Gender();
+        gender.setGender("gender");
+        gender = genderRepository.saveAndFlush(gender);
+
+        StatusCustomer statusCustomer = new StatusCustomer();
+        statusCustomer.setStatusCus("statusCustomer");
+        statusCustomer = statusCustomerRepository.saveAndFlush(statusCustomer);
+
+        TitleName titleName = new TitleName();
+        titleName.setTitle("titleName");
+        titleName = titleNameRepository.saveAndFlush(titleName);
+
+        Customer customer = new Customer();
+        customer.setName("customertest");
+        customer.setPassword("customertest1234");
+        customer.setEmail("customertest@gmail.com");
+        customer.setPhone("0812345678");
+        customer.setGenders(gender);
+        customer.setStatuss(statusCustomer);
+        customer.setTitleNames(titleName);
+        customer = customerRepository.saveAndFlush(customer);
+
+        Borrow borrow = new Borrow();
+        Date date = new Date();
+
+        borrow.setBordate(date);
+        borrow.setBornote("test");
+        borrow.setBorrowStatus(true);
+        borrow.setCustomer(customer);
+        borrow.setEmployee(employee);
+        borrow.setManageequipment(null);
+
+        // ตรวจสอบ error และเก็บค่า error ในรูปแบบ set
+        Set<ConstraintViolation<Borrow>> result = Validator.validate(borrow);
+
+        // result ต้องมี error 1 ค่าเท่านั้น
+        assertEquals(1, result.size());
+
+        // error message ตรงชนิด และถูก field
+        ConstraintViolation<Borrow> v = result.iterator().next();
+        assertEquals("must not be null", v.getMessage());
+        assertEquals("manageequipment", v.getPropertyPath().toString());
+
+    }
 }
