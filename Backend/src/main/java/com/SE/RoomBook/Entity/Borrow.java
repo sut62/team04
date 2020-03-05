@@ -22,41 +22,44 @@ import javax.persistence.FetchType;
 
 import javax.validation.constraints.NotNull;
 
-
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="BORROW")
+@Table(name = "BORROW")
 public class Borrow {
     @Id
-    @SequenceGenerator(name="borrow_seq",sequenceName="borrow_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="borrow_seq")
+    @SequenceGenerator(name = "borrow_seq", sequenceName = "borrow_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "borrow_seq")
     @Column(name = "borrow__id", unique = true, nullable = true)
     private @NonNull Long bid;
 
     @NotNull
-    @Column(name="borrow_date")
+    @Column(name = "borrow_date")
     private Date bordate;
 
     @NotNull
     @Pattern(regexp = "[a-zA-Z0-9ก-๙-]*")
-    @Size(min=0, max=50)
-    @Column(name="borrow_note")
+    @Size(min = 0, max = 50)
+    @Column(name = "borrow_note")
     private String bornote;
 
+    @NotNull
+    @Column(name = "borrow_Status")
+    private Boolean borrowStatus;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Employee.class)
     @JoinColumn(name = "EMPLOYEE_ID", insertable = true)
     private Employee employee;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Customer.class)
     @JoinColumn(name = "CUSTOMER_ID", insertable = true)
     private Customer customer;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = ManageEquipment.class)
     @JoinColumn(name = "ManageEquipment_ID", insertable = true)
     private ManageEquipment manageequipment;
 
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = BorrowStatus.class)
-    @JoinColumn(name = "BorrowStatus_id", insertable = true)
-    private BorrowStatus borrowStatus;
 }
