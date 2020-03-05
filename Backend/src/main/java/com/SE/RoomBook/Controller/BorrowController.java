@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -36,16 +35,12 @@ public class BorrowController {
     private CustomerRepository CustomerRepository;
     @Autowired
     private EmployeeRepository EmployeeRepository;
-    @Autowired
-    private BorrowStatusRepository BorrowStatusRepository;
-    
 
-    BorrowController(BorrowRepository BorrowRepository, BorrowStatusRepository BorrowStatusRepository) {
+    BorrowController(BorrowRepository BorrowRepository) {
         this.BorrowRepository = BorrowRepository;
-        this.BorrowStatusRepository = BorrowStatusRepository;
     }
 
-	@GetMapping("/Borrow")
+    @GetMapping("/Borrow")
     public Collection<Borrow> Borrows() {
         return BorrowRepository.findAll().stream().collect(Collectors.toList());
     }
@@ -56,36 +51,36 @@ public class BorrowController {
     }
 
     @GetMapping("/BorrowCustomerId/{id}")
-    public Collection<Borrow> BorrowCustomer(@PathVariable  Long id){
+    public Collection<Borrow> BorrowCustomer(@PathVariable Long id) {
         return BorrowRepository.findByCustomerId(id).stream().collect(Collectors.toList());
     }
 
     @PostMapping("/Borrow/{id}/{em_id}/{manageEquipment_id}/{bornote}")
-    public Borrow newBorrow (final Borrow newBorrow,
-    @PathVariable final long id,//customer
-    @PathVariable final long em_id,//employee
-    @PathVariable final String bornote,
-    @PathVariable final long manageEquipment_id)//equipment
+    public Borrow newBorrow(final Borrow newBorrow, @PathVariable final long id, // customer
+            @PathVariable final long em_id, // employee
+            @PathVariable final String bornote, @PathVariable final long manageEquipment_id)// equipment
     {
-    
-    final Customer Customer = CustomerRepository.findById(id);
-    final Employee Employee = EmployeeRepository.findById(em_id);
-    final ManageEquipment ManageEquipment = ManageEquipmentRepository.findById(manageEquipment_id);
-    ManageEquipment.setManageEquipment_amount(ManageEquipment.getManageEquipment_amount()-1);
-    ManageEquipmentRepository.save(ManageEquipment);
-    final BorrowStatus borrowStatus = BorrowStatusRepository.findBorrowById();
-    
-    newBorrow.setCustomer(Customer);
-    newBorrow.setEmployee(Employee);
-    newBorrow.setBordate(new Date());
-    newBorrow.setManageequipment(ManageEquipment);
-    newBorrow.setBornote(bornote);
 
-    newBorrow.setBorrowStatus(borrowStatus);
+        final Customer Customer = CustomerRepository.findById(id);
+        final Employee Employee = EmployeeRepository.findById(em_id);
+        final List<ManageEquipment> ManageEquipment = ManageEquipmentRepository.findAll();
+        for (ManageEquipment me : ManageEquipment) {
+            if (me.getEquipmentName().getEquipmentname_id() == manageEquipment_id) {
+                if (me.getManageEquipment_amount() != 0) {
+                    me.setManageEquipment_amount(me.getManageEquipment_amount() - 1);
+                    ManageEquipmentRepository.save(me);
+                    newBorrow.setManageequipment(me);
+                    break;
+                }
+            }
+        }
+        newBorrow.setCustomer(Customer);
+        newBorrow.setEmployee(Employee);
+        newBorrow.setBordate(new Date());
+        newBorrow.setBornote(bornote);
+        newBorrow.setBorrowStatus(true);
 
-    
-    
-    return BorrowRepository.save(newBorrow); //บันทึก Objcet ชื่อ Borrow
-    
+        return BorrowRepository.save(newBorrow); // บันทึก Objcet ชื่อ Borrow
+
     }
 }
