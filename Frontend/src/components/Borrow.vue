@@ -7,6 +7,7 @@
             <v-container class="fill-height" fluid>
               <v-row align="center" justify="center">
                 <v-col cols="12" sm="8" md="4">
+
                   <div v-if="BorrowCheck == true">
                     <v-alert type="success">ทำรายการเรียบร้อยแล้ว</v-alert>
                   </div>
@@ -55,7 +56,7 @@
                               v-model="Borrow.equipId"
                               :items="Result"
                               item-text="name"
-                              item-value="Manid"
+                              item-value="id"
                               :rules="[(v) => !!v || 'Item is required']"
                               required
                             ></v-select>
@@ -128,6 +129,7 @@ export default {
         equipId: "",
         bornote: ""
       },
+      
       Notes: [
         v => !!v || "Note is required",
         v => (v && v.length <= 50) || "Note must be less than 10 characters"
@@ -141,7 +143,8 @@ export default {
       emid: "",
       BorrowCheck: false,
       checkAll: false,
-      checkNote: false
+      checkNote: false,
+      
     };
   },
   methods: {
@@ -149,12 +152,6 @@ export default {
     ResultALL() {
       this.equipsFull = this.Result;
       // this.
-    },
-    CheckSum() {
-      if (this.manageEquipmentss != null) return true;
-    },
-    CheckSumA() {
-      if (this.manageEquipmentss != null) return true;
     },
     lockemployee() {
       this.emid = this.$route.params.em;
@@ -192,9 +189,9 @@ export default {
     },
     getManageequipments() {
       http
-        .get("/manageEquipments")
+        .get("/findAmountManageEquipments")
         .then(response => {
-          this.manageEquipmentss = response.data;
+          this.manageEquipmentss = response.data
           console.log(response.data);
         })
         .catch(e => {
@@ -238,10 +235,12 @@ export default {
             this.BorrowCheck = true;
             this.checkNote = false;
             this.checkAll = false;
+                            
             // this.refreshList(this.equipId = false);
           })
           .catch(e => {
             console.log(e);
+             
           });
         this.submitted = true;
       }
@@ -285,52 +284,15 @@ export default {
   },
   computed: {
     Result() {
-      let result1 = new Set();
       let result = new Array();
-      let resultName = new Set();
-      // let Name = [];
-      let Manid = 0;
-
-      if (this.CheckSum()) {
-        // เก็บ  ไอดี ของอุปรกรณ์
-        for (let i = 0; i < this.manageEquipmentss.length; i++) {
-          result1.add(this.manageEquipmentss[i].equipmentName.equipmentname_id);
-        }
-        // เก็บ ชื่ออุปกรณ์
-        for (let i = 0; i < this.manageEquipmentss.length; i++) {
-          resultName.add(this.manageEquipmentss[i].equipmentName.name);
+      for(let i = 0; i<this.manageEquipmentss.length;i++){
+        if(this.manageEquipmentss[i][0] != 0){
+          result.push({
+            name: this.manageEquipmentss[i][1],
+            id: this.manageEquipmentss[i][2]
+          });
         }
       }
-
-      // const setIter = resultName.values();
-      let array = [...resultName];
-      // console.log(array);
-
-      let j = 0;
-      result1.forEach(value => {
-        let amount = 0;
-        // console.log(index);
-        for (let i = 0; i < this.manageEquipmentss.length; i++) {
-          let id = this.manageEquipmentss[i].equipmentName.equipmentname_id;
-
-          if (
-            value == id /*  หากค่าของ id  เท่ากับ ค่าของ lopp id ที่เก็บก่อนหน้า*/
-          ) {
-            Manid = this.manageEquipmentss[i].manageEquipment_id;
-            // Name =  this.resultName[i];
-            amount = amount + this.manageEquipmentss[i].manageEquipment_amount;
-            // console.log(Name);
-          }
-          if (i == this.manageEquipmentss.length - 1 && amount > 0) {
-            result.push({
-              name: array.slice(j, j + 1),
-              amount: amount,
-              Manid: Manid
-            });
-          }
-        }
-        j++;
-      });
       return result;
     }
   }

@@ -51,7 +51,6 @@ export default {
         { text: "อุปกรณ์ที่ยืม", value: "manageequipment.equipmentName.name" },
         { text: "พนักงานที่ทำรายการ", value: "employee.em_name" },
         { text: "Note", value: "bornote" },
-        { text: "Status", value: "borrowStatus.borstatus" },
         { text: "วัน/เวลาที่ยืม", value: "bordate" }
       ],
       items: []
