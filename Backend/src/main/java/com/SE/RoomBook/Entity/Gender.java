@@ -23,7 +23,7 @@ public class Gender {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gender_seq")
 	@Column(name="Gender_ID",unique = true, nullable = true)
 	private @NonNull Long id;
-	private @NonNull String gender;
+	private @NonNull String Gender;
 	
 	
 }
