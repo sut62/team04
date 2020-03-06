@@ -26,7 +26,7 @@ public class TitleName {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="title_seq")
 	@Column(name="Title_ID",unique = true, nullable = true)
 	private @NonNull Long id;
-	private @NonNull String title;
+	private @NonNull String Title;
 	
 	
 }

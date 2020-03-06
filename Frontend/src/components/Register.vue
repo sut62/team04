@@ -175,7 +175,7 @@ export default {
         // alert("Can't not register")
       }
       else{
-        this.registerCheck = true;
+        
       http
         .post("/customer/" +
             this.customer.Name +
@@ -198,11 +198,8 @@ export default {
         .then(response => {
           //this.types = response.data;
           console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-        this.customer.GenderId = ""
+          this.registerCheck = true;
+           this.customer.GenderId = ""
         this.customer.TitleId = ""
         this.customer.StatusId = ""
         this.customer.Name = ""
@@ -210,6 +207,13 @@ export default {
         this.customer.Password = ""
         this.customer.Email = ""
         this.customer.Phone=""
+        })
+        .catch(e => {
+          console.log(e);
+          this.registerCheck = false;
+          this.customer.Email = ""
+        });
+       
       // alert('Register complete')
       
       }
