@@ -63,13 +63,11 @@ public class ReturnsController {
         manageEquipmentRepository.save(m);
 
         borrow.setBorrowStatus(false);
-       
         newReturns.setBorrow(borrow);
         newReturns.setCustomer(customer);
         newReturns.setEmployee(employee);
         newReturns.setReturnsdate(new Date());
         newReturns.setNote(N);
-
         borrowRepository.save(borrow);
         return returnsRepository.save(newReturns);
 
