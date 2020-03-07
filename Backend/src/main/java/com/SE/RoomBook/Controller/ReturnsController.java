@@ -37,8 +37,6 @@ public class ReturnsController {
     private EmployeeRepository employeeRepository;
     @Autowired
     private CustomerRepository customerRepository;
-    @Autowired
-    private BorrowStatusRepository borrowStatusRepository;
 
     ReturnsController(final ReturnsRepository returnsRepository) {
         this.returnsRepository = returnsRepository;
@@ -63,9 +61,8 @@ public class ReturnsController {
         final ManageEquipment  m = manageEquipmentRepository.findById(man);  
         m.setManageEquipment_amount(m.getManageEquipment_amount()+1);
         manageEquipmentRepository.save(m);
-        final BorrowStatus borrowStatus = borrowStatusRepository.findNotBorrowById();
 
-        borrow.setBorrowStatus(borrowStatus);
+        borrow.setBorrowStatus(false);
        
         newReturns.setBorrow(borrow);
         newReturns.setCustomer(customer);
