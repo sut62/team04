@@ -211,7 +211,14 @@ export default {
         .catch(e => {
           console.log(e);
           this.registerCheck = false;
-          this.customer.Email = ""
+           this.customer.GenderId = ""
+        this.customer.TitleId = ""
+        this.customer.StatusId = ""
+        this.customer.Name = ""
+        this.customer.LastName = ""
+        this.customer.Password = ""
+        this.customer.Email = ""
+        this.customer.Phone=""
         });
        
       // alert('Register complete')
