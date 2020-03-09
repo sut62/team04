@@ -9,8 +9,9 @@ import java.util.Collection;
 public interface ManageEquipmentRepository extends JpaRepository<ManageEquipment, Long> {
 	ManageEquipment findById(long manageEquipment_id);
 
-	@Query(value = "SELECT * FROM MANAGE_EQUIPMENT WHERE 	MANAGE_EQUIPMENT_ID = :Id" ,nativeQuery = true)
+	@Query(value = "SELECT * FROM MANAGE_EQUIPMENT WHERE MANAGE_EQUIPMENT_ID = :Id" ,nativeQuery = true)
 	ManageEquipment findByAmount(@Param("Id") long id);
 
-
+	@Query(value = "SELECT SUM(m.AMOUNT) , e.EQNAME , m.EQUIPMENT_NAME_ID  FROM MANAGE_EQUIPMENT m , EQUIPMENT_NAME e WHERE m.EQUIPMENT_NAME_ID = e.EQUIPMENT_NAME_ID GROUP BY e.EQNAME" ,nativeQuery = true)
+	Collection findAmount();
 }
