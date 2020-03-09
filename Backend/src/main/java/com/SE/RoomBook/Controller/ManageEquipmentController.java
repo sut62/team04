@@ -36,7 +36,7 @@ public class ManageEquipmentController {
   @Autowired
   private EmployeeRepository EmployeeRepository;
 
-  ManageEquipmentController(ManageEquipmentRepository ManageEquipmentRepository) {
+  ManageEquipmentController(final ManageEquipmentRepository ManageEquipmentRepository) {
     this.ManageEquipmentRepository = ManageEquipmentRepository;
   }
 
@@ -45,17 +45,20 @@ public class ManageEquipmentController {
     return ManageEquipmentRepository.findAll().stream().collect(Collectors.toList());
   }
 
-  @PostMapping("/manageEquipments/{em_id}/{equipmenttype_id}/{equipmentname_id}/{manageEquipment_amount}")
-  public ManageEquipment newManageEquipment(ManageEquipment newManageEquipment,
-  // @PathVariable Date manageEquipment_date,
-  @PathVariable long em_id,
-  @PathVariable long equipmenttype_id,
-  @PathVariable long equipmentname_id,
-  @PathVariable Integer manageEquipment_amount) {
+  @GetMapping("/findAmountManageEquipments")
+  public Collection FindAmountManageEquipment() {
+    return ManageEquipmentRepository.findAmount();
+  }
 
-    Employee Employee = EmployeeRepository.findById(em_id);
-    EquipmentType EquipmentType = EquipmentTypeRepository.findById(equipmenttype_id);
-    EquipmentName EquipmentName = EquipmentNameRepository.findById(equipmentname_id);
+  @PostMapping("/manageEquipments/{em_id}/{equipmenttype_id}/{equipmentname_id}/{manageEquipment_amount}")
+  public ManageEquipment newManageEquipment(final ManageEquipment newManageEquipment,
+      // @PathVariable Date manageEquipment_date,
+      @PathVariable final long em_id, @PathVariable final long equipmenttype_id,
+      @PathVariable final long equipmentname_id, @PathVariable final Integer manageEquipment_amount) {
+
+    final Employee Employee = EmployeeRepository.findById(em_id);
+    final EquipmentType EquipmentType = EquipmentTypeRepository.findById(equipmenttype_id);
+    final EquipmentName EquipmentName = EquipmentNameRepository.findById(equipmentname_id);
 
     // newManageEquipment.setManageEquipment_date(manageEquipment_date);
     newManageEquipment.setEmployee(Employee);

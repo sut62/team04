@@ -151,6 +151,16 @@ export default {
       this.lock = true;
     },
     saveData() {
+      if (
+        this.ManageEquipment.EmName == "" ||
+        this.ManageEquipment.Typename == "" ||
+        this.ManageEquipment.EQname == "" ||
+        this.ManageEquipment.Amount == "0"
+      ) {
+        this.snackbar=true
+        this.cl="error"
+        this.status="เพิ่มข้อมูลไม่สำเร็จ!"
+      } else {
       http
       .post(
         "/manageEquipments/" +
@@ -176,7 +186,7 @@ export default {
         this.status="เพิ่มข้อมูลไม่สำเร็จ!"
       });
       this.submitted = true;
-    },
+    }},
     getEmployee() {
       http.get("/employees").then(response => {
         this.Employee = response.data;
